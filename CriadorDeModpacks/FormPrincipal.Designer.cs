@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -37,33 +36,21 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button7 = new System.Windows.Forms.Button();
+            this.add_modpack = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.lbl_modpack_info = new System.Windows.Forms.Label();
-            this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.Mod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pasta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Caminho = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Versão = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.directory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.diretorio = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.game_version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.forge_version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Mod,
-            this.Pasta,
-            this.Caminho,
-            this.Versão});
-            this.dataGridView1.Location = new System.Drawing.Point(29, 127);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(861, 377);
-            this.dataGridView1.TabIndex = 0;
             // 
             // label1
             // 
@@ -130,7 +117,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(470, 24);
+            this.button6.Location = new System.Drawing.Point(632, 61);
             this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(142, 31);
@@ -149,16 +136,16 @@
             this.comboBox1.TabIndex = 9;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // button7
+            // add_modpack
             // 
-            this.button7.Location = new System.Drawing.Point(281, 23);
-            this.button7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(47, 31);
-            this.button7.TabIndex = 10;
-            this.button7.Text = "+";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.add_modpack.Location = new System.Drawing.Point(281, 23);
+            this.add_modpack.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.add_modpack.Name = "add_modpack";
+            this.add_modpack.Size = new System.Drawing.Size(47, 31);
+            this.add_modpack.TabIndex = 10;
+            this.add_modpack.Text = "+";
+            this.add_modpack.UseVisualStyleBackColor = true;
+            this.add_modpack.Click += new System.EventHandler(this.addmodpack_click);
             // 
             // button8
             // 
@@ -180,64 +167,92 @@
             this.lbl_modpack_info.TabIndex = 12;
             this.lbl_modpack_info.Text = "label2";
             // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(474, 72);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(138, 33);
-            this.button9.TabIndex = 13;
-            this.button9.Text = "Limpar lista";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(632, 72);
+            this.button10.Location = new System.Drawing.Point(387, 23);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(125, 30);
             this.button10.TabIndex = 14;
-            this.button10.Text = "Configurações";
+            this.button10.Text = "Configurar";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
-            // Mod
+            // Id
             // 
-            this.Mod.HeaderText = "Mod";
-            this.Mod.MinimumWidth = 6;
-            this.Mod.Name = "Mod";
-            this.Mod.Width = 125;
+            this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 6;
+            this.Id.Name = "Id";
+            this.Id.Width = 125;
             // 
-            // Pasta
+            // name
             // 
-            this.Pasta.HeaderText = "Pasta";
-            this.Pasta.MinimumWidth = 6;
-            this.Pasta.Name = "Pasta";
-            this.Pasta.Width = 125;
+            this.name.HeaderText = "Nome";
+            this.name.MinimumWidth = 6;
+            this.name.Name = "name";
+            this.name.Width = 125;
             // 
-            // Caminho
+            // directory
             // 
-            this.Caminho.HeaderText = "Caminho";
-            this.Caminho.MinimumWidth = 6;
-            this.Caminho.Name = "Caminho";
-            this.Caminho.Width = 125;
+            this.directory.HeaderText = "Diretorio";
+            this.directory.MinimumWidth = 6;
+            this.directory.Name = "directory";
+            this.directory.Width = 125;
             // 
-            // Versão
+            // dataGridView1
             // 
-            this.Versão.HeaderText = "Versão";
-            this.Versão.MinimumWidth = 6;
-            this.Versão.Name = "Versão";
-            this.Versão.Width = 125;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(5, 103);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 29;
+            this.dataGridView1.Size = new System.Drawing.Size(1019, 408);
+            this.dataGridView1.TabIndex = 15;
+            // 
+            // nome
+            // 
+            this.nome.HeaderText = "nome";
+            this.nome.MinimumWidth = 6;
+            this.nome.Name = "nome";
+            this.nome.Width = 125;
+            // 
+            // diretorio
+            // 
+            this.diretorio.HeaderText = "diretorio";
+            this.diretorio.MinimumWidth = 6;
+            this.diretorio.Name = "diretorio";
+            this.diretorio.Width = 125;
+            // 
+            // descricao
+            // 
+            this.descricao.HeaderText = "descricao";
+            this.descricao.MinimumWidth = 6;
+            this.descricao.Name = "descricao";
+            this.descricao.Width = 125;
+            // 
+            // game_version
+            // 
+            this.game_version.HeaderText = "minecraft_version";
+            this.game_version.MinimumWidth = 6;
+            this.game_version.Name = "game_version";
+            this.game_version.Width = 125;
+            // 
+            // forge_version
+            // 
+            this.forge_version.HeaderText = "forge_version";
+            this.forge_version.MinimumWidth = 6;
+            this.forge_version.Name = "forge_version";
+            this.forge_version.Width = 125;
             // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(914, 600);
+            this.ClientSize = new System.Drawing.Size(1059, 600);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button10);
-            this.Controls.Add(this.button9);
             this.Controls.Add(this.lbl_modpack_info);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
+            this.Controls.Add(this.add_modpack);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -246,7 +261,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridView1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormPrincipal";
             this.Text = "Form1";
@@ -258,8 +272,6 @@
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
         private Label label1;
         private Button button1;
         private Button button2;
@@ -268,14 +280,18 @@
         private Button button5;
         private Button button6;
         private ComboBox comboBox1;
-        private Button button7;
+        private Button add_modpack;
         private Button button8;
         private Label lbl_modpack_info;
-        private Button button9;
         private Button button10;
-        private DataGridViewTextBoxColumn Mod;
-        private DataGridViewTextBoxColumn Pasta;
-        private DataGridViewTextBoxColumn Caminho;
-        private DataGridViewTextBoxColumn Versão;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn name;
+        private DataGridViewTextBoxColumn directory;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn nome;
+        private DataGridViewButtonColumn diretorio;
+        private DataGridViewTextBoxColumn descricao;
+        private DataGridViewTextBoxColumn game_version;
+        private DataGridViewTextBoxColumn forge_version;
     }
 }

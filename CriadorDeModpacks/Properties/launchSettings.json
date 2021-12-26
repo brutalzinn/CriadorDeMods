@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CriadorDeModpacks": {
+      "commandName": "Project",
+      "hotReloadEnabled": true
+    }
+  }
+}

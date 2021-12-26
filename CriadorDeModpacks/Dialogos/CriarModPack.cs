@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CriadorDeModpacks.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,16 +12,42 @@ using System.Windows.Forms;
 namespace CriadorDeModpacks.Dialogos
 {
     public partial class CriarModPack : Form
+
     {
+        public ModPack ModPack { get; set; }
+     
         public CriarModPack()
         {
             InitializeComponent();
+            
         }
 
-        public string Nome { get; set; }
-        public string MinecraftVersion { get; set; }
-        public string ForgeVersion { get; set; }
-        public string PublicZipUrl { get; set; }
+        public void AdicionarError(string erro)
+        {
+            lbl_error.Visible = true;
+            lbl_error.Text = erro;
+        }
+        public CriarModPack(ModPack ModPack)
+        {
+            InitializeComponent();
+
+            if (ModPack != null)
+            {
+                this.txb_id.Text = ModPack.id ?? Guid.NewGuid().ToString();
+                this.txb_nome.Text = ModPack.name;
+                this.txb_diretory.Text = ModPack.directory;
+                this.ckb_default.Checked = ModPack.@default;
+                this.txb_description.Text = ModPack.description;
+                this.txb_minecraft_version.Text = ModPack.game_version;
+                this.txb_forge_version.Text = ModPack.forge_version;
+                this.txb_ip.Text = ModPack.server_ip;
+                this.txb_port.Text = ModPack.server_port;
+                this.txb_img.Text = ModPack.img;
+                this.txb_autor.Text = ModPack.author;
+            }
+
+        }
+
         private void CloseForm(DialogResult result)
         {
             DialogResult = result;
@@ -30,9 +57,21 @@ namespace CriadorDeModpacks.Dialogos
 
         private void btn_salvar_Click(object sender, EventArgs e)
         {
-            Nome = txb_nome.Text;
-            ForgeVersion = txb_forge.Text;
-            MinecraftVersion = txb_minecraft.Text;
+            ModPack = new ModPack()
+            {
+                id = this.txb_id.Text ?? Guid.NewGuid().ToString(),
+                name = this.txb_nome.Text,
+                forge_version = this.txb_forge_version.Text,
+                game_version = this.txb_minecraft_version.Text,
+                directory = this.txb_diretory.Text,
+                server_ip = this.txb_ip.Text,
+                server_port = this.txb_port.Text,
+                img = this.txb_img.Text,
+                @default = this.ckb_default.Checked,
+                author = this.txb_autor.Text,
+                description = this.txb_description.Text,
+
+            };
             CloseForm(DialogResult.OK);
         }
 
@@ -42,6 +81,11 @@ namespace CriadorDeModpacks.Dialogos
         }
 
         private void CriarModPack_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
         {
 
         }
