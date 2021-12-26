@@ -49,6 +49,9 @@
             this.descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.game_version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.forge_version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cbx_search = new System.Windows.Forms.ComboBox();
+            this.btn_clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +66,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(618, 24);
+            this.button1.Location = new System.Drawing.Point(606, 24);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(142, 31);
@@ -74,10 +77,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(767, 24);
+            this.button2.Location = new System.Drawing.Point(754, 22);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 31);
+            this.button2.Size = new System.Drawing.Size(122, 33);
             this.button2.TabIndex = 4;
             this.button2.Text = "Remover mod";
             this.button2.UseVisualStyleBackColor = true;
@@ -106,7 +109,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(775, 531);
+            this.button5.Location = new System.Drawing.Point(910, 530);
             this.button5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(114, 53);
@@ -117,7 +120,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(632, 61);
+            this.button6.Location = new System.Drawing.Point(882, 23);
             this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(142, 31);
@@ -169,7 +172,7 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(387, 23);
+            this.button10.Location = new System.Drawing.Point(387, 24);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(125, 30);
             this.button10.TabIndex = 14;
@@ -201,12 +204,14 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(5, 103);
+            this.dataGridView1.Location = new System.Drawing.Point(5, 142);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(1019, 408);
+            this.dataGridView1.Size = new System.Drawing.Size(1019, 369);
             this.dataGridView1.TabIndex = 15;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // nome
             // 
@@ -243,11 +248,40 @@
             this.forge_version.Name = "forge_version";
             this.forge_version.Width = 125;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(5, 109);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(270, 27);
+            this.textBox1.TabIndex = 16;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // cbx_search
+            // 
+            this.cbx_search.FormattingEnabled = true;
+            this.cbx_search.Location = new System.Drawing.Point(281, 109);
+            this.cbx_search.Name = "cbx_search";
+            this.cbx_search.Size = new System.Drawing.Size(151, 28);
+            this.cbx_search.TabIndex = 17;
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.Location = new System.Drawing.Point(438, 109);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(94, 29);
+            this.btn_clear.TabIndex = 18;
+            this.btn_clear.Text = "Clear Filters";
+            this.btn_clear.UseVisualStyleBackColor = true;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 600);
+            this.Controls.Add(this.btn_clear);
+            this.Controls.Add(this.cbx_search);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.lbl_modpack_info);
@@ -293,5 +327,8 @@
         private DataGridViewTextBoxColumn descricao;
         private DataGridViewTextBoxColumn game_version;
         private DataGridViewTextBoxColumn forge_version;
+        private TextBox textBox1;
+        public ComboBox cbx_search;
+        private Button btn_clear;
     }
 }

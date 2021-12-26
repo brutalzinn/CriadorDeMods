@@ -1,30 +1,38 @@
 using CriadorDeModpacks.Dialogos;
 using CriadorDeModpacks.Models;
 using Newtonsoft.Json;
+using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace CriadorDeModpacks
 {
     public partial class FormPrincipal : Form
     {
 
-      
+        public DataTable dt = new DataTable();
+        public List<ModPack> ModPacks { get; set; } = new List<ModPack>();
+        public ModPack ModPack { get; set; }
 
         public FormPrincipal()
         {
             InitializeComponent();
+
+            
+            dt.Columns.Add(new DataColumn("id", typeof(string)));
+            dt.Columns.Add(new DataColumn("name", typeof(string)));
+            dt.Columns.Add(new DataColumn("game_version", typeof(string)));
+            dt.Columns.Add(new DataColumn("forge_version", typeof(string)));
+            dt.Columns.Add(new DataColumn("default", typeof(bool)));
+            dataGridView1.DataSource = dt;
             CarregarModPacks();
             CarregarModPacksComboBox();
             SalvarConfiguracoes("http://boberto.net");
+            Search.FillSearchComboBox(cbx_search);
+
         }
-
    
-
-        public List<ModPack> ModPacks { get; set; } = new List<ModPack>();
-
-        public ModPack ModPack { get; set; }
-
         public void CarregarModPacksComboBox()
         {
             comboBox1.Items.Clear();
@@ -52,11 +60,6 @@ namespace CriadorDeModpacks
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             ModPack = (ModPack)comboBox1.SelectedItem;
-            //ListaMods = ModPack.Mods;
-            //lbl_modpack_info.Text = $"Nome: {ModPack.Nome} {Environment.NewLine}" +
-            //    $"ForgeVersion: {ModPack.ForgeVersion} {Environment.NewLine}" +
-            //$"MinecraftVersion: {ModPack.MinecraftVersion}";
-            //textBox1.Text = ModPack.Nome;
             ListarDataGrid();
         }
 
@@ -73,8 +76,9 @@ namespace CriadorDeModpacks
                     modpacks_errados += item.id + Environment.NewLine;
                 }
                 MessageBox.Show(modpacks_errados);
+                return;
             }
-
+            
             var json = JsonConvert.SerializeObject(ModPacks, Formatting.Indented);
             File.WriteAllText(Globals.filename, json);
 
@@ -83,10 +87,14 @@ namespace CriadorDeModpacks
         }
         private void ListarDataGrid()
         {
-            dataGridView1.Rows.Clear();
+            if(dataGridView1.Rows.Count > 0)
+            {
+               dt.Rows.Clear();
+
+            }
             foreach (var mod in ModPacks)
             {
-                dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default);
+                dt.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default);
             }
         }
         private void button6_Click(object sender, EventArgs e)
@@ -182,7 +190,7 @@ namespace CriadorDeModpacks
                 ModPacks.Add(criarModPack.ModPack);
                 CarregarModPacksComboBox();
             }
-
+            ListarDataGrid();
         }
         //remover item 
         private void button8_Click(object sender, EventArgs e)
@@ -224,5 +232,65 @@ namespace CriadorDeModpacks
             CarregarModPacksComboBox();
             ListarDataGrid();
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            List<ModPack> ModPacks_Filters = new List<ModPack>();
+            switch (cbx_search.SelectedItem)
+            {
+                case Search.TIPOS.id:
+                    ModPacks_Filters = ModPacks.FindAll(e => e.id.Contains(textBox1.Text)).ToList();
+                break;
+                case Search.TIPOS.nome:
+                ModPacks_Filters = ModPacks.FindAll(e => e.name.Contains(textBox1.Text)).ToList();
+                break;
+                case Search.TIPOS.game_version:
+                ModPacks_Filters = ModPacks.FindAll(e => e.game_version.Contains(textBox1.Text)).ToList();
+                break;
+                case Search.TIPOS.forge_version:
+                ModPacks_Filters = ModPacks.FindAll(e => e.forge_version.Contains(textBox1.Text)).ToList();
+                break;
+                case Search.TIPOS.author:
+                ModPacks_Filters = ModPacks.FindAll(e => e.author.Contains(textBox1.Text)).ToList();
+                break;
+            }
+            dt.Rows.Clear();
+            foreach (var mod in ModPacks_Filters)
+            {
+                dt.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default);
+            }
+        }
+
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            ListarDataGrid();
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //dt.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default);
+
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+            string id = row.Cells[0].Value.ToString();
+            string name = row.Cells[1].Value.ToString();
+            string game_version = row.Cells[2].Value.ToString();
+            string forge_version = row.Cells[3].Value.ToString();
+            bool  @default = (bool)row.Cells[4].Value;
+
+            var modpack_old = ModPacks.Where(e => e.id == id).FirstOrDefault();
+            modpack_old.name = name;
+            modpack_old.game_version = game_version;
+            modpack_old.forge_version = forge_version;
+            modpack_old.@default = @default;
+            ModPacks.Remove(modpack_old);
+            ModPacks.Add(modpack_old);
+            CarregarModPacksComboBox();
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+          
+         }
     }
 }
