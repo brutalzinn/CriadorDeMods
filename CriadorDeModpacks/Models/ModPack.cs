@@ -13,6 +13,7 @@ namespace CriadorDeModpacks.Models
         public string name { get; set; }
         public string directory { get; set; }
         public bool @default { get; set; }
+        public bool premium { get; set; }
         public string description { get; set; }
         public string game_version { get; set; }
         public string forge_version { get; set; }
@@ -21,11 +22,19 @@ namespace CriadorDeModpacks.Models
         public string img { get; set; }
         public string author { get; set; }
 
+       
+
+        public ModPack()
+        {
+
+        }
+
         public ModPack(string id,
-            string name, 
-            string directory,
+            string name,
+            string directory, 
             bool @default, 
-            string description,
+            bool premium,
+            string description, 
             string game_version, 
             string forge_version, 
             string server_ip, 
@@ -37,6 +46,7 @@ namespace CriadorDeModpacks.Models
             this.name = name;
             this.directory = directory;
             this.@default = @default;
+            this.premium = premium;
             this.description = description;
             this.game_version = game_version;
             this.forge_version = forge_version;
@@ -44,11 +54,6 @@ namespace CriadorDeModpacks.Models
             this.server_port = server_port;
             this.img = img;
             this.author = author;
-        }
-
-        public ModPack()
-        {
-
         }
 
         public override string ToString()

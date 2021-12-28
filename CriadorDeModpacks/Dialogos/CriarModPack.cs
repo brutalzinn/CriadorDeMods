@@ -37,6 +37,7 @@ namespace CriadorDeModpacks.Dialogos
                 this.txb_nome.Text = ModPack.name;
                 this.txb_diretory.Text = ModPack.directory;
                 this.ckb_default.Checked = ModPack.@default;
+                this.ckb_premium.Checked = ModPack.premium;
                 this.txb_description.Text = ModPack.description;
                 this.txb_minecraft_version.Text = ModPack.game_version;
                 this.txb_forge_version.Text = ModPack.forge_version;
@@ -67,6 +68,7 @@ namespace CriadorDeModpacks.Dialogos
                 server_ip = this.txb_ip.Text,
                 server_port = this.txb_port.Text,
                 img = this.txb_img.Text,
+                premium = this.ckb_premium.Checked,
                 @default = this.ckb_default.Checked,
                 author = this.txb_autor.Text,
                 description = this.txb_description.Text,
@@ -88,6 +90,15 @@ namespace CriadorDeModpacks.Dialogos
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var form = new ForgeInstaller();
+            form.minecraft_version = this.txb_minecraft_version.Text;
+            form.forge_version = this.txb_forge_version.Text;
+            form.modpack_name = this.txb_diretory.Text;
+            form.ShowDialog();
         }
     }
 }

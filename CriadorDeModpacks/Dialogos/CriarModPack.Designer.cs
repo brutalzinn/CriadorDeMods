@@ -47,6 +47,7 @@
             this.btn_cancelar = new System.Windows.Forms.Button();
             this.ckb_default = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.txb_description = new System.Windows.Forms.RichTextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -54,6 +55,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txb_diretory = new System.Windows.Forms.TextBox();
             this.lbl_error = new System.Windows.Forms.Label();
+            this.ckb_premium = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -225,6 +227,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.ckb_premium);
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.txb_description);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label7);
@@ -239,6 +243,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Configurações - Extras";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(239, 126);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(122, 37);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "Install forge";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // txb_description
             // 
@@ -301,11 +315,21 @@
             this.lbl_error.Text = "Error";
             this.lbl_error.Visible = false;
             // 
+            // ckb_premium
+            // 
+            this.ckb_premium.AutoSize = true;
+            this.ckb_premium.Location = new System.Drawing.Point(103, 37);
+            this.ckb_premium.Name = "ckb_premium";
+            this.ckb_premium.Size = new System.Drawing.Size(127, 24);
+            this.ckb_premium.TabIndex = 17;
+            this.ckb_premium.Text = "Premium users";
+            this.ckb_premium.UseVisualStyleBackColor = true;
+            // 
             // CriarModPack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 406);
+            this.ClientSize = new System.Drawing.Size(704, 406);
             this.Controls.Add(this.lbl_error);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btn_cancelar);
@@ -350,5 +374,7 @@
         private Label label10;
         public TextBox txb_id;
         private Label lbl_error;
+        private Button button1;
+        private CheckBox ckb_premium;
     }
 }

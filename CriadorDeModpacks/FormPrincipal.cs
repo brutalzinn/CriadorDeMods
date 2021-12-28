@@ -25,6 +25,7 @@ namespace CriadorDeModpacks
             dt.Columns.Add(new DataColumn("game_version", typeof(string)));
             dt.Columns.Add(new DataColumn("forge_version", typeof(string)));
             dt.Columns.Add(new DataColumn("default", typeof(bool)));
+
             dataGridView1.DataSource = dt;
             CarregarModPacks();
             CarregarModPacksComboBox();
@@ -69,7 +70,7 @@ namespace CriadorDeModpacks
 
             var modpacks_defauls = ModPacks.FindAll(e => e.@default == true);
 
-            if(modpacks_defauls.Count != 1) {
+            if(modpacks_defauls.Count > 1) {
                 string modpacks_errados = "Há mais de um modpack padrão criado.Faça a correção" + Environment.NewLine;
                 foreach(var item in modpacks_defauls)
                 {
@@ -187,7 +188,13 @@ namespace CriadorDeModpacks
             criarModPack.ShowDialog();
             if (criarModPack.DialogResult == DialogResult.OK)
             {
+                var modpack_directory = Path.Combine(Globals.modpack_root, criarModPack.txb_diretory.Text);
                 ModPacks.Add(criarModPack.ModPack);
+                if (!Directory.Exists(modpack_directory))
+                {
+                    Directory.CreateDirectory(modpack_directory);
+                }
+                
                 CarregarModPacksComboBox();
             }
             ListarDataGrid();
