@@ -19,14 +19,49 @@ namespace CriadorDeModpacks
         {
             InitializeComponent();
 
-            
-            dt.Columns.Add(new DataColumn("id", typeof(string)));
-            dt.Columns.Add(new DataColumn("name", typeof(string)));
-            dt.Columns.Add(new DataColumn("game_version", typeof(string)));
-            dt.Columns.Add(new DataColumn("forge_version", typeof(string)));
-            dt.Columns.Add(new DataColumn("default", typeof(bool)));
+      
+            DataGridViewTextBoxColumn id = new DataGridViewTextBoxColumn();
+            id.Name = "id_column_column";
+            id.HeaderText = "Id";
+            DataGridViewTextBoxColumn name = new DataGridViewTextBoxColumn();
+            name.Name = "name_column_column";
+            name.HeaderText = "Name";
+            DataGridViewTextBoxColumn game_version = new DataGridViewTextBoxColumn();
+            game_version.Name = "game_version_column";
+            game_version.HeaderText = "Game version";
+            DataGridViewTextBoxColumn forge_version = new DataGridViewTextBoxColumn();
+            forge_version.Name = "forge_version_column";
+            forge_version.HeaderText = "Forge versiom";
 
-            dataGridView1.DataSource = dt;
+            DataGridViewCheckBoxColumn default_Cell = new DataGridViewCheckBoxColumn();
+            default_Cell.Name = "defailt_column";
+            default_Cell.HeaderText = "Default modpack";
+
+            DataGridViewCheckBoxColumn premium_cell = new DataGridViewCheckBoxColumn();
+            premium_cell.Name = "premium_column";
+            premium_cell.HeaderText = "Premium modpack";
+
+            DataGridViewButtonColumn openmodpack = new DataGridViewButtonColumn();
+            openmodpack.Name = "openmodpack_column";
+
+            //dt.Columns.Add(new DataColumn("id", typeof(string)));
+            //dt.Columns.Add(new DataColumn("name", typeof(string)));
+            //dt.Columns.Add(new DataColumn("game_version", typeof(string)));
+            //dt.Columns.Add(new DataColumn("forge_version", typeof(string)));
+            //dt.Columns.Add(new DataColumn("default", typeof(bool)));
+
+
+
+
+            //     dataGridView1.DataSource = dt;
+            dataGridView1.Columns.Add(id);
+            dataGridView1.Columns.Add(name);
+            dataGridView1.Columns.Add(game_version);
+            dataGridView1.Columns.Add(forge_version);
+            dataGridView1.Columns.Add(default_Cell);
+            dataGridView1.Columns.Add(premium_cell);
+            dataGridView1.Columns.Add(openmodpack);
+            
             CarregarModPacks();
             CarregarModPacksComboBox();
             SalvarConfiguracoes("http://boberto.net");
@@ -90,12 +125,12 @@ namespace CriadorDeModpacks
         {
             if(dataGridView1.Rows.Count > 0)
             {
-               dt.Rows.Clear();
+               dataGridView1.Rows.Clear();
 
             }
             foreach (var mod in ModPacks)
             {
-                dt.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default);
+                dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default, mod.premium, "Abrr modpack");
             }
         }
         private void button6_Click(object sender, EventArgs e)
@@ -261,10 +296,10 @@ namespace CriadorDeModpacks
                 ModPacks_Filters = ModPacks.FindAll(e => e.author.Contains(textBox1.Text)).ToList();
                 break;
             }
-            dt.Rows.Clear();
+            dataGridView1.Rows.Clear();
             foreach (var mod in ModPacks_Filters)
             {
-                dt.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default);
+                dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default, mod.premium, "Open modpack");
             }
         }
 
@@ -293,11 +328,31 @@ namespace CriadorDeModpacks
             ModPacks.Add(modpack_old);
             CarregarModPacksComboBox();
 
+
+
+
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          
-         }
+
+            if (e.ColumnIndex == dataGridView1.Columns["openmodpack_column"].Index) {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                string id = row.Cells[0].Value.ToString();
+                var modpack = ModPacks.Where(e => e.id == id).FirstOrDefault();
+                string modpack_dir = Path.Combine(Globals.modpack_root, modpack.directory);
+                if (Directory.Exists(modpack_dir))
+                {
+                    Process.Start("explorer.exe", modpack_dir);
+
+                }
+                else
+                {
+                    MessageBox.Show("Modpack withoout folder created.");
+                }
+
+                //Do something with your button.
+            }
+        }
     }
 }
