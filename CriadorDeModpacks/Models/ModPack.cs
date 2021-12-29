@@ -19,9 +19,13 @@ namespace CriadorDeModpacks.Models
         public string forge_version { get; set; }
         public string server_ip { get; set; }
         public string server_port { get; set; }
+        public string datetime_creat_at { get; set; }
+        public string datetime_updat_at { get; set; }
         public string img { get; set; }
         public string author { get; set; }
 
+     
+        
        
 
         public ModPack()

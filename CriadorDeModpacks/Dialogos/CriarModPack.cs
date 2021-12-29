@@ -58,22 +58,23 @@ namespace CriadorDeModpacks.Dialogos
 
         private void btn_salvar_Click(object sender, EventArgs e)
         {
-            ModPack = new ModPack()
-            {
-                id = this.txb_id.Text ?? Guid.NewGuid().ToString(),
-                name = this.txb_nome.Text,
-                forge_version = this.txb_forge_version.Text,
-                game_version = this.txb_minecraft_version.Text,
-                directory = this.txb_diretory.Text,
-                server_ip = this.txb_ip.Text,
-                server_port = this.txb_port.Text,
-                img = this.txb_img.Text,
-                premium = this.ckb_premium.Checked,
-                @default = this.ckb_default.Checked,
-                author = this.txb_autor.Text,
-                description = this.txb_description.Text,
 
-            };
+
+            ModPack.id = this.txb_id.Text ?? Guid.NewGuid().ToString();
+                ModPack.name = this.txb_nome.Text;
+                ModPack.datetime_updat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+                ModPack.forge_version = this.txb_forge_version.Text;
+                ModPack.game_version = this.txb_minecraft_version.Text;
+               ModPack.directory = this.txb_diretory.Text;
+                ModPack.server_ip = this.txb_ip.Text;
+                ModPack.server_port = this.txb_port.Text;
+                ModPack.img = this.txb_img.Text;
+                ModPack.premium = this.ckb_premium.Checked;
+                ModPack .@default = this.ckb_default.Checked;
+                ModPack.author = this.txb_autor.Text;
+                ModPack.description = this.txb_description.Text;
+
+           
             CloseForm(DialogResult.OK);
         }
 

@@ -59,15 +59,5 @@ namespace CriadorDeModpacks.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Consulta um recurso localizado do tipo System.Byte[].
-        /// </summary>
-        public static byte[] launcher_profiles {
-            get {
-                object obj = ResourceManager.GetObject("launcher_profiles", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

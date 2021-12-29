@@ -47,6 +47,7 @@
             this.btn_cancelar = new System.Windows.Forms.Button();
             this.ckb_default = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ckb_premium = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.txb_description = new System.Windows.Forms.RichTextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txb_diretory = new System.Windows.Forms.TextBox();
             this.lbl_error = new System.Windows.Forms.Label();
-            this.ckb_premium = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -244,6 +244,16 @@
             this.groupBox2.Text = "Configurações - Extras";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
+            // ckb_premium
+            // 
+            this.ckb_premium.AutoSize = true;
+            this.ckb_premium.Location = new System.Drawing.Point(103, 37);
+            this.ckb_premium.Name = "ckb_premium";
+            this.ckb_premium.Size = new System.Drawing.Size(127, 24);
+            this.ckb_premium.TabIndex = 17;
+            this.ckb_premium.Text = "Premium users";
+            this.ckb_premium.UseVisualStyleBackColor = true;
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(239, 126);
@@ -314,16 +324,6 @@
             this.lbl_error.TabIndex = 12;
             this.lbl_error.Text = "Error";
             this.lbl_error.Visible = false;
-            // 
-            // ckb_premium
-            // 
-            this.ckb_premium.AutoSize = true;
-            this.ckb_premium.Location = new System.Drawing.Point(103, 37);
-            this.ckb_premium.Name = "ckb_premium";
-            this.ckb_premium.Size = new System.Drawing.Size(127, 24);
-            this.ckb_premium.TabIndex = 17;
-            this.ckb_premium.Text = "Premium users";
-            this.ckb_premium.UseVisualStyleBackColor = true;
             // 
             // CriarModPack
             // 

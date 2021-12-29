@@ -224,12 +224,14 @@ namespace CriadorDeModpacks
             if (criarModPack.DialogResult == DialogResult.OK)
             {
                 var modpack_directory = Path.Combine(Globals.modpack_root, criarModPack.txb_diretory.Text);
-                ModPacks.Add(criarModPack.ModPack);
                 if (!Directory.Exists(modpack_directory))
                 {
+                    criarModPack.ModPack.datetime_creat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
                     Directory.CreateDirectory(modpack_directory);
                 }
-                
+              //  criarModPack.ModPack.datetime_creat_at = d
+                ModPacks.Add(criarModPack.ModPack);
+
                 CarregarModPacksComboBox();
             }
             ListarDataGrid();
