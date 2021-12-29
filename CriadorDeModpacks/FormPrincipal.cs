@@ -220,16 +220,17 @@ namespace CriadorDeModpacks
         {
             var criarModPack = new CriarModPack();
             criarModPack.txb_id.Text  = Guid.NewGuid().ToString();
+            criarModPack.creat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+
             criarModPack.ShowDialog();
             if (criarModPack.DialogResult == DialogResult.OK)
             {
                 var modpack_directory = Path.Combine(Globals.modpack_root, criarModPack.txb_diretory.Text);
                 if (!Directory.Exists(modpack_directory))
                 {
-                    criarModPack.ModPack.datetime_creat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
                     Directory.CreateDirectory(modpack_directory);
                 }
-              //  criarModPack.ModPack.datetime_creat_at = d
+                //  criarModPack.ModPack.datetime_creat_at = d
                 ModPacks.Add(criarModPack.ModPack);
 
                 CarregarModPacksComboBox();
