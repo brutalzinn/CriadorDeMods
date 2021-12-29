@@ -78,6 +78,7 @@ namespace CriadorDeModpacks.Dialogos
                 description = this.txb_description.Text,
 
             };
+            Utils.FileUtils.CreateServerFile(ModPack);
             CloseForm(DialogResult.OK);
         }
 
