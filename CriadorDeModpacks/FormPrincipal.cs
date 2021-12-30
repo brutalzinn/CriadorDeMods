@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Linq;
+using CriadorDeModpacks.Dialogos.ModsManagerDialog;
 
 namespace CriadorDeModpacks
 {
@@ -172,7 +173,8 @@ namespace CriadorDeModpacks
 
         private void button5_Click(object sender, EventArgs e)
         {
-            //ModGenerator.GerarManifesto(ModPacks);
+            var modpack = new ModPackManager();
+            modpack.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)

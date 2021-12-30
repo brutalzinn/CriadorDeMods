@@ -34,6 +34,7 @@ namespace CriadorDeModpacks.Dialogos
 
             if (ModPack != null)
             {
+                this.ModPack = ModPack;
                 this.txb_id.Text = ModPack.id ?? Guid.NewGuid().ToString();
                 this.txb_nome.Text = ModPack.name;
                 this.creat_at = ModPack.datetime_creat_at;
@@ -104,6 +105,13 @@ namespace CriadorDeModpacks.Dialogos
             form.forge_version = this.txb_forge_version.Text;
             form.modpack_name = this.txb_diretory.Text;
             form.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(ModPack != null)
+            Utils.FileUtils.GerarModPackZip(ModPack);
+
         }
     }
 }
