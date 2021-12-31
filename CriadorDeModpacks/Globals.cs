@@ -13,5 +13,8 @@ namespace CriadorDeModpacks
         public static string filename = Path.Combine(Application.StartupPath,"web","launcher", "config-launcher", "modpacks.json");
         public static string filename_config = Application.StartupPath + @"\config.json";
         public static ConfiguracaoModel Configuracao { get; set; }
+
+        public static string api_url = "http://127.0.0.1:5000";
+
     }
 }

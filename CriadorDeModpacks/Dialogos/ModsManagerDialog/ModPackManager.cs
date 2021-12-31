@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CriadorDeModpacks.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,8 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
 {
     public partial class ModPackManager : Form
     {
+    
+
         public ModPackManager()
         {
             InitializeComponent();
@@ -32,15 +35,25 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
             dgv_modpack.Columns.Add(modpack_dir);
             dgv_modpack.Columns.Add(buttonmodpack);
 
+            HostUtils.FillHostModPack(comboBox1);
+
+        }
+        private void GenerateLocalModPacks()
+        {
+            foreach (string item in Directory.GetFileSystemEntries(Globals.modpack_root))
+                if (Path.GetExtension(item) != ".zip")
+                {
+                    dgv_modpack.Rows.Add(Path.GetFileName(item), item, "Ações");
+                }
+        }
+        private void GenerateRemoteModPacks()
+        {
+
         }
 
         private void ModPackManager_Load(object sender, EventArgs e)
         {
-            foreach (string item in Directory.GetFileSystemEntries(Globals.modpack_root))
-                if(Path.GetExtension(item) != ".zip")
-                {
-                    dgv_modpack.Rows.Add(Path.GetFileName(item),item, "Ações");
-                }
+    
           
         }
 
@@ -55,5 +68,7 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
                 modpackAction.ShowDialog();
             }
         }
+
+
     }
 }
