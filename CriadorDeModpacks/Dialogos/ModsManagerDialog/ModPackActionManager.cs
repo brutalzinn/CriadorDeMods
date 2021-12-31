@@ -27,20 +27,29 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
                 name = modpack_name,
                 directory = Path.GetFileNameWithoutExtension(modpack_dir)
             };
-            label1.Text = "Modpack: " + ModPack.name;
         }
 
         private void ModPackActionManager_Load(object sender, EventArgs e)
         {
 
         }
+        void StartBackground()
+        {
+            string path = Path.Combine(Globals.modpack_root, $"{ModPack.directory.Replace(" ", "_").ToLower()}.zip");
+            Utils.FileUtils.progress_bar = progressBar1;
 
+           label1.Invoke(() => label1.Text = "Preparing to zip modpack.. 1/2");
+            Task.Run(() => Utils.FileUtils.GerarModPackZip(ModPack)).Wait();
+            label1.Invoke(() => label1.Text =  "Sending modpack to server.. 2/2");
+            Task.Run(() =>   Utils.FileUtils.UploadMultipart(path, ModPack.directory, "http://127.0.0.1:5000/uploader")).Wait();
+            label1.Invoke(() => label1.Text = "Modpack uploaded with success");
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Utils.FileUtils.GerarModPackZip(ModPack);
-            byte[] data = File.ReadAllBytes(Path.Combine(Globals.modpack_root, $"{ModPack.directory.Replace(" ", "_").ToLower()}.zip"));
-            Utils.FileUtils.UploadMultipart(data,"file", "data", "http://127.0.0.1:5000/uploader");
+            Thread t = new Thread(StartBackground);          // Kick off a new thread
+            t.Start();
+
         }
     }
 }

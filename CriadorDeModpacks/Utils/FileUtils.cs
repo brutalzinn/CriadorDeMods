@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace CriadorDeModpacks.Utils
 {
     public static class FileUtils
     {
+        public static ProgressBar progress_bar { get; set; }
+
 
     public static void CreateServerFile(ModPack  modpack)
      {
@@ -26,40 +29,92 @@ namespace CriadorDeModpacks.Utils
             var serverFile = new NbtFile(serverInfo);
             serverFile.SaveToFile(Path.Combine(Globals.modpack_root, modpack.directory, "servers.dat"), NbtCompression.None);
       }
+       static void CompressFolder(string folder, string targetFilename)
+        {
+            string[] allFilesToZip = Directory.GetFiles(folder, "*.*", System.IO.SearchOption.AllDirectories);
+
+            // You can use the size as the progress total size
+            int size = allFilesToZip.Length;
+            progress_bar.Invoke(() => progress_bar.Maximum = size);
+            // You can use the progress to notify the current progress.
+            int progress = 0;
+            progress_bar.Invoke(() => progress_bar.Value = 0);
+            // To have relative paths in the zip.
+            string pathToRemove = folder + "\\";
+
+            using (ZipArchive zip = ZipFile.Open(targetFilename, ZipArchiveMode.Create))
+            {
+                // Go over all files and zip them.
+                foreach (var file in allFilesToZip)
+                {
+                    String fileRelativePath = file.Replace(pathToRemove, "");
+
+                    // It is not mentioned in MS documentation, but the name can be
+                    // a relative path with the file name, this will create a zip 
+                    // with folders and not only with files.
+                    zip.CreateEntryFromFile(file, fileRelativePath);
+                    Debug.WriteLine(progress);
+                    progress++;
+                    progress_bar.Invoke(() => progress_bar.Value = progress);
+
+                    // ---------------------------
+                    // TBD: Notify about progress.
+                    // ---------------------------
+                }
+            }
+        }
+
         public static void GerarModPackZip(ModPack modpack)
         {
             string caminho = Path.Combine(Globals.modpack_root, $"{modpack.directory.Replace(" ", "_").ToLower()}.zip");
             bool zipExists = File.Exists(caminho);
             if (zipExists) File.Delete(caminho);
-            ZipFile.CreateFromDirectory(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
-        }
-        public static void UploadMultipart(byte[] file, string filename, string contentType, string url)
-        {
-            var webClient = new WebClient();
-            string boundary = "------------------------" + DateTime.Now.Ticks.ToString("x");
-            webClient.Headers.Add("Content-Type", "multipart/form-data; boundary=" + boundary);
-            webClient.Headers.Add("api-key", "teste");
-            var fileData = webClient.Encoding.GetString(file);
-            var package = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n{3}\r\n--{0}--\r\n", boundary, filename, contentType, fileData);
 
-            var nfile = webClient.Encoding.GetBytes(package);
+            CompressFolder(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
+            //  ZipFile.CreateFromDirectory(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
+
+        }
+        async public static void UploadMultipart(string path, string directory, string url)
+        {
+        
+            FileStream file = File.OpenRead(path);
             Uri uri = new Uri(url);
-            webClient.UploadProgressChanged += new UploadProgressChangedEventHandler(UploadProgressWCallback);
-
-
-            webClient.UploadDataAsync(uri, "POST", nfile);
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("api-key", "teste");
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            form.Add(new StringContent(directory), "directory");
+            form.Add(new StreamContent(file), "file", Path.GetFileName(path));
+            bool keepTracking = true; //to start and stop the tracking thread
+            new Task(new Action(() => { progressTracker(file, ref keepTracking); })).Start();
+            var result = await httpClient.PostAsync(uri, form);
+            keepTracking = false;
+            result.EnsureSuccessStatusCode();
+            httpClient.Dispose();
+            string sd = result.Content.ReadAsStringAsync().Result;
         }
-       
-
-        private static void UploadProgressWCallback(object sender, UploadProgressChangedEventArgs e)
+       static void progressTracker(FileStream streamToTrack, ref bool keepTracking)
         {
-            // Displays the operation identifier, and the transfer progress.
-            Debug.WriteLine("{0}    uploaded {1} of {2} bytes. {3} % complete...",
-                (string)e.UserState,
-                e.BytesSent,
-                e.TotalBytesToSend,
-                e.ProgressPercentage);
+            int prevPos = -1;
+            progress_bar.Invoke(() => progress_bar.Maximum = 100);
+            progress_bar.Invoke(() => progress_bar.Value = 0);
+                
+             while (keepTracking)
+            {
+                int pos = (int)Math.Round(100 * (streamToTrack.Position / (double)streamToTrack.Length));
+                if (pos != prevPos)
+                {
+                  
+                    progress_bar.Invoke(() => progress_bar.Value = pos);
+
+                    Debug.WriteLine(pos + "%");
+
+                }
+                prevPos = pos;
+
+                Thread.Sleep(100); //update every 100ms
+            }
         }
 
+       
     }
 }

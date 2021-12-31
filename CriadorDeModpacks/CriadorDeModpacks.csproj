@@ -20,6 +20,7 @@
   <ItemGroup>
     <PackageReference Include="fNbt" Version="0.6.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RestSharp" Version="106.15.0" />
   </ItemGroup>
 
   <ItemGroup>
