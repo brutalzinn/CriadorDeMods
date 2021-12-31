@@ -1,4 +1,5 @@
-﻿using CriadorDeModpacks.Utils;
+﻿using CriadorDeModpacks.Models;
+using CriadorDeModpacks.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,11 +41,14 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
         }
         private void GenerateLocalModPacks()
         {
+            dgv_modpack.Rows.Clear();
             foreach (string item in Directory.GetFileSystemEntries(Globals.modpack_root))
+            {
                 if (Path.GetExtension(item) != ".zip")
                 {
                     dgv_modpack.Rows.Add(Path.GetFileName(item), item, "Ações");
                 }
+            }
         }
         private void GenerateRemoteModPacks()
         {
@@ -69,6 +73,16 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
             }
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tipo = comboBox1.SelectedItem;
 
+            switch (tipo)
+            {
+                case HostUtils.TIPOS.local:
+                    GenerateLocalModPacks();
+                break;
+            }
+        }
     }
 }

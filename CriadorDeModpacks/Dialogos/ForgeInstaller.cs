@@ -33,7 +33,7 @@ namespace CriadorDeModpacks.Dialogos
 
         string GetUrl()
         {
-            return "https://maven.minecraftforge.net/net/minecraftforge/forge/"+forge_version+ "/forge-" + forge_version + "-installer.jar";
+            return $"https://maven.minecraftforge.net/net/minecraftforge/forge/{minecraft_version}-{forge_version}/forge-{minecraft_version}-{forge_version}-installer.jar";
 
         }
         private void startDownload()
@@ -42,7 +42,7 @@ namespace CriadorDeModpacks.Dialogos
                 WebClient client = new WebClient();
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(GetUrl()), Path.Combine(Application.StartupPath,"web","files","files", modpack_name, "forge-" + forge_version + "-installer.jar"));
+                client.DownloadFileAsync(new Uri(GetUrl()), Path.Combine(Application.StartupPath,"web","files","files", modpack_name, forge_name));
             });
             thread.Start();
         }
@@ -169,7 +169,7 @@ namespace CriadorDeModpacks.Dialogos
         private void ForgeInstaller_Load(object sender, EventArgs e)
         {
             modpack_directory = Path.Combine(Globals.modpack_root, modpack_name ?? "default");
-            forge_name = "forge-" + forge_version + "-installer.jar";
+            forge_name = $"forge-{minecraft_version}-{forge_version}-installer.jar";
             lbl_forge_version.Text = "Installing forge " + forge_version;
 
         }

@@ -41,7 +41,7 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
            label1.Invoke(() => label1.Text = "Preparing to zip modpack.. 1/2");
             Task.Run(() => Utils.FileUtils.GerarModPackZip(ModPack)).Wait();
             label1.Invoke(() => label1.Text =  "Sending modpack to server.. 2/2");
-            Task.Run(() =>   Utils.FileUtils.UploadMultipart(path, ModPack.directory, "http://127.0.0.1:5000/uploader")).Wait();
+            Task.Run(() =>   Utils.FileUtils.UploadMultipart(path, ModPack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks")).Wait();
             label1.Invoke(() => label1.Text = "Modpack uploaded with success");
         }
 
