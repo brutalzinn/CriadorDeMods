@@ -53,6 +53,7 @@
             this.cbx_search = new System.Windows.Forms.ComboBox();
             this.btn_clear = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btn_sync_modpack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -288,11 +289,23 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(8, 8);
             this.tableLayoutPanel1.TabIndex = 19;
             // 
+            // btn_sync_modpack
+            // 
+            this.btn_sync_modpack.Location = new System.Drawing.Point(754, 531);
+            this.btn_sync_modpack.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_sync_modpack.Name = "btn_sync_modpack";
+            this.btn_sync_modpack.Size = new System.Drawing.Size(141, 53);
+            this.btn_sync_modpack.TabIndex = 20;
+            this.btn_sync_modpack.Text = "Sincronizar modpacks";
+            this.btn_sync_modpack.UseVisualStyleBackColor = true;
+            this.btn_sync_modpack.Click += new System.EventHandler(this.btn_sync_modpack_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 600);
+            this.Controls.Add(this.btn_sync_modpack);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btn_clear);
             this.Controls.Add(this.cbx_search);
@@ -346,5 +359,6 @@
         public ComboBox cbx_search;
         private Button btn_clear;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button btn_sync_modpack;
     }
 }

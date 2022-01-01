@@ -1,5 +1,6 @@
 ﻿using CriadorDeModpacks.Models;
 using fNbt;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -80,7 +81,7 @@ namespace CriadorDeModpacks.Utils
             FileStream file = File.OpenRead(path);
             Uri uri = new Uri(url);
             HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("api-key", "teste");
+            httpClient.DefaultRequestHeaders.Add("api-key", Globals.api_key);
             MultipartFormDataContent form = new MultipartFormDataContent();
             form.Add(new StringContent(directory), "directory");
             form.Add(new StreamContent(file), "file", Path.GetFileName(path));
@@ -114,7 +115,28 @@ namespace CriadorDeModpacks.Utils
                 Thread.Sleep(100); //update every 100ms
             }
         }
+       public static bool SyncModPacks(List<ModPack> modpacks)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/modpacks");
+            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
 
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+
+                //json = json.Replace("\",", "\","   + "\"" +"\u002B");
+                var json = JsonConvert.SerializeObject(modpacks, Formatting.Indented);
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            return httpResponse.StatusCode == HttpStatusCode.OK;
+        }
        
     }
 }

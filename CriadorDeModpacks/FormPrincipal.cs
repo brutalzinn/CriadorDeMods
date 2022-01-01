@@ -65,7 +65,8 @@ namespace CriadorDeModpacks
             
             CarregarModPacks();
             CarregarModPacksComboBox();
-            SalvarConfiguracoes("http://boberto.net");
+            CarregarConfiguracoes();
+           // SalvarConfiguracoes("http://boberto.net");
             Search.FillSearchComboBox(cbx_search);
 
         }
@@ -363,6 +364,11 @@ namespace CriadorDeModpacks
 
                 //Do something with your button.
             }
+        }
+
+        private void btn_sync_modpack_Click(object sender, EventArgs e)
+        {
+            Utils.FileUtils.SyncModPacks(ModPacks);
         }
     }
 }

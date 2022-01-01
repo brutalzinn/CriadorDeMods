@@ -31,6 +31,7 @@ namespace CriadorDeModpacks.Dialogos
         four
         }
 
+        //this is wrong way to do this
         string GetUrl()
         {
             return $"https://maven.minecraftforge.net/net/minecraftforge/forge/{minecraft_version}-{forge_version}/forge-{minecraft_version}-{forge_version}-installer.jar";

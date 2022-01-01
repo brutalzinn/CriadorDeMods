@@ -109,8 +109,8 @@ namespace CriadorDeModpacks.Dialogos
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(ModPack != null)
-            Utils.FileUtils.GerarModPackZip(ModPack);
+            //if(ModPack != null)
+            //Utils.FileUtils.GerarModPackZip(ModPack);
 
         }
     }

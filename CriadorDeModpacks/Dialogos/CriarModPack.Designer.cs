@@ -56,7 +56,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txb_diretory = new System.Windows.Forms.TextBox();
             this.lbl_error = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -326,22 +325,11 @@
             this.lbl_error.Text = "Error";
             this.lbl_error.Visible = false;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(319, 366);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(131, 31);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Gerar zip";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // CriarModPack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 406);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.lbl_error);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btn_cancelar);
@@ -388,6 +376,5 @@
         private Label lbl_error;
         private Button button1;
         private CheckBox ckb_premium;
-        private Button button2;
     }
 }
