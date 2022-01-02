@@ -14,6 +14,7 @@ namespace CriadorDeModpacks.Models
         public string directory { get; set; }
         public bool @default { get; set; }
         public bool premium { get; set; }
+        public bool verify_mods { get; set; }
         public string description { get; set; }
         public string game_version { get; set; }
         public string forge_version { get; set; }

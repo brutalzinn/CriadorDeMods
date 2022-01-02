@@ -132,7 +132,7 @@ namespace CriadorDeModpacks
             }
             foreach (var mod in ModPacks)
             {
-                dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default, mod.premium, "Abrr modpack");
+                dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default, mod.premium, "Open modpack folder");
             }
         }
         private void button6_Click(object sender, EventArgs e)
@@ -316,6 +316,7 @@ namespace CriadorDeModpacks
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
+            textBox1.Text = "";
             ListarDataGrid();
         }
 
@@ -370,5 +371,21 @@ namespace CriadorDeModpacks
         {
             Utils.FileUtils.SyncModPacks(ModPacks);
         }
-    }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_configuracoes_Click(object sender, EventArgs e)
+        {
+            var configuracoesForm = new Configuracoes();
+
+            configuracoesForm.ShowDialog();
+            if (configuracoesForm.DialogResult == DialogResult.OK)
+            {
+                SalvarConfiguracoes(configuracoesForm.textBox1.Text);
+            }
+        }
+        }
 }

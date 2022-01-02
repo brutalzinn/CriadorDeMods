@@ -41,6 +41,7 @@ namespace CriadorDeModpacks.Dialogos
                 this.txb_diretory.Text = ModPack.directory;
                 this.ckb_default.Checked = ModPack.@default;
                 this.ckb_premium.Checked = ModPack.premium;
+                this.ckb_verify_mods.Checked = ModPack.verify_mods;
                 this.txb_description.Text = ModPack.description;
                 this.txb_minecraft_version.Text = ModPack.game_version;
                 this.txb_forge_version.Text = ModPack.forge_version;
@@ -69,6 +70,7 @@ namespace CriadorDeModpacks.Dialogos
                 datetime_updat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
                 forge_version = this.txb_forge_version.Text,
                 game_version = this.txb_minecraft_version.Text,
+                verify_mods = this.ckb_verify_mods.Checked,
                 directory = this.txb_diretory.Text,
                 server_ip = this.txb_ip.Text,
                 server_port = this.txb_port.Text,

@@ -33,15 +33,15 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
         {
 
         }
-        void StartBackground()
+       async void StartBackground()
         {
             string path = Path.Combine(Globals.modpack_root, $"{ModPack.directory.Replace(" ", "_").ToLower()}.zip");
             Utils.FileUtils.progress_bar = progressBar1;
 
-           label1.Invoke(() => label1.Text = "Preparing to zip modpack.. 1/2");
-            Task.Run(() => Utils.FileUtils.GerarModPackZip(ModPack)).Wait();
-            label1.Invoke(() => label1.Text =  "Sending modpack to server.. 2/2");
-            Task.Run(() =>   Utils.FileUtils.UploadMultipart(path, ModPack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks")).Wait();
+            label1.Invoke(() => label1.Text = "Preparing to zip modpack.. 1/2");
+             Utils.FileUtils.GerarModPackZip(ModPack);
+            label1.Invoke(() => label1.Text =  "Zip Ready. Sending modpack to server.. 2/2");
+            await Utils.FileUtils.UploadMultipart(path, ModPack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks");
             label1.Invoke(() => label1.Text = "Modpack uploaded with success");
         }
 
@@ -49,6 +49,7 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
         {
             Thread t = new Thread(StartBackground);          // Kick off a new thread
             t.Start();
+            
 
         }
     }

@@ -30,7 +30,6 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -54,6 +53,7 @@
             this.btn_clear = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_sync_modpack = new System.Windows.Forms.Button();
+            this.btn_configuracoes = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,24 +68,15 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(606, 24);
+            this.button1.Location = new System.Drawing.Point(733, 23);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(142, 31);
             this.button1.TabIndex = 3;
             this.button1.Text = "Adicionar mod";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(754, 22);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 33);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Remover mod";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -129,6 +120,7 @@
             this.button6.TabIndex = 8;
             this.button6.Text = "Carregar pasta";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // comboBox1
@@ -300,11 +292,22 @@
             this.btn_sync_modpack.UseVisualStyleBackColor = true;
             this.btn_sync_modpack.Click += new System.EventHandler(this.btn_sync_modpack_Click);
             // 
+            // btn_configuracoes
+            // 
+            this.btn_configuracoes.Location = new System.Drawing.Point(882, 88);
+            this.btn_configuracoes.Name = "btn_configuracoes";
+            this.btn_configuracoes.Size = new System.Drawing.Size(129, 29);
+            this.btn_configuracoes.TabIndex = 21;
+            this.btn_configuracoes.Text = "configuracoes";
+            this.btn_configuracoes.UseVisualStyleBackColor = true;
+            this.btn_configuracoes.Click += new System.EventHandler(this.btn_configuracoes_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 600);
+            this.Controls.Add(this.btn_configuracoes);
             this.Controls.Add(this.btn_sync_modpack);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btn_clear);
@@ -320,7 +323,6 @@
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -336,7 +338,6 @@
         #endregion
         private Label label1;
         private Button button1;
-        private Button button2;
         private Button button3;
         private Button button4;
         private Button button5;
@@ -360,5 +361,6 @@
         private Button btn_clear;
         private TableLayoutPanel tableLayoutPanel1;
         private Button btn_sync_modpack;
+        private Button btn_configuracoes;
     }
 }

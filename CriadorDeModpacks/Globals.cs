@@ -14,8 +14,5 @@ namespace CriadorDeModpacks
         public static string filename_config = Application.StartupPath + @"\config.json";
         public static string api_key { get; set; } = "teste";
         public static ConfiguracaoModel Configuracao { get; set; }
-       
-        public static string api_url = true ? "http://boberto.net" : "http://127.0.0.1:5000";
-
     }
 }

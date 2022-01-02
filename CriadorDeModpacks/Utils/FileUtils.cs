@@ -30,7 +30,19 @@ namespace CriadorDeModpacks.Utils
             var serverFile = new NbtFile(serverInfo);
             serverFile.SaveToFile(Path.Combine(Globals.modpack_root, modpack.directory, "servers.dat"), NbtCompression.None);
       }
-       static void CompressFolder(string folder, string targetFilename)
+        class MyEncoder : UTF8Encoding
+        {
+            public MyEncoder()
+            {
+
+            }
+            public override byte[] GetBytes(string s)
+            {
+                s = s.Replace("\\", "/");
+                return base.GetBytes(s);
+            }
+        }
+        public static void CompressFolder(string folder, string targetFilename)
         {
             string[] allFilesToZip = Directory.GetFiles(folder, "*.*", System.IO.SearchOption.AllDirectories);
 
@@ -43,7 +55,7 @@ namespace CriadorDeModpacks.Utils
             // To have relative paths in the zip.
             string pathToRemove = folder + "\\";
 
-            using (ZipArchive zip = ZipFile.Open(targetFilename, ZipArchiveMode.Create))
+            using (ZipArchive zip = ZipFile.Open(targetFilename, ZipArchiveMode.Create, new MyEncoder()))
             {
                 // Go over all files and zip them.
                 foreach (var file in allFilesToZip)
@@ -53,29 +65,33 @@ namespace CriadorDeModpacks.Utils
                     // It is not mentioned in MS documentation, but the name can be
                     // a relative path with the file name, this will create a zip 
                     // with folders and not only with files.
-                    zip.CreateEntryFromFile(file, fileRelativePath);
-                    Debug.WriteLine(progress);
+                    zip.CreateEntryFromFile(file, fileRelativePath, CompressionLevel.Fastest);
                     progress++;
+
                     progress_bar.Invoke(() => progress_bar.Value = progress);
+
 
                     // ---------------------------
                     // TBD: Notify about progress.
                     // ---------------------------
                 }
+
             }
         }
 
-        public static void GerarModPackZip(ModPack modpack)
+
+        public static  void GerarModPackZip(ModPack modpack)
         {
-            string caminho = Path.Combine(Globals.modpack_root, $"{modpack.directory.Replace(" ", "_").ToLower()}.zip");
+            string caminho = Path.Combine(Globals.modpack_root, $"{modpack.directory.ToLower()}.zip");
             bool zipExists = File.Exists(caminho);
             if (zipExists) File.Delete(caminho);
 
-            CompressFolder(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
+            //await Archive.CreateFromFolderAsync(Path.Combine(Globals.modpack_root, modpack.directory), caminho,(V)=>Debug.WriteLine(V));
+            CompressFolder(Path.Combine(Globals.modpack_root, modpack.directory), Path.Combine(Globals.modpack_root, Path.GetFileName(caminho)));
             //  ZipFile.CreateFromDirectory(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
 
         }
-        async public static void UploadMultipart(string path, string directory, string url)
+        async public static Task UploadMultipart(string path, string directory, string url)
         {
         
             FileStream file = File.OpenRead(path);

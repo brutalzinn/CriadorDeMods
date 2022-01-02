@@ -56,6 +56,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txb_diretory = new System.Windows.Forms.TextBox();
             this.lbl_error = new System.Windows.Forms.Label();
+            this.ckb_verify_mods = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -227,6 +228,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.ckb_verify_mods);
             this.groupBox2.Controls.Add(this.ckb_premium);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.txb_description);
@@ -325,6 +327,16 @@
             this.lbl_error.Text = "Error";
             this.lbl_error.Visible = false;
             // 
+            // ckb_verify_mods
+            // 
+            this.ckb_verify_mods.AutoSize = true;
+            this.ckb_verify_mods.Location = new System.Drawing.Point(232, 37);
+            this.ckb_verify_mods.Name = "ckb_verify_mods";
+            this.ckb_verify_mods.Size = new System.Drawing.Size(109, 24);
+            this.ckb_verify_mods.TabIndex = 18;
+            this.ckb_verify_mods.Text = "Verify Mods";
+            this.ckb_verify_mods.UseVisualStyleBackColor = true;
+            // 
             // CriarModPack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -376,5 +388,6 @@
         private Label lbl_error;
         private Button button1;
         private CheckBox ckb_premium;
+        private CheckBox ckb_verify_mods;
     }
 }
