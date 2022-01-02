@@ -81,7 +81,6 @@ namespace CriadorDeModpacks.Dialogos
                 description = this.txb_description.Text,
 
             };
-            Utils.FileUtils.CreateServerFile(ModPack);
             CloseForm(DialogResult.OK);
         }
 
@@ -105,7 +104,7 @@ namespace CriadorDeModpacks.Dialogos
             var form = new ForgeInstaller();
             form.minecraft_version = this.txb_minecraft_version.Text;
             form.forge_version = this.txb_forge_version.Text;
-            form.modpack_name = this.txb_diretory.Text;
+            form.mod_directory = this.txb_diretory.Text;
             form.ShowDialog();
         }
 

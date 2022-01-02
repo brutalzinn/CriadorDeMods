@@ -20,6 +20,10 @@ namespace CriadorDeModpacks.Utils
 
     public static void CreateServerFile(ModPack  modpack)
      {
+            if(string.IsNullOrEmpty(modpack.server_ip) && string.IsNullOrEmpty(modpack.server_port))
+            {
+                return;
+            }
             var serverInfo = new NbtCompound("");
             var list = new NbtList("servers");
             var server = new NbtCompound();
@@ -130,6 +134,12 @@ namespace CriadorDeModpacks.Utils
 
                 Thread.Sleep(100); //update every 100ms
             }
+        }
+        public static void CreateModPackFiles(string mod_directory)
+        {
+            var modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory);
+            File.Copy(@"Arquivos\launcher_profiles.json", Path.Combine(modpackDirectory, "launcher_profiles.json"), true);
+            File.Copy(@"Arquivos\.htaccess", Path.Combine(modpackDirectory, ".htaccess"), true);
         }
        public static bool SyncModPacks(List<ModPack> modpacks)
         {

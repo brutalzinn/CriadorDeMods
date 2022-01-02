@@ -16,8 +16,8 @@ namespace CriadorDeModpacks.Dialogos
     {
         public string minecraft_version { get; set; }
         public string forge_version { get; set; }
-        public string modpack_name { get; set; }
-        private string modpack_directory { get; set; }
+        public string mod_directory { get; set; }
+        private string modpackDirectory { get; set; }
         private string forge_name { get; set; }
 
         public ForgeInstaller()
@@ -43,7 +43,7 @@ namespace CriadorDeModpacks.Dialogos
                 WebClient client = new WebClient();
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(GetUrl()), Path.Combine(Application.StartupPath,"web","files","files", modpack_name, forge_name));
+                client.DownloadFileAsync(new Uri(GetUrl()), Path.Combine(Application.StartupPath,"web","files","files", mod_directory, forge_name));
             });
             thread.Start();
         }
@@ -67,21 +67,21 @@ namespace CriadorDeModpacks.Dialogos
         }
         private void downloadforge_click(object sender, EventArgs e)
         {
-            var modpack_directory = Path.Combine(Globals.modpack_root, modpack_name);
-            if (!Directory.Exists(modpack_directory))
+            var modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory);
+            if (!Directory.Exists(modpackDirectory))
             {
-                Directory.CreateDirectory(modpack_directory);
+                Directory.CreateDirectory(modpackDirectory);
             }
-            File.Copy(@"Arquivos\launcher_profiles.json", Path.Combine(modpack_directory, "launcher_profiles.json"), true);
-            File.Copy(@"Arquivos\.htaccess", Path.Combine(modpack_directory, ".htaccess"), true);
+            File.Copy(@"Arquivos\launcher_profiles.json", Path.Combine(modpackDirectory, "launcher_profiles.json"), true);
+            File.Copy(@"Arquivos\.htaccess", Path.Combine(modpackDirectory, ".htaccess"), true);
             
             startDownload();
         }
 
         private void clipboard_copy_click(object sender, EventArgs e)
         {
-            Clipboard.SetText(modpack_directory);
-            MessageBox.Show(modpack_directory + " paste this folder to forge installer client");
+            Clipboard.SetText(modpackDirectory);
+            MessageBox.Show(modpackDirectory + " paste this folder to forge installer client");
             NextStep(STEP.two);
    
 
@@ -139,20 +139,20 @@ namespace CriadorDeModpacks.Dialogos
         }
         private void checkModPack()
         {
-            if (Directory.Exists(Path.Combine(modpack_directory, "versions", minecraft_version)))
+            if (Directory.Exists(Path.Combine(modpackDirectory, "versions", minecraft_version)))
             {
-                Directory.Delete(Path.Combine(modpack_directory, "versions", minecraft_version), true);
+                Directory.Delete(Path.Combine(modpackDirectory, "versions", minecraft_version), true);
                
             }
-            File.Delete(Path.Combine(modpack_directory, forge_name));
-            File.Delete(Path.Combine(modpack_directory, "installer.log"));
+            File.Delete(Path.Combine(modpackDirectory, forge_name));
+            File.Delete(Path.Combine(modpackDirectory, "installer.log"));
             NextStep(STEP.four);
 
 
         }
         private void startforge_click(object sender, EventArgs e)
         {
-            string workingdir = Path.Combine(Application.StartupPath, "web", "files", "files", modpack_name);
+            string workingdir = Path.Combine(Application.StartupPath, "web", "files", "files", mod_directory);
          
             Process p = new Process();
             p.StartInfo.CreateNoWindow = true;
@@ -169,7 +169,7 @@ namespace CriadorDeModpacks.Dialogos
 
         private void ForgeInstaller_Load(object sender, EventArgs e)
         {
-            modpack_directory = Path.Combine(Globals.modpack_root, modpack_name ?? "default");
+            modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory ?? "default");
             forge_name = $"forge-{minecraft_version}-{forge_version}-installer.jar";
             lbl_forge_version.Text = "Installing forge " + forge_version;
 

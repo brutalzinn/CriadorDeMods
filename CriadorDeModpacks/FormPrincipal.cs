@@ -233,15 +233,12 @@ namespace CriadorDeModpacks
                 {
                     Directory.CreateDirectory(modpack_directory);
                 }
+                Utils.FileUtils.CreateServerFile(criarModPack.ModPack);
+                Utils.FileUtils.CreateModPackFiles(criarModPack.ModPack.directory);
                 //  criarModPack.ModPack.datetime_creat_at = d
                 ModPacks.Add(criarModPack.ModPack);
 
                 CarregarModPacksComboBox();
-
-
-
-
-
             }
             ListarDataGrid();
         }
