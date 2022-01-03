@@ -122,8 +122,10 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
             {
                 case "True":
                     modpack_cheked = false;
+                    ch1.Value = false;
                     break;
                 case "False":
+                    ch1.Value = true;
                     modpack_cheked = true;
                     break;
             }
@@ -147,13 +149,13 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
 
             }
 
+            lbl_count.Text = ModPacksChecked.Count.ToString();
 
 
         }
 
         private void dgv_modpack_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            lbl_count.Text = ModPacksChecked.Count.ToString();
 
         }
     }
