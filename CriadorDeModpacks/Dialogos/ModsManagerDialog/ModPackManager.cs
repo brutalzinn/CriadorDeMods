@@ -99,9 +99,36 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
                     break;
             }
         }
+        async void StartBackground()
+
+        {
+            Utils.FileUtils.progress_bar = progressBar1;
+
+            foreach (ModPack modpack in ModPacksChecked)
+            {
+                string path = Path.Combine(Globals.modpack_root, $"{modpack.directory.Replace(" ", "_").ToLower()}.zip");
+
+                lbl_status.Invoke(() => lbl_status.Text = "Preparing to zip modpack.. 1/2");
+                Utils.FileUtils.GerarModPackZip(modpack);
+               lbl_status.Invoke(() => lbl_status.Text = "Zip Ready. Sending modpack to server.. 2/2");
+                await Utils.FileUtils.UploadMultipart(path, modpack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks");
+               lbl_status.Invoke(() => lbl_status.Text = "Modpack uploaded with success");
+            }
+            if (Utils.FileUtils.SyncModPacks(ModPacksChecked))
+            {
+                lbl_status.Invoke(() => lbl_status.Text = "ModPack sincronizado.");
+
+            }
+
+
+        }
+
 
         private void btn_generate_modpack_Click(object sender, EventArgs e)
         {
+            Thread t = new Thread(StartBackground);          // Kick off a new thread
+            t.Start();
+
 
         }
 

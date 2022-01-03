@@ -34,6 +34,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lbl_count = new System.Windows.Forms.Label();
+            this.lbl_status = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_modpack)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             this.dgv_modpack.RowTemplate.Height = 29;
             this.dgv_modpack.ShowCellToolTips = false;
             this.dgv_modpack.ShowEditingIcon = false;
-            this.dgv_modpack.Size = new System.Drawing.Size(847, 213);
+            this.dgv_modpack.Size = new System.Drawing.Size(1082, 213);
             this.dgv_modpack.TabIndex = 0;
             this.dgv_modpack.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_modpack_CellClick);
             this.dgv_modpack.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_modpack_CellContentClick);
@@ -99,11 +100,21 @@
             this.lbl_count.TabIndex = 5;
             this.lbl_count.Text = "label1";
             // 
+            // lbl_status
+            // 
+            this.lbl_status.AutoSize = true;
+            this.lbl_status.Location = new System.Drawing.Point(349, 15);
+            this.lbl_status.Name = "lbl_status";
+            this.lbl_status.Size = new System.Drawing.Size(70, 20);
+            this.lbl_status.TabIndex = 6;
+            this.lbl_status.Text = "lbl_status";
+            // 
             // ModPackManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 352);
+            this.ClientSize = new System.Drawing.Size(1116, 352);
+            this.Controls.Add(this.lbl_status);
             this.Controls.Add(this.lbl_count);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button2);
@@ -127,5 +138,6 @@
         private Button button2;
         private ProgressBar progressBar1;
         private Label lbl_count;
+        private Label lbl_status;
     }
 }

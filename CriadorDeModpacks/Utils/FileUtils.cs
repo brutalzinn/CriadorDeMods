@@ -111,6 +111,7 @@ namespace CriadorDeModpacks.Utils
             keepTracking = false;
             result.EnsureSuccessStatusCode();
             httpClient.Dispose();
+            file.Close();
             string sd = result.Content.ReadAsStringAsync().Result;
         }
        static void progressTracker(FileStream streamToTrack, ref bool keepTracking)
