@@ -102,7 +102,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(910, 530);
+            this.button5.Location = new System.Drawing.Point(761, 530);
             this.button5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(114, 53);
@@ -205,6 +205,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(1019, 369);
             this.dataGridView1.TabIndex = 15;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // nome
@@ -283,7 +284,7 @@
             // 
             // btn_sync_modpack
             // 
-            this.btn_sync_modpack.Location = new System.Drawing.Point(754, 531);
+            this.btn_sync_modpack.Location = new System.Drawing.Point(882, 531);
             this.btn_sync_modpack.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_sync_modpack.Name = "btn_sync_modpack";
             this.btn_sync_modpack.Size = new System.Drawing.Size(141, 53);

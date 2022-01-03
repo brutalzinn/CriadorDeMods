@@ -13,7 +13,6 @@ namespace CriadorDeModpacks
     {
 
         public DataTable dt = new DataTable();
-        public List<ModPack> ModPacks { get; set; } = new List<ModPack>();
         public ModPack ModPack { get; set; }
 
         public FormPrincipal()
@@ -74,7 +73,7 @@ namespace CriadorDeModpacks
         public void CarregarModPacksComboBox()
         {
             comboBox1.Items.Clear();
-            foreach (var item in ModPacks)
+            foreach (var item in Globals.ModPacks)
             {
                 comboBox1.Items.Add(item);
             }
@@ -91,7 +90,7 @@ namespace CriadorDeModpacks
                 return;
             }
             var json = File.ReadAllText(Globals.filename);
-            ModPacks = JsonConvert.DeserializeObject<List<ModPack>>(json);
+            Globals.ModPacks = JsonConvert.DeserializeObject<List<ModPack>>(json);
             CarregarModPacksComboBox();
             ListarDataGrid();
         }
@@ -105,7 +104,7 @@ namespace CriadorDeModpacks
         private void button3_Click(object sender, EventArgs e)
         {
 
-            var modpacks_defauls = ModPacks.FindAll(e => e.@default == true);
+            var modpacks_defauls = Globals.ModPacks.FindAll(e => e.@default == true);
 
             if(modpacks_defauls.Count > 1) {
                 string modpacks_errados = "Há mais de um modpack padrão criado.Faça a correção" + Environment.NewLine;
@@ -117,7 +116,7 @@ namespace CriadorDeModpacks
                 return;
             }
             
-            var json = JsonConvert.SerializeObject(ModPacks, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(Globals.ModPacks, Formatting.Indented);
             File.WriteAllText(Globals.filename, json);
 
 
@@ -130,7 +129,7 @@ namespace CriadorDeModpacks
                dataGridView1.Rows.Clear();
 
             }
-            foreach (var mod in ModPacks)
+            foreach (var mod in Globals.ModPacks)
             {
                 dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default, mod.premium, "Open modpack folder");
             }
@@ -236,7 +235,7 @@ namespace CriadorDeModpacks
                 Utils.FileUtils.CreateServerFile(criarModPack.ModPack);
                 Utils.FileUtils.CreateModPackFiles(criarModPack.ModPack.directory);
                 //  criarModPack.ModPack.datetime_creat_at = d
-                ModPacks.Add(criarModPack.ModPack);
+                Globals.ModPacks.Add(criarModPack.ModPack);
 
                 CarregarModPacksComboBox();
             }
@@ -246,8 +245,8 @@ namespace CriadorDeModpacks
         private void button8_Click(object sender, EventArgs e)
         {
             ModPack = (ModPack)comboBox1.SelectedItem;
-            ModPacks.Remove(ModPack);
-            ModPacks.Clear();
+            Globals.ModPacks.Remove(ModPack);
+            Globals.ModPacks.Clear();
 
             CarregarModPacksComboBox();
             ListarDataGrid();
@@ -274,9 +273,9 @@ namespace CriadorDeModpacks
             if (criarModPack.DialogResult == DialogResult.OK)
             {
        
-                var modpack_old = ModPacks.Where(e => e.id == criarModPack.ModPack.id).FirstOrDefault();
-                ModPacks.Remove(modpack_old);
-                ModPacks.Add(criarModPack.ModPack);
+                var modpack_old = Globals.ModPacks.Where(e => e.id == criarModPack.ModPack.id).FirstOrDefault();
+                Globals.ModPacks.Remove(modpack_old);
+                Globals.ModPacks.Add(criarModPack.ModPack);
             }
 
             CarregarModPacksComboBox();
@@ -289,19 +288,19 @@ namespace CriadorDeModpacks
             switch (cbx_search.SelectedItem)
             {
                 case Search.TIPOS.id:
-                    ModPacks_Filters = ModPacks.FindAll(e => e.id.Contains(textBox1.Text)).ToList();
+                    ModPacks_Filters = Globals.ModPacks.FindAll(e => e.id.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.nome:
-                ModPacks_Filters = ModPacks.FindAll(e => e.name.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.name.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.game_version:
-                ModPacks_Filters = ModPacks.FindAll(e => e.game_version.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.game_version.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.forge_version:
-                ModPacks_Filters = ModPacks.FindAll(e => e.forge_version.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.forge_version.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.author:
-                ModPacks_Filters = ModPacks.FindAll(e => e.author.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.author.Contains(textBox1.Text)).ToList();
                 break;
             }
             dataGridView1.Rows.Clear();
@@ -328,13 +327,13 @@ namespace CriadorDeModpacks
             string forge_version = row.Cells[3].Value.ToString();
             bool  @default = (bool)row.Cells[4].Value;
 
-            var modpack_old = ModPacks.Where(e => e.id == id).FirstOrDefault();
+            var modpack_old = Globals.ModPacks.Where(e => e.id == id).FirstOrDefault();
             modpack_old.name = name;
             modpack_old.game_version = game_version;
             modpack_old.forge_version = forge_version;
             modpack_old.@default = @default;
-            ModPacks.Remove(modpack_old);
-            ModPacks.Add(modpack_old);
+            Globals.ModPacks.Remove(modpack_old);
+            Globals.ModPacks.Add(modpack_old);
             CarregarModPacksComboBox();
 
 
@@ -348,7 +347,7 @@ namespace CriadorDeModpacks
             if (e.ColumnIndex == dataGridView1.Columns["openmodpack_column"].Index) {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 string id = row.Cells[0].Value.ToString();
-                var modpack = ModPacks.Where(e => e.id == id).FirstOrDefault();
+                var modpack = Globals.ModPacks.Where(e => e.id == id).FirstOrDefault();
                 string modpack_dir = Path.Combine(Globals.modpack_root, modpack.directory);
                 if (Directory.Exists(modpack_dir))
                 {
@@ -366,7 +365,7 @@ namespace CriadorDeModpacks
 
         private void btn_sync_modpack_Click(object sender, EventArgs e)
         {
-            Utils.FileUtils.SyncModPacks(ModPacks);
+            Utils.FileUtils.SyncModPacks(Globals.ModPacks);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -384,5 +383,12 @@ namespace CriadorDeModpacks
                 SalvarConfiguracoes(configuracoesForm.textBox1.Text);
             }
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+          
+           
+            
         }
+    }
 }
