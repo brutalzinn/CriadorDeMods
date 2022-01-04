@@ -17,8 +17,9 @@ namespace CriadorDeModpacks.Utils
     {
         public static ProgressBar progress_bar { get; set; }
 
+        public static Label progress_txt { get; set; }
 
-    public static void CreateServerFile(ModPack  modpack)
+        public static void CreateServerFile(ModPack  modpack)
      {
             if(string.IsNullOrEmpty(modpack.server_ip) && string.IsNullOrEmpty(modpack.server_port))
             {
@@ -71,7 +72,7 @@ namespace CriadorDeModpacks.Utils
                     // with folders and not only with files.
                     zip.CreateEntryFromFile(file, fileRelativePath, CompressionLevel.Fastest);
                     progress++;
-
+                    progress_txt.Invoke(() => progress_txt.Text = $"Compressing.. {progress}/100");
                     progress_bar.Invoke(() => progress_bar.Value = progress);
 
 
@@ -95,7 +96,7 @@ namespace CriadorDeModpacks.Utils
             //  ZipFile.CreateFromDirectory(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
 
         }
-        async public static Task UploadMultipart(string path, string directory, string url)
+        async public static Task<bool> UploadMultipart(string path, string directory, string url)
         {
         
             FileStream file = File.OpenRead(path);
@@ -109,12 +110,15 @@ namespace CriadorDeModpacks.Utils
             new Task(new Action(() => { progressTracker(file, ref keepTracking); })).Start();
             var result = await httpClient.PostAsync(uri, form);
             keepTracking = false;
-            result.EnsureSuccessStatusCode();
             httpClient.Dispose();
             file.Close();
-            string sd = result.Content.ReadAsStringAsync().Result;
+
+           // result.Content.ReadAsStringAsync().Result;
+           return  result.StatusCode == HttpStatusCode.OK;
+
+
         }
-       static void progressTracker(FileStream streamToTrack, ref bool keepTracking)
+        static void progressTracker(FileStream streamToTrack, ref bool keepTracking)
         {
             int prevPos = -1;
             progress_bar.Invoke(() => progress_bar.Maximum = 100);
@@ -127,6 +131,7 @@ namespace CriadorDeModpacks.Utils
                 {
                   
                     progress_bar.Invoke(() => progress_bar.Value = pos);
+                    progress_txt.Invoke(() => progress_txt.Text = $"Uploading.. {pos}/100");
 
                     Debug.WriteLine(pos + "%");
 

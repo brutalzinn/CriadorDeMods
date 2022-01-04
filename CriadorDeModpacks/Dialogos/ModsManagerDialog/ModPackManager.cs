@@ -102,21 +102,33 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
         async void StartBackground()
 
         {
-            Utils.FileUtils.progress_bar = progressBar1;
+            Utils.FileUtils.progress_bar = progress_bar_modpack;
+            Utils.FileUtils.progress_txt = lbl_progress_bar_modpack;
 
+            progress_bar_complete.Invoke(() => progress_bar_complete.Maximum = ModPacksChecked.Count);
             foreach (ModPack modpack in ModPacksChecked)
             {
                 string path = Path.Combine(Globals.modpack_root, $"{modpack.directory.Replace(" ", "_").ToLower()}.zip");
-
-                lbl_status.Invoke(() => lbl_status.Text = "Preparing to zip modpack.. 1/2");
+                lbl_status.Invoke(() => lbl_status.Text = $"Preparing to zip modpack.. {modpack.name} 1/2");
                 Utils.FileUtils.GerarModPackZip(modpack);
-               lbl_status.Invoke(() => lbl_status.Text = "Zip Ready. Sending modpack to server.. 2/2");
-                await Utils.FileUtils.UploadMultipart(path, modpack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks");
-               lbl_status.Invoke(() => lbl_status.Text = "Modpack uploaded with success");
+                lbl_status.Invoke(() => lbl_status.Text = $"Zip Ready. Sending modpack to server.. {modpack.name} 2/2");
+                if(!await Utils.FileUtils.UploadMultipart(path, modpack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks"))
+                {
+                    lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.name} with error.");
+                }
+
+                lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.name} with success.");
+                progress_bar_complete.Invoke(() => progress_bar_complete.Value += 1);
+                lbl_progress_complete.Invoke(() => lbl_progress_complete.Text = $"{progress_bar_complete.Value}/{ModPacksChecked.Count}");
+
+
             }
+
+            lbl_progress_bar_modpack.Invoke(() => lbl_progress_bar_modpack.Text = $"All modpacks uploaded.");
+
             if (Utils.FileUtils.SyncModPacks(ModPacksChecked))
             {
-                lbl_status.Invoke(() => lbl_status.Text = "ModPack sincronizado.");
+                lbl_status.Invoke(() => lbl_status.Text = "All modpacks are sync with server.");
 
             }
 
@@ -128,8 +140,6 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
         {
             Thread t = new Thread(StartBackground);          // Kick off a new thread
             t.Start();
-
-
         }
 
         private void dgv_modpack_CellContentClick(object sender, DataGridViewCellEventArgs e)

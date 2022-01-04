@@ -32,9 +32,12 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btn_generate_modpack = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progress_bar_modpack = new System.Windows.Forms.ProgressBar();
             this.lbl_count = new System.Windows.Forms.Label();
             this.lbl_status = new System.Windows.Forms.Label();
+            this.progress_bar_complete = new System.Windows.Forms.ProgressBar();
+            this.lbl_progress_complete = new System.Windows.Forms.Label();
+            this.lbl_progress_bar_modpack = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_modpack)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,7 +70,7 @@
             // 
             // btn_generate_modpack
             // 
-            this.btn_generate_modpack.Location = new System.Drawing.Point(696, 287);
+            this.btn_generate_modpack.Location = new System.Drawing.Point(931, 287);
             this.btn_generate_modpack.Name = "btn_generate_modpack";
             this.btn_generate_modpack.Size = new System.Drawing.Size(148, 42);
             this.btn_generate_modpack.TabIndex = 2;
@@ -77,19 +80,19 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(542, 287);
+            this.button2.Location = new System.Drawing.Point(777, 287);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(148, 42);
             this.button2.TabIndex = 3;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // progressBar1
+            // progress_bar_modpack
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 287);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(502, 53);
-            this.progressBar1.TabIndex = 4;
+            this.progress_bar_modpack.Location = new System.Drawing.Point(12, 311);
+            this.progress_bar_modpack.Name = "progress_bar_modpack";
+            this.progress_bar_modpack.Size = new System.Drawing.Size(502, 29);
+            this.progress_bar_modpack.TabIndex = 4;
             // 
             // lbl_count
             // 
@@ -109,14 +112,42 @@
             this.lbl_status.TabIndex = 6;
             this.lbl_status.Text = "lbl_status";
             // 
+            // progress_bar_complete
+            // 
+            this.progress_bar_complete.Location = new System.Drawing.Point(12, 276);
+            this.progress_bar_complete.Name = "progress_bar_complete";
+            this.progress_bar_complete.Size = new System.Drawing.Size(502, 29);
+            this.progress_bar_complete.TabIndex = 7;
+            // 
+            // lbl_progress_complete
+            // 
+            this.lbl_progress_complete.AutoSize = true;
+            this.lbl_progress_complete.Location = new System.Drawing.Point(532, 285);
+            this.lbl_progress_complete.Name = "lbl_progress_complete";
+            this.lbl_progress_complete.Size = new System.Drawing.Size(17, 20);
+            this.lbl_progress_complete.TabIndex = 8;
+            this.lbl_progress_complete.Text = "0";
+            // 
+            // lbl_progress_bar_modpack
+            // 
+            this.lbl_progress_bar_modpack.AutoSize = true;
+            this.lbl_progress_bar_modpack.Location = new System.Drawing.Point(532, 320);
+            this.lbl_progress_bar_modpack.Name = "lbl_progress_bar_modpack";
+            this.lbl_progress_bar_modpack.Size = new System.Drawing.Size(17, 20);
+            this.lbl_progress_bar_modpack.TabIndex = 9;
+            this.lbl_progress_bar_modpack.Text = "0";
+            // 
             // ModPackManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 352);
+            this.Controls.Add(this.lbl_progress_bar_modpack);
+            this.Controls.Add(this.lbl_progress_complete);
+            this.Controls.Add(this.progress_bar_complete);
             this.Controls.Add(this.lbl_status);
             this.Controls.Add(this.lbl_count);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progress_bar_modpack);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btn_generate_modpack);
             this.Controls.Add(this.comboBox1);
@@ -136,8 +167,11 @@
         private ComboBox comboBox1;
         private Button btn_generate_modpack;
         private Button button2;
-        private ProgressBar progressBar1;
+        private ProgressBar progress_bar_modpack;
         private Label lbl_count;
         private Label lbl_status;
+        private ProgressBar progress_bar_complete;
+        private Label lbl_progress_complete;
+        private Label lbl_progress_bar_modpack;
     }
 }
