@@ -246,7 +246,7 @@ namespace CriadorDeModpacks
         {
             ModPack = (ModPack)comboBox1.SelectedItem;
             Globals.ModPacks.Remove(ModPack);
-            Globals.ModPacks.Clear();
+         
 
             CarregarModPacksComboBox();
             ListarDataGrid();
@@ -376,7 +376,8 @@ namespace CriadorDeModpacks
         private void btn_configuracoes_Click(object sender, EventArgs e)
         {
             var configuracoesForm = new Configuracoes();
-
+            CarregarConfiguracoes();
+            configuracoesForm.textBox1.Text = Globals.Configuracao.Url;
             configuracoesForm.ShowDialog();
             if (configuracoesForm.DialogResult == DialogResult.OK)
             {
