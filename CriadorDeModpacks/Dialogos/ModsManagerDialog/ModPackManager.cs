@@ -120,17 +120,16 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
                 lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.name} with success.");
                 progress_bar_complete.Invoke(() => progress_bar_complete.Value += 1);
                 lbl_progress_complete.Invoke(() => lbl_progress_complete.Text = $"{progress_bar_complete.Value}/{ModPacksChecked.Count}");
-
+                if (Utils.FileUtils.SyncModPackUploader(modpack))
+                {
+                    lbl_status.Invoke(() => lbl_status.Text = $"{modpack.name} uploaded.");
+                }
 
             }
 
             lbl_progress_bar_modpack.Invoke(() => lbl_progress_bar_modpack.Text = $"All modpacks uploaded.");
 
-            if (Utils.FileUtils.SyncModPacks(ModPacksChecked))
-            {
-                lbl_status.Invoke(() => lbl_status.Text = "All modpacks are sync with server.");
 
-            }
 
 
         }

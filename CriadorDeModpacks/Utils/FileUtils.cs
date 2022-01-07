@@ -149,26 +149,39 @@ namespace CriadorDeModpacks.Utils
         }
        public static bool SyncModPacks(List<ModPack> modpacks)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/modpacks");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/sync/modpacks");
             httpWebRequest.Headers.Add("api-key", Globals.api_key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
-
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-
-                //json = json.Replace("\",", "\","   + "\"" +"\u002B");
                 var json = JsonConvert.SerializeObject(modpacks, Formatting.Indented);
-
                 streamWriter.Write(json);
                 streamWriter.Flush();
                 streamWriter.Close();
             }
-
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             return httpResponse.StatusCode == HttpStatusCode.OK;
         }
-       
+
+        public static bool SyncModPackUploader(ModPack modpacks)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/append/modpacks");
+            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                var json = JsonConvert.SerializeObject(modpacks, Formatting.Indented);
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            return httpResponse.StatusCode == HttpStatusCode.OK;
+        }
+
     }
 }
