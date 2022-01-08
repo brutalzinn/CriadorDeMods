@@ -252,11 +252,9 @@ namespace CriadorDeModpacks
             ListarDataGrid();
         }
 
-        private void SalvarConfiguracoes(string url)
-        {
-            var configuracoes = new ConfiguracaoModel();
-            configuracoes.Url = url;
-            var json = JsonConvert.SerializeObject(configuracoes, Formatting.Indented);
+        private void SalvarConfiguracoes(ConfiguracaoModel config)
+        {      
+            var json = JsonConvert.SerializeObject(config, Formatting.Indented);
             File.WriteAllText(Application.StartupPath + @"\config.json", json);
         }
 
@@ -381,7 +379,10 @@ namespace CriadorDeModpacks
             configuracoesForm.ShowDialog();
             if (configuracoesForm.DialogResult == DialogResult.OK)
             {
-                SalvarConfiguracoes(configuracoesForm.textBox1.Text);
+                var config = new ConfiguracaoModel();
+                config.Url = configuracoesForm.textBox1.Text;
+                config.Api_Key = configuracoesForm.textBox2.Text;
+                SalvarConfiguracoes(config);
             }
         }
 
@@ -390,6 +391,14 @@ namespace CriadorDeModpacks
           
            
             
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            var launcherUpdateForm = new LauncherUpdate();
+            CarregarConfiguracoes();
+            launcherUpdateForm.ShowDialog();
+        
         }
     }
 }

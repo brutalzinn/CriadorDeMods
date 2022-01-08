@@ -9,5 +9,8 @@ namespace CriadorDeModpacks.Models
     public class ConfiguracaoModel
     {
         public string Url { get; set; } = "http://boberto.net";
+
+        public string Api_Key { get; set; } = "teste";
+
     }
 }

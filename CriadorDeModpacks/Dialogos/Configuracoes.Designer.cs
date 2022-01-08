@@ -32,11 +32,13 @@
             this.btn_cancelar = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_salvar
             // 
-            this.btn_salvar.Location = new System.Drawing.Point(256, 118);
+            this.btn_salvar.Location = new System.Drawing.Point(271, 118);
             this.btn_salvar.Name = "btn_salvar";
             this.btn_salvar.Size = new System.Drawing.Size(102, 46);
             this.btn_salvar.TabIndex = 0;
@@ -46,7 +48,7 @@
             // 
             // btn_cancelar
             // 
-            this.btn_cancelar.Location = new System.Drawing.Point(148, 118);
+            this.btn_cancelar.Location = new System.Drawing.Point(163, 118);
             this.btn_cancelar.Name = "btn_cancelar";
             this.btn_cancelar.Size = new System.Drawing.Size(102, 46);
             this.btn_cancelar.TabIndex = 1;
@@ -56,7 +58,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(68, 63);
+            this.textBox1.Location = new System.Drawing.Point(83, 46);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(290, 27);
             this.textBox1.TabIndex = 2;
@@ -64,17 +66,35 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 66);
+            this.label1.Location = new System.Drawing.Point(29, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "URL:";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 20);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "API-KEY:";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(83, 85);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(290, 27);
+            this.textBox2.TabIndex = 4;
+            // 
             // Configuracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(370, 180);
+            this.ClientSize = new System.Drawing.Size(397, 180);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btn_cancelar);
@@ -93,5 +113,7 @@
         private Button btn_cancelar;
         private Label label1;
         public TextBox textBox1;
+        private Label label2;
+        public TextBox textBox2;
     }
 }

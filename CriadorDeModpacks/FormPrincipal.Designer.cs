@@ -52,6 +52,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_sync_modpack = new System.Windows.Forms.Button();
             this.btn_configuracoes = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -269,19 +270,30 @@
             // 
             // btn_configuracoes
             // 
-            this.btn_configuracoes.Location = new System.Drawing.Point(882, 88);
+            this.btn_configuracoes.Location = new System.Drawing.Point(895, 9);
             this.btn_configuracoes.Name = "btn_configuracoes";
-            this.btn_configuracoes.Size = new System.Drawing.Size(129, 29);
+            this.btn_configuracoes.Size = new System.Drawing.Size(129, 32);
             this.btn_configuracoes.TabIndex = 21;
             this.btn_configuracoes.Text = "Configurations";
             this.btn_configuracoes.UseVisualStyleBackColor = true;
             this.btn_configuracoes.Click += new System.EventHandler(this.btn_configuracoes_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(715, 9);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(160, 32);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "Launcher update";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 600);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_configuracoes);
             this.Controls.Add(this.btn_sync_modpack);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -333,5 +345,6 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Button btn_sync_modpack;
         private Button btn_configuracoes;
+        private Button button1;
     }
 }

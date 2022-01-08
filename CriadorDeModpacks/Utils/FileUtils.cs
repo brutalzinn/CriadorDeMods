@@ -115,6 +115,48 @@ namespace CriadorDeModpacks.Utils
 
            // result.Content.ReadAsStringAsync().Result;
            return  result.StatusCode == HttpStatusCode.OK;
+        }
+        public class Teste
+        {
+            public FileStream file { get; set; }
+            public string path { get; set; }
+            public Teste(FileStream file, string path)
+            {
+                this.file = file;
+                this.path = path;
+            }
+
+  
+        }
+        async public static Task<bool> UploadLauncherUpdate(LauncherUpdateModel launcher)
+        {
+
+            Uri uri = new Uri($"{Globals.Configuracao.Url}/launcher/upload/update");
+            List<Teste> files = new List<Teste>();
+            foreach(var item in launcher.files)
+            {
+                FileStream file = File.OpenRead(item);
+                files.Add(new Teste(file,item));
+            }
+
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("api-key", Globals.api_key);
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            bool keepTracking = true;
+            foreach (Teste file in files)
+            {
+               form.Add(new StreamContent(file.file), "file", Path.GetFileName(file.path));
+               new Task(new Action(() => { progressTracker(file.file, ref keepTracking); })).Start();
+            }
+            //to start and stop the tracking thread
+            var result = await httpClient.PostAsync(uri, form);
+            keepTracking = false;
+            httpClient.Dispose();
+            foreach (Teste file in files)
+            {
+                file.file.Close();
+            }
+            return result.StatusCode == HttpStatusCode.OK;
 
 
         }
