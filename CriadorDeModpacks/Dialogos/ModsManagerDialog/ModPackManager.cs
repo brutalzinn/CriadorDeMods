@@ -128,10 +128,6 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
             }
 
             lbl_progress_bar_modpack.Invoke(() => lbl_progress_bar_modpack.Text = $"All modpacks uploaded.");
-
-
-
-
         }
 
 
