@@ -47,6 +47,7 @@
             this.btn_cancelar = new System.Windows.Forms.Button();
             this.ckb_default = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ckb_verify_mods = new System.Windows.Forms.CheckBox();
             this.ckb_premium = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.txb_description = new System.Windows.Forms.RichTextBox();
@@ -56,7 +57,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txb_diretory = new System.Windows.Forms.TextBox();
             this.lbl_error = new System.Windows.Forms.Label();
-            this.ckb_verify_mods = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +96,7 @@
             this.groupBox1.Size = new System.Drawing.Size(273, 326);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Configurações - ModPack";
+            this.groupBox1.Text = "Configurations - Modpack";
             // 
             // label10
             // 
@@ -243,8 +243,18 @@
             this.groupBox2.Size = new System.Drawing.Size(374, 335);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Configurações - Extras";
+            this.groupBox2.Text = "Configurations - Importants";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // ckb_verify_mods
+            // 
+            this.ckb_verify_mods.AutoSize = true;
+            this.ckb_verify_mods.Location = new System.Drawing.Point(232, 37);
+            this.ckb_verify_mods.Name = "ckb_verify_mods";
+            this.ckb_verify_mods.Size = new System.Drawing.Size(109, 24);
+            this.ckb_verify_mods.TabIndex = 18;
+            this.ckb_verify_mods.Text = "Verify Mods";
+            this.ckb_verify_mods.UseVisualStyleBackColor = true;
             // 
             // ckb_premium
             // 
@@ -326,16 +336,6 @@
             this.lbl_error.TabIndex = 12;
             this.lbl_error.Text = "Error";
             this.lbl_error.Visible = false;
-            // 
-            // ckb_verify_mods
-            // 
-            this.ckb_verify_mods.AutoSize = true;
-            this.ckb_verify_mods.Location = new System.Drawing.Point(232, 37);
-            this.ckb_verify_mods.Name = "ckb_verify_mods";
-            this.ckb_verify_mods.Size = new System.Drawing.Size(109, 24);
-            this.ckb_verify_mods.TabIndex = 18;
-            this.ckb_verify_mods.Text = "Verify Mods";
-            this.ckb_verify_mods.UseVisualStyleBackColor = true;
             // 
             // CriarModPack
             // 

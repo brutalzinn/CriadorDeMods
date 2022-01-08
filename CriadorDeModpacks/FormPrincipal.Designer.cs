@@ -29,11 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.add_modpack = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -66,18 +64,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "ModPack:";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(733, 23);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(142, 31);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Adicionar mod";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(153, 528);
@@ -85,7 +71,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(112, 56);
             this.button3.TabIndex = 5;
-            this.button3.Text = "Salvar";
+            this.button3.Text = "Save";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -107,21 +93,9 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(114, 53);
             this.button5.TabIndex = 7;
-            this.button5.Text = "Gerar ModPack";
+            this.button5.Text = "Upload ModPacks";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(882, 23);
-            this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(142, 31);
-            this.button6.TabIndex = 8;
-            this.button6.Text = "Carregar pasta";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Visible = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // comboBox1
             // 
@@ -168,9 +142,9 @@
             // 
             this.button10.Location = new System.Drawing.Point(387, 24);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(125, 30);
+            this.button10.Size = new System.Drawing.Size(158, 30);
             this.button10.TabIndex = 14;
-            this.button10.Text = "Configurar";
+            this.button10.Text = "Config modpack";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
@@ -289,7 +263,7 @@
             this.btn_sync_modpack.Name = "btn_sync_modpack";
             this.btn_sync_modpack.Size = new System.Drawing.Size(141, 53);
             this.btn_sync_modpack.TabIndex = 20;
-            this.btn_sync_modpack.Text = "Sincronizar modpacks";
+            this.btn_sync_modpack.Text = "Sync Modpacks all modpacks without upload";
             this.btn_sync_modpack.UseVisualStyleBackColor = true;
             this.btn_sync_modpack.Click += new System.EventHandler(this.btn_sync_modpack_Click);
             // 
@@ -299,7 +273,7 @@
             this.btn_configuracoes.Name = "btn_configuracoes";
             this.btn_configuracoes.Size = new System.Drawing.Size(129, 29);
             this.btn_configuracoes.TabIndex = 21;
-            this.btn_configuracoes.Text = "configuracoes";
+            this.btn_configuracoes.Text = "Configurations";
             this.btn_configuracoes.UseVisualStyleBackColor = true;
             this.btn_configuracoes.Click += new System.EventHandler(this.btn_configuracoes_Click);
             // 
@@ -320,11 +294,9 @@
             this.Controls.Add(this.button8);
             this.Controls.Add(this.add_modpack);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormPrincipal";
@@ -338,11 +310,9 @@
 
         #endregion
         private Label label1;
-        private Button button1;
         private Button button3;
         private Button button4;
         private Button button5;
-        private Button button6;
         private ComboBox comboBox1;
         private Button add_modpack;
         private Button button8;
