@@ -1,4 +1,5 @@
-﻿using CriadorDeModpacks.Models;
+﻿using CriadorDeModpacks.Messages.Launcher;
+using CriadorDeModpacks.Models;
 using fNbt;
 using Newtonsoft.Json;
 using System;
@@ -223,6 +224,69 @@ namespace CriadorDeModpacks.Utils
             }
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             return httpResponse.StatusCode == HttpStatusCode.OK;
+        }
+
+        async public static Task<bool> LauncherUpdateVersion(LauncherUpdateModel launcherUpdateModel)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/version");
+            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                var update = new LauncherUpdateMessage()
+                {
+                    packages = new Messages.Launcher.Packages()
+                    {
+                        win64 = new Messages.Launcher.Win64(launcherUpdateModel.packages.win64.url ?? null),
+                        mac64 = new Messages.Launcher.Mac64(launcherUpdateModel.packages.mac64.url ?? null),
+                        linux64 = new Messages.Launcher.Linux64(launcherUpdateModel.packages.linux64.url ?? null)
+                    },
+                    version = launcherUpdateModel.version
+                };
+                var json = JsonConvert.SerializeObject(update, Formatting.Indented);
+                
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            return httpResponse.StatusCode == HttpStatusCode.OK;
+        }
+
+         public static LauncherUpdateMessage LauncherGetVersion()
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/version");
+            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+
+
+            string json = null;
+            var response = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                json = sr.ReadToEnd();
+            }
+            LauncherUpdateModel resultado = JsonConvert.DeserializeObject<LauncherUpdateModel>(json);
+            if(resultado.packages == null || resultado.version == null){
+                return null;
+            }
+            return new LauncherUpdateMessage()
+            {
+                packages = new Messages.Launcher.Packages()
+                {
+                    win64 = resultado.packages.win64 != null ? new Messages.Launcher.Win64(resultado.packages.win64.url) : new Messages.Launcher.Win64(),
+                    mac64 = resultado.packages.mac64 != null ? new Messages.Launcher.Mac64(resultado.packages.mac64.url) : new Messages.Launcher.Mac64(),
+                    linux64 = resultado.packages.linux64 != null ? new Messages.Launcher.Linux64(resultado.packages.linux64.url) : new Messages.Launcher.Linux64()
+                },
+                version = resultado.version
+            };
+          
+
         }
 
     }

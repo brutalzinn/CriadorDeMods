@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.txb_launcher_version = new System.Windows.Forms.Label();
+            this.txb_launcher_version = new System.Windows.Forms.TextBox();
+            this.lbl_version = new System.Windows.Forms.Label();
             this.btn_open_windows = new System.Windows.Forms.Button();
             this.btn_open_linux = new System.Windows.Forms.Button();
             this.btn_open_mac = new System.Windows.Forms.Button();
@@ -49,21 +49,21 @@
             this.lbl_status = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(240, 28);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(154, 27);
-            this.textBox1.TabIndex = 0;
-            // 
             // txb_launcher_version
             // 
-            this.txb_launcher_version.AutoSize = true;
-            this.txb_launcher_version.Location = new System.Drawing.Point(174, 31);
+            this.txb_launcher_version.Location = new System.Drawing.Point(240, 28);
             this.txb_launcher_version.Name = "txb_launcher_version";
-            this.txb_launcher_version.Size = new System.Drawing.Size(60, 20);
-            this.txb_launcher_version.TabIndex = 1;
-            this.txb_launcher_version.Text = "Version:";
+            this.txb_launcher_version.Size = new System.Drawing.Size(154, 27);
+            this.txb_launcher_version.TabIndex = 0;
+            // 
+            // lbl_version
+            // 
+            this.lbl_version.AutoSize = true;
+            this.lbl_version.Location = new System.Drawing.Point(174, 31);
+            this.lbl_version.Name = "lbl_version";
+            this.lbl_version.Size = new System.Drawing.Size(60, 20);
+            this.lbl_version.TabIndex = 1;
+            this.lbl_version.Text = "Version:";
             // 
             // btn_open_windows
             // 
@@ -240,8 +240,8 @@
             this.Controls.Add(this.btn_open_mac);
             this.Controls.Add(this.btn_open_linux);
             this.Controls.Add(this.btn_open_windows);
+            this.Controls.Add(this.lbl_version);
             this.Controls.Add(this.txb_launcher_version);
-            this.Controls.Add(this.textBox1);
             this.Name = "LauncherUpdate";
             this.Text = "LauncherUpdate";
             this.Load += new System.EventHandler(this.LauncherUpdate_Load);
@@ -251,7 +251,6 @@
         }
 
         #endregion
-        private Label txb_launcher_version;
         private Button btn_open_windows;
         private Button btn_open_linux;
         private Button btn_open_mac;
@@ -270,5 +269,7 @@
         private Button btn_remove_linux;
         private Button btn_remove_mac;
         private Label lbl_status;
+        private Label lbl_version;
+        public TextBox txb_launcher_version;
     }
 }

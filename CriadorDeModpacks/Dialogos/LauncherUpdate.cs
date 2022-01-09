@@ -13,7 +13,7 @@ namespace CriadorDeModpacks.Dialogos
 {
     public partial class LauncherUpdate : Form
     {
-        public LauncherUpdateModel launcherUpdate { get; set; } = new LauncherUpdateModel();
+        public LauncherUpdateModel launcherUpdate { get; set; }
         public enum SYSTEM
         {
             win = 0,
@@ -43,6 +43,26 @@ namespace CriadorDeModpacks.Dialogos
 
         private void LauncherUpdate_Load(object sender, EventArgs e)
         {
+            var server = Utils.FileUtils.LauncherGetVersion();
+            if(server != null)
+            {
+                launcherUpdate = new LauncherUpdateModel()
+                {
+                    packages = new Packages()
+                    {
+                        win64 = server.packages.win64 != null ? new Win64(server.packages.win64.url) : new Win64(),
+                        mac64 = server.packages.mac64 != null ? new Mac64(server.packages.mac64.url) : new Mac64(),
+                        linux64 = server.packages.linux64 != null ? new Linux64(server.packages.linux64.url) : new Linux64()
+                    },
+                    version = server.version,
+                    files = new List<string>()
+  
+                };
+            }
+            else
+            {
+                launcherUpdate = new LauncherUpdateModel();
+            }
 
         }
         private void CloseForm(DialogResult result)
@@ -54,8 +74,11 @@ namespace CriadorDeModpacks.Dialogos
         {
             Utils.FileUtils.progress_bar = progressBar1;
             Utils.FileUtils.progress_txt = lbl_status;
+            if (await Utils.FileUtils.LauncherUpdateVersion(launcherUpdate))
+            {
+                await Utils.FileUtils.UploadLauncherUpdate(launcherUpdate);
+            }
 
-            await Utils.FileUtils.UploadLauncherUpdate(launcherUpdate);
 
         }
         private void button1_Click(object sender, EventArgs e)
@@ -65,10 +88,8 @@ namespace CriadorDeModpacks.Dialogos
            
             string url = $"{Globals.Configuracao.Url}/launcher/version";
 
-            listBox1.Items.Clear();
-            if (files.Count > 0) { 
-            launcherUpdate.files = files.Select(v => v.file).ToList();
-            }
+            UpdateList();
+
             foreach (var item in files)
             {
                 if (!listBox1.Items.Contains(item))
@@ -137,12 +158,20 @@ namespace CriadorDeModpacks.Dialogos
 
 
         }
-
+        private void UpdateList()
+        {
+            listBox1.Items.Clear();
+            if (files.Count > 0)
+            {
+                launcherUpdate.files = files.Select(v => v.file).ToList();
+            }
+        }
         private void btn_remove_windows_Click(object sender, EventArgs e)
         {
             var Launcher = files.Where(v=>v.system == SYSTEM.win).FirstOrDefault();
             if(Launcher != null)
                 files.Remove(Launcher);
+                UpdateList();
         }
 
         private void btn_remove_linux_Click(object sender, EventArgs e)
@@ -150,6 +179,7 @@ namespace CriadorDeModpacks.Dialogos
             var Launcher = files.Where(v => v.system == SYSTEM.linux).FirstOrDefault();
             if (Launcher != null)
                 files.Remove(Launcher);
+                UpdateList();
         }
 
         private void btn_remove_mac_Click(object sender, EventArgs e)
@@ -157,6 +187,7 @@ namespace CriadorDeModpacks.Dialogos
             var Launcher = files.Where(v => v.system == SYSTEM.mac).FirstOrDefault();
             if (Launcher != null)
                files.Remove(Launcher);
+               UpdateList();
 
         }
     }
