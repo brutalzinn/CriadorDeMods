@@ -58,6 +58,7 @@ namespace CriadorDeModpacks.Dialogos
                     files = new List<string>()
   
                 };
+                txb_launcher_version.Text = launcherUpdate.version;
             }
             else
             {

@@ -103,7 +103,7 @@ namespace CriadorDeModpacks.Utils
             FileStream file = File.OpenRead(path);
             Uri uri = new Uri(url);
             HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("api-key", Globals.api_key);
+            httpClient.DefaultRequestHeaders.Add("api-key", Globals.Configuracao.Api_Key);
             MultipartFormDataContent form = new MultipartFormDataContent();
             form.Add(new StringContent(directory), "directory");
             form.Add(new StreamContent(file), "file", Path.GetFileName(path));
@@ -141,7 +141,7 @@ namespace CriadorDeModpacks.Utils
             }
 
             HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("api-key", Globals.api_key);
+            httpClient.DefaultRequestHeaders.Add("api-key", Globals.Configuracao.Api_Key);
             MultipartFormDataContent form = new MultipartFormDataContent();
             bool keepTracking = true;
             foreach (Teste file in files)
@@ -193,7 +193,7 @@ namespace CriadorDeModpacks.Utils
        public static bool SyncModPacks(List<ModPack> modpacks)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/sync/modpacks");
-            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
@@ -211,7 +211,7 @@ namespace CriadorDeModpacks.Utils
         public static bool SyncModPackUploader(ModPack modpacks)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/append/modpacks");
-            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
@@ -229,7 +229,7 @@ namespace CriadorDeModpacks.Utils
         async public static Task<bool> LauncherUpdateVersion(LauncherUpdateModel launcherUpdateModel)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/version");
-            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
@@ -239,9 +239,9 @@ namespace CriadorDeModpacks.Utils
                 {
                     packages = new Messages.Launcher.Packages()
                     {
-                        win64 = new Messages.Launcher.Win64(launcherUpdateModel.packages.win64.url ?? null),
-                        mac64 = new Messages.Launcher.Mac64(launcherUpdateModel.packages.mac64.url ?? null),
-                        linux64 = new Messages.Launcher.Linux64(launcherUpdateModel.packages.linux64.url ?? null)
+                        win64 = launcherUpdateModel.packages.win64 != null ? new Messages.Launcher.Win64(launcherUpdateModel.packages.win64.url) : null,
+                        mac64 = launcherUpdateModel.packages.mac64 != null ? new Messages.Launcher.Mac64(launcherUpdateModel.packages.mac64.url) : null,
+                        linux64 = launcherUpdateModel.packages.linux64 != null ? new Messages.Launcher.Linux64(launcherUpdateModel.packages.linux64.url) : null
                     },
                     version = launcherUpdateModel.version
                 };
@@ -258,7 +258,7 @@ namespace CriadorDeModpacks.Utils
          public static LauncherUpdateMessage LauncherGetVersion()
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/version");
-            httpWebRequest.Headers.Add("api-key", Globals.api_key);
+            httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "GET";
             httpWebRequest.Accept = "application/json; charset=utf-8";
