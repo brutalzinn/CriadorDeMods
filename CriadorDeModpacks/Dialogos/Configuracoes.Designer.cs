@@ -30,10 +30,12 @@
         {
             this.btn_salvar = new System.Windows.Forms.Button();
             this.btn_cancelar = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txb_api_url = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txb_api_key = new System.Windows.Forms.TextBox();
+            this.txb_web_url = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_salvar
@@ -56,21 +58,21 @@
             this.btn_cancelar.UseVisualStyleBackColor = true;
             this.btn_cancelar.Click += new System.EventHandler(this.btn_cancelar_Click);
             // 
-            // textBox1
+            // txb_api_url
             // 
-            this.textBox1.Location = new System.Drawing.Point(83, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(290, 27);
-            this.textBox1.TabIndex = 2;
+            this.txb_api_url.Location = new System.Drawing.Point(83, 20);
+            this.txb_api_url.Name = "txb_api_url";
+            this.txb_api_url.Size = new System.Drawing.Size(290, 27);
+            this.txb_api_url.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 49);
+            this.label1.Location = new System.Drawing.Point(12, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 20);
+            this.label1.Size = new System.Drawing.Size(66, 20);
             this.label1.TabIndex = 3;
-            this.label1.Text = "URL:";
+            this.label1.Text = "API-URL:";
             // 
             // label2
             // 
@@ -81,22 +83,40 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "API-KEY:";
             // 
-            // textBox2
+            // txb_api_key
             // 
-            this.textBox2.Location = new System.Drawing.Point(83, 85);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(290, 27);
-            this.textBox2.TabIndex = 4;
+            this.txb_api_key.Location = new System.Drawing.Point(83, 85);
+            this.txb_api_key.Name = "txb_api_key";
+            this.txb_api_key.Size = new System.Drawing.Size(290, 27);
+            this.txb_api_key.TabIndex = 4;
+            // 
+            // txb_web_url
+            // 
+            this.txb_web_url.Location = new System.Drawing.Point(83, 53);
+            this.txb_web_url.Name = "txb_web_url";
+            this.txb_web_url.Size = new System.Drawing.Size(290, 27);
+            this.txb_web_url.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 20);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "URL:";
             // 
             // Configuracoes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 180);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txb_web_url);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txb_api_key);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txb_api_url);
             this.Controls.Add(this.btn_cancelar);
             this.Controls.Add(this.btn_salvar);
             this.Name = "Configuracoes";
@@ -112,8 +132,10 @@
         private Button btn_salvar;
         private Button btn_cancelar;
         private Label label1;
-        public TextBox textBox1;
+        public TextBox txb_api_url;
         private Label label2;
-        public TextBox textBox2;
+        public TextBox txb_api_key;
+        public TextBox txb_web_url;
+        private Label label3;
     }
 }

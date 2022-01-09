@@ -350,11 +350,10 @@ namespace CriadorDeModpacks
                 if (Directory.Exists(modpack_dir))
                 {
                     Process.Start("explorer.exe", modpack_dir);
-
                 }
                 else
                 {
-                    MessageBox.Show("Modpack withoout folder created.");
+                    MessageBox.Show("Modpack without folder created.");
                 }
 
                 //Do something with your button.
@@ -375,13 +374,17 @@ namespace CriadorDeModpacks
         {
             var configuracoesForm = new Configuracoes();
             CarregarConfiguracoes();
-            configuracoesForm.textBox1.Text = Globals.Configuracao.Url;
+            configuracoesForm.txb_web_url.Text = Globals.Configuracao.Url;
+            configuracoesForm.txb_api_url.Text = Globals.Configuracao.Url_Api;
+            configuracoesForm.txb_api_key.Text = Globals.Configuracao.Api_Key;
             configuracoesForm.ShowDialog();
             if (configuracoesForm.DialogResult == DialogResult.OK)
             {
                 var config = new ConfiguracaoModel();
-                config.Url = configuracoesForm.textBox1.Text;
-                config.Api_Key = configuracoesForm.textBox2.Text;
+
+                config.Url = configuracoesForm.txb_web_url.Text;
+                config.Url_Api = configuracoesForm.txb_api_url.Text;
+                config.Api_Key = configuracoesForm.txb_api_key.Text;
                 SalvarConfiguracoes(config);
             }
         }

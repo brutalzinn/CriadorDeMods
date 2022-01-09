@@ -17,8 +17,10 @@ namespace CriadorDeModpacks.Dialogos
         public Configuracoes()
         {
             InitializeComponent();
-            textBox1.Text = Globals.Configuracao.Url;
-            textBox2.Text = Globals.Configuracao.Api_Key;
+
+            txb_api_url.Text = Globals.Configuracao.Url_Api;
+            txb_web_url.Text = Globals.Configuracao.Url;
+            txb_api_key.Text = Globals.Configuracao.Api_Key;
 
         }
         private void CloseForm(DialogResult result)

@@ -132,7 +132,7 @@ namespace CriadorDeModpacks.Utils
         async public static Task<bool> UploadLauncherUpdate(LauncherUpdateModel launcher)
         {
 
-            Uri uri = new Uri($"{Globals.Configuracao.Url}/launcher/upload/update");
+            Uri uri = new Uri($"{Globals.Configuracao.Url_Api}/launcher/upload/update");
             List<Teste> files = new List<Teste>();
             foreach(var item in launcher.files)
             {
@@ -192,7 +192,7 @@ namespace CriadorDeModpacks.Utils
         }
        public static bool SyncModPacks(List<ModPack> modpacks)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/sync/modpacks");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/launcher/update/sync/modpacks");
             httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
@@ -210,7 +210,7 @@ namespace CriadorDeModpacks.Utils
 
         public static bool SyncModPackUploader(ModPack modpacks)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/update/append/modpacks");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/launcher/update/append/modpacks");
             httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
@@ -228,7 +228,7 @@ namespace CriadorDeModpacks.Utils
 
         async public static Task<bool> LauncherUpdateVersion(LauncherUpdateModel launcherUpdateModel)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/version");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/launcher/version");
             httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
@@ -257,7 +257,7 @@ namespace CriadorDeModpacks.Utils
 
          public static LauncherUpdateMessage LauncherGetVersion()
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url}/launcher/version");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/launcher/version");
             httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "GET";

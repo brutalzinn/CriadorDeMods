@@ -87,7 +87,7 @@ namespace CriadorDeModpacks.Dialogos
             launcherUpdate.version = txb_launcher_version.Text;
             launcherUpdate.packages = new Packages();
            
-            string url = $"{Globals.Configuracao.Url}/launcher/version";
+            string url = $"{Globals.Configuracao.Url}/data/cliente/launcher/update-launcher";
 
             UpdateList();
 
