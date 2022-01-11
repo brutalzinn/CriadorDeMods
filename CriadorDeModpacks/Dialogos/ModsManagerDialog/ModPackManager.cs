@@ -106,6 +106,8 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
             Utils.ApiUtils.progress_txt = lbl_progress_bar_modpack;
 
             progress_bar_complete.Invoke(() => progress_bar_complete.Maximum = ModPacksChecked.Count);
+            progress_bar_complete.Invoke(() => progress_bar_complete.Value = 0);
+            progress_bar_modpack.Invoke(() => progress_bar_modpack.Value = 0);
             foreach (ModPack modpack in ModPacksChecked)
             {
                 string path = Path.Combine(Globals.modpack_root, $"{modpack.directory.Replace(" ", "_").ToLower()}.zip");
