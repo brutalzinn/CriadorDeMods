@@ -36,12 +36,12 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
        async void StartBackground()
         {
             string path = Path.Combine(Globals.modpack_root, $"{ModPack.directory.Replace(" ", "_").ToLower()}.zip");
-            Utils.FileUtils.progress_bar = progressBar1;
+            Utils.ApiUtils.progress_bar = progressBar1;
 
             label1.Invoke(() => label1.Text = "Preparing to zip modpack.. 1/2");
-             Utils.FileUtils.GerarModPackZip(ModPack);
+             Utils.ApiUtils.GenerateModPackZip(ModPack);
             label1.Invoke(() => label1.Text =  "Zip Ready. Sending modpack to server.. 2/2");
-            await Utils.FileUtils.UploadMultipart(path, ModPack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks");
+            await Utils.ApiUtils.UploadModPack(path, ModPack.directory);
             label1.Invoke(() => label1.Text = "Modpack uploaded with success");
         }
 

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CriadorDeModpacks.Utils
 {
-    public static class FileUtils
+    public static class ApiUtils
     {
         public static ProgressBar progress_bar { get; set; }
 
@@ -36,7 +36,13 @@ namespace CriadorDeModpacks.Utils
             var serverFile = new NbtFile(serverInfo);
             serverFile.SaveToFile(Path.Combine(Globals.modpack_root, modpack.directory, "servers.dat"), NbtCompression.None);
       }
-        class MyEncoder : UTF8Encoding
+    public static void CreateModPackFiles(string mod_directory)
+    {
+        var modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory);
+        File.Copy(@"Arquivos\launcher_profiles.json", Path.Combine(modpackDirectory, "launcher_profiles.json"), true);
+        File.Copy(@"Arquivos\.htaccess", Path.Combine(modpackDirectory, ".htaccess"), true);
+    }
+       private class MyEncoder : UTF8Encoding
         {
             public MyEncoder()
             {
@@ -86,7 +92,7 @@ namespace CriadorDeModpacks.Utils
         }
 
 
-        public static  void GerarModPackZip(ModPack modpack)
+        public static  void GenerateModPackZip(ModPack modpack)
         {
             string caminho = Path.Combine(Globals.modpack_root, $"{modpack.directory.ToLower()}.zip");
             bool zipExists = File.Exists(caminho);
@@ -97,11 +103,11 @@ namespace CriadorDeModpacks.Utils
             //  ZipFile.CreateFromDirectory(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
 
         }
-        async public static Task<bool> UploadMultipart(string path, string directory, string url)
+        async public static Task<bool> UploadModPack(string path, string directory)
         {
         
             FileStream file = File.OpenRead(path);
-            Uri uri = new Uri(url);
+            Uri uri = new Uri($"{Globals.Configuracao.Url_Api}/launcher/modpacks/upload");
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("api-key", Globals.Configuracao.Api_Key);
             MultipartFormDataContent form = new MultipartFormDataContent();
@@ -132,7 +138,7 @@ namespace CriadorDeModpacks.Utils
         async public static Task<bool> UploadLauncherUpdate(LauncherUpdateModel launcher)
         {
 
-            Uri uri = new Uri($"{Globals.Configuracao.Url_Api}/launcher/upload/update");
+            Uri uri = new Uri($"{Globals.Configuracao.Url_Api}/launcher/version/upload");
             List<Teste> files = new List<Teste>();
             foreach(var item in launcher.files)
             {
@@ -184,15 +190,10 @@ namespace CriadorDeModpacks.Utils
                 Thread.Sleep(100); //update every 100ms
             }
         }
-        public static void CreateModPackFiles(string mod_directory)
-        {
-            var modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory);
-            File.Copy(@"Arquivos\launcher_profiles.json", Path.Combine(modpackDirectory, "launcher_profiles.json"), true);
-            File.Copy(@"Arquivos\.htaccess", Path.Combine(modpackDirectory, ".htaccess"), true);
-        }
+ 
        public static bool SyncModPacks(List<ModPack> modpacks)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/launcher/update/sync/modpacks");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/modpackcreator/modpacks/sync");
             httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
@@ -208,9 +209,9 @@ namespace CriadorDeModpacks.Utils
             return httpResponse.StatusCode == HttpStatusCode.OK;
         }
 
-        public static bool SyncModPackUploader(ModPack modpacks)
+        public static bool AppendModPack(ModPack modpacks)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/launcher/update/append/modpacks");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/modpackcreator/modpacks/append");
             httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";

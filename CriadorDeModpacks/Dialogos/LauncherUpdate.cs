@@ -43,7 +43,7 @@ namespace CriadorDeModpacks.Dialogos
 
         private void LauncherUpdate_Load(object sender, EventArgs e)
         {
-            var server = Utils.FileUtils.LauncherGetVersion();
+            var server = Utils.ApiUtils.LauncherGetVersion();
             if(server != null)
             {
                 launcherUpdate = new LauncherUpdateModel()
@@ -73,11 +73,11 @@ namespace CriadorDeModpacks.Dialogos
         }
         async void StartBackground()
         {
-            Utils.FileUtils.progress_bar = progressBar1;
-            Utils.FileUtils.progress_txt = lbl_status;
-            if (await Utils.FileUtils.LauncherUpdateVersion(launcherUpdate))
+            Utils.ApiUtils.progress_bar = progressBar1;
+            Utils.ApiUtils.progress_txt = lbl_status;
+            if (await Utils.ApiUtils.LauncherUpdateVersion(launcherUpdate))
             {
-                await Utils.FileUtils.UploadLauncherUpdate(launcherUpdate);
+                await Utils.ApiUtils.UploadLauncherUpdate(launcherUpdate);
             }
 
 

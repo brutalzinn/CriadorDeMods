@@ -1,5 +1,7 @@
 # Mod creator
 
+# Critical refactor needed. Feel free to takes a pull request with some implemetation.
+
 # ENGLISH 
 This project is developed by me to uses with https://github.com/brutalzinn/boberto-minecraft-launcher
 This project is obrigatory to uses with https://github.com/brutalzinn/boberto-launcher-web to sync mods between your web server and the ModPack Creator

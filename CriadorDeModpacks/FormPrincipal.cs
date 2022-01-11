@@ -232,8 +232,8 @@ namespace CriadorDeModpacks
                 {
                     Directory.CreateDirectory(modpack_directory);
                 }
-                Utils.FileUtils.CreateServerFile(criarModPack.ModPack);
-                Utils.FileUtils.CreateModPackFiles(criarModPack.ModPack.directory);
+                Utils.ApiUtils.CreateServerFile(criarModPack.ModPack);
+                Utils.ApiUtils.CreateModPackFiles(criarModPack.ModPack.directory);
                 //  criarModPack.ModPack.datetime_creat_at = d
                 Globals.ModPacks.Add(criarModPack.ModPack);
 
@@ -362,7 +362,7 @@ namespace CriadorDeModpacks
 
         private void btn_sync_modpack_Click(object sender, EventArgs e)
         {
-            Utils.FileUtils.SyncModPacks(Globals.ModPacks);
+            Utils.ApiUtils.SyncModPacks(Globals.ModPacks);
         }
 
         private void button2_Click(object sender, EventArgs e)

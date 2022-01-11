@@ -102,17 +102,17 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
         async void StartBackground()
 
         {
-            Utils.FileUtils.progress_bar = progress_bar_modpack;
-            Utils.FileUtils.progress_txt = lbl_progress_bar_modpack;
+            Utils.ApiUtils.progress_bar = progress_bar_modpack;
+            Utils.ApiUtils.progress_txt = lbl_progress_bar_modpack;
 
             progress_bar_complete.Invoke(() => progress_bar_complete.Maximum = ModPacksChecked.Count);
             foreach (ModPack modpack in ModPacksChecked)
             {
                 string path = Path.Combine(Globals.modpack_root, $"{modpack.directory.Replace(" ", "_").ToLower()}.zip");
                 lbl_status.Invoke(() => lbl_status.Text = $"Preparing to zip modpack.. {modpack.name} 1/2");
-                Utils.FileUtils.GerarModPackZip(modpack);
+                Utils.ApiUtils.GenerateModPackZip(modpack);
                 lbl_status.Invoke(() => lbl_status.Text = $"Zip Ready. Sending modpack to server.. {modpack.name} 2/2");
-                if(!await Utils.FileUtils.UploadMultipart(path, modpack.directory, $"{Globals.Configuracao.Url}/launcher/upload/modpacks"))
+                if(!await Utils.ApiUtils.UploadModPack(path, modpack.directory))
                 {
                     lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.name} with error.");
                 }
@@ -120,7 +120,7 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
                 lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.name} with success.");
                 progress_bar_complete.Invoke(() => progress_bar_complete.Value += 1);
                 lbl_progress_complete.Invoke(() => lbl_progress_complete.Text = $"{progress_bar_complete.Value}/{ModPacksChecked.Count}");
-                if (Utils.FileUtils.SyncModPackUploader(modpack))
+                if (Utils.ApiUtils.AppendModPack(modpack))
                 {
                     lbl_status.Invoke(() => lbl_status.Text = $"{modpack.name} uploaded.");
                 }

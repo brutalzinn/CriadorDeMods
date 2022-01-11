@@ -89,7 +89,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(761, 530);
+            this.button5.Location = new System.Drawing.Point(715, 528);
             this.button5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(114, 53);
@@ -259,10 +259,10 @@
             // 
             // btn_sync_modpack
             // 
-            this.btn_sync_modpack.Location = new System.Drawing.Point(882, 531);
+            this.btn_sync_modpack.Location = new System.Drawing.Point(835, 530);
             this.btn_sync_modpack.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_sync_modpack.Name = "btn_sync_modpack";
-            this.btn_sync_modpack.Size = new System.Drawing.Size(141, 53);
+            this.btn_sync_modpack.Size = new System.Drawing.Size(192, 53);
             this.btn_sync_modpack.TabIndex = 20;
             this.btn_sync_modpack.Text = "Sync Modpacks all modpacks without upload";
             this.btn_sync_modpack.UseVisualStyleBackColor = true;
