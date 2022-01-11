@@ -81,9 +81,9 @@
             this.lbl_info.AutoSize = true;
             this.lbl_info.Location = new System.Drawing.Point(22, 323);
             this.lbl_info.Name = "lbl_info";
-            this.lbl_info.Size = new System.Drawing.Size(50, 20);
+            this.lbl_info.Size = new System.Drawing.Size(498, 20);
             this.lbl_info.TabIndex = 7;
-            this.lbl_info.Text = "label1";
+            this.lbl_info.Text = "Start the process clicking in 1 - download forge and follow the intructions.";
             // 
             // lbl_forge_version
             // 

@@ -49,7 +49,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ckb_verify_mods = new System.Windows.Forms.CheckBox();
             this.ckb_premium = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_install_forge = new System.Windows.Forms.Button();
             this.txb_description = new System.Windows.Forms.RichTextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -67,6 +67,7 @@
             this.txb_forge_version.Name = "txb_forge_version";
             this.txb_forge_version.Size = new System.Drawing.Size(126, 27);
             this.txb_forge_version.TabIndex = 0;
+            this.txb_forge_version.TextChanged += new System.EventHandler(this.txb_forge_version_TextChanged);
             // 
             // txb_minecraft_version
             // 
@@ -167,9 +168,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(14, 75);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 20);
+            this.label3.Size = new System.Drawing.Size(52, 20);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Nome:";
+            this.label3.Text = "Name:";
             // 
             // txb_nome
             // 
@@ -202,7 +203,7 @@
             this.btn_salvar.Name = "btn_salvar";
             this.btn_salvar.Size = new System.Drawing.Size(101, 34);
             this.btn_salvar.TabIndex = 7;
-            this.btn_salvar.Text = "Salvar";
+            this.btn_salvar.Text = "SAVE";
             this.btn_salvar.UseVisualStyleBackColor = true;
             this.btn_salvar.Click += new System.EventHandler(this.btn_salvar_Click);
             // 
@@ -212,7 +213,7 @@
             this.btn_cancelar.Name = "btn_cancelar";
             this.btn_cancelar.Size = new System.Drawing.Size(101, 34);
             this.btn_cancelar.TabIndex = 8;
-            this.btn_cancelar.Text = "Cancelar";
+            this.btn_cancelar.Text = "CANCEL";
             this.btn_cancelar.UseVisualStyleBackColor = true;
             this.btn_cancelar.Click += new System.EventHandler(this.btn_cancelar_Click);
             // 
@@ -230,7 +231,7 @@
             // 
             this.groupBox2.Controls.Add(this.ckb_verify_mods);
             this.groupBox2.Controls.Add(this.ckb_premium);
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.btn_install_forge);
             this.groupBox2.Controls.Add(this.txb_description);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label7);
@@ -266,15 +267,16 @@
             this.ckb_premium.Text = "Premium users";
             this.ckb_premium.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btn_install_forge
             // 
-            this.button1.Location = new System.Drawing.Point(239, 126);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 37);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "Install forge";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_install_forge.Enabled = false;
+            this.btn_install_forge.Location = new System.Drawing.Point(239, 126);
+            this.btn_install_forge.Name = "btn_install_forge";
+            this.btn_install_forge.Size = new System.Drawing.Size(122, 37);
+            this.btn_install_forge.TabIndex = 16;
+            this.btn_install_forge.Text = "Install forge";
+            this.btn_install_forge.UseVisualStyleBackColor = true;
+            this.btn_install_forge.Click += new System.EventHandler(this.button1_Click);
             // 
             // txb_description
             // 
@@ -289,9 +291,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(17, 141);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(74, 20);
+            this.label8.Size = new System.Drawing.Size(88, 20);
             this.label8.TabIndex = 14;
-            this.label8.Text = "Descrição";
+            this.label8.Text = "Description:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label7
@@ -299,9 +301,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(17, 106);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 20);
+            this.label7.Size = new System.Drawing.Size(57, 20);
             this.label7.TabIndex = 13;
-            this.label7.Text = "Autor:";
+            this.label7.Text = "Author:";
             // 
             // txb_autor
             // 
@@ -315,9 +317,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(17, 70);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(72, 20);
+            this.label6.Size = new System.Drawing.Size(73, 20);
             this.label6.TabIndex = 11;
-            this.label6.Text = "Diretório:";
+            this.label6.Text = "Directory:";
             // 
             // txb_diretory
             // 
@@ -386,7 +388,7 @@
         private Label label10;
         public TextBox txb_id;
         private Label lbl_error;
-        private Button button1;
+        private Button btn_install_forge;
         private CheckBox ckb_premium;
         private CheckBox ckb_verify_mods;
     }
