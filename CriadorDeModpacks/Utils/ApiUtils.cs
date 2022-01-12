@@ -208,6 +208,37 @@ namespace CriadorDeModpacks.Utils
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             return httpResponse.StatusCode == HttpStatusCode.OK;
         }
+        public static bool RedisClearAll()
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/redis/clear");
+            httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            return httpResponse.StatusCode == HttpStatusCode.OK;
+        }
+        public static bool RedisClearModPack(ModPack modpack)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{Globals.Configuracao.Url_Api}/redis/del");
+            httpWebRequest.Headers.Add("api-key", Globals.Configuracao.Api_Key);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json; charset=utf-8";
+            var resultado = new RedisClearModPackMessage()
+            {
+                id = modpack.id
+            };
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                var json = JsonConvert.SerializeObject(resultado, Formatting.Indented);
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            return httpResponse.StatusCode == HttpStatusCode.OK;
+        }
 
         public static bool AppendModPack(ModPack modpacks)
         {

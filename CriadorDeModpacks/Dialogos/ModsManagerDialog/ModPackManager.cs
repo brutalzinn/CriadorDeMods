@@ -126,10 +126,18 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
                 {
                     lbl_status.Invoke(() => lbl_status.Text = $"{modpack.name} uploaded.");
                 }
+                try
+                {
+                    Utils.ApiUtils.RedisClearModPack(modpack);
+                }
+                catch (System.Net.WebException)
+                {
 
+                }
             }
 
             lbl_progress_bar_modpack.Invoke(() => lbl_progress_bar_modpack.Text = $"All modpacks uploaded.");
+         
         }
 
 
