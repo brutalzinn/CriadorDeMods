@@ -152,7 +152,7 @@ namespace CriadorDeModpacks.Utils
             bool keepTracking = true;
             foreach (Teste file in files)
             {
-               form.Add(new StreamContent(file.file), "file", Path.GetFileName(file.path));
+               form.Add(new StreamContent(file.file), "file[]", Path.GetFileName(file.path));
                new Task(new Action(() => { progressTracker(file.file, ref keepTracking); })).Start();
             }
             //to start and stop the tracking thread
