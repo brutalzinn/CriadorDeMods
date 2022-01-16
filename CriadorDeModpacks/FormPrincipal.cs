@@ -377,6 +377,7 @@ namespace CriadorDeModpacks
             configuracoesForm.txb_web_url.Text = Globals.Configuracao.Url;
             configuracoesForm.txb_api_url.Text = Globals.Configuracao.Url_Api;
             configuracoesForm.txb_api_key.Text = Globals.Configuracao.Api_Key;
+            configuracoesForm.txb_api_header.Text = Globals.Configuracao.Api_Header;
             configuracoesForm.ShowDialog();
             if (configuracoesForm.DialogResult == DialogResult.OK)
             {
@@ -385,6 +386,7 @@ namespace CriadorDeModpacks
                 config.Url = configuracoesForm.txb_web_url.Text;
                 config.Url_Api = configuracoesForm.txb_api_url.Text;
                 config.Api_Key = configuracoesForm.txb_api_key.Text;
+                config.Api_Header = configuracoesForm.txb_api_header.Text;
                 SalvarConfiguracoes(config);
             }
         }

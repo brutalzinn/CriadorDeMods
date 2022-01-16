@@ -14,5 +14,8 @@ namespace CriadorDeModpacks.Models
         
         public string Api_Key { get; set; } = "teste";
 
+        public string Api_Header { get; set; } = "api-key";
+
+
     }
 }
