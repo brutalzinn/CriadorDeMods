@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace CriadorDeModpacks.Dialogos
 {
@@ -125,6 +126,31 @@ namespace CriadorDeModpacks.Dialogos
             {
                 btn_install_forge.Enabled = true;
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            var form = new FabricInstaller();
+            string baseURL = "https://maven.fabricmc.net/net/fabricmc/fabric-installer/maven-metadata.xml";
+
+            XmlDocument doc1 = new XmlDocument();
+            doc1.Load(baseURL);
+            XmlElement root = doc1.DocumentElement;
+            XmlNodeList nodes = root.SelectNodes("/metadata/versioning");
+            string version = "";
+            foreach (XmlNode node in nodes)
+            {
+                version = node["versioning"].InnerText;
+            }
+            form.minecraft_version = this.txb_minecraft_version.Text;
+            form.fabric_version = version;
+            form.mod_directory = this.txb_diretory.Text;
+            form.ShowDialog();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

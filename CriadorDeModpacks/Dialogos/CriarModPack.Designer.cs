@@ -47,6 +47,7 @@
             this.btn_cancelar = new System.Windows.Forms.Button();
             this.ckb_default = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.ckb_verify_mods = new System.Windows.Forms.CheckBox();
             this.ckb_premium = new System.Windows.Forms.CheckBox();
             this.btn_install_forge = new System.Windows.Forms.Button();
@@ -71,7 +72,7 @@
             // 
             // txb_minecraft_version
             // 
-            this.txb_minecraft_version.Location = new System.Drawing.Point(97, 147);
+            this.txb_minecraft_version.Location = new System.Drawing.Point(98, 144);
             this.txb_minecraft_version.Name = "txb_minecraft_version";
             this.txb_minecraft_version.Size = new System.Drawing.Size(125, 27);
             this.txb_minecraft_version.TabIndex = 1;
@@ -94,7 +95,7 @@
             this.groupBox1.Controls.Add(this.txb_forge_version);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(273, 326);
+            this.groupBox1.Size = new System.Drawing.Size(273, 385);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configurations - Modpack";
@@ -118,7 +119,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 291);
+            this.label9.Location = new System.Drawing.Point(15, 288);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(77, 20);
             this.label9.TabIndex = 12;
@@ -126,7 +127,7 @@
             // 
             // txb_img
             // 
-            this.txb_img.Location = new System.Drawing.Point(97, 291);
+            this.txb_img.Location = new System.Drawing.Point(98, 288);
             this.txb_img.Name = "txb_img";
             this.txb_img.Size = new System.Drawing.Size(125, 27);
             this.txb_img.TabIndex = 11;
@@ -134,7 +135,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 249);
+            this.label5.Location = new System.Drawing.Point(15, 246);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 20);
             this.label5.TabIndex = 10;
@@ -143,7 +144,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 197);
+            this.label4.Location = new System.Drawing.Point(15, 194);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(25, 20);
             this.label4.TabIndex = 9;
@@ -151,14 +152,14 @@
             // 
             // txb_port
             // 
-            this.txb_port.Location = new System.Drawing.Point(97, 246);
+            this.txb_port.Location = new System.Drawing.Point(98, 243);
             this.txb_port.Name = "txb_port";
             this.txb_port.Size = new System.Drawing.Size(125, 27);
             this.txb_port.TabIndex = 8;
             // 
             // txb_ip
             // 
-            this.txb_ip.Location = new System.Drawing.Point(97, 197);
+            this.txb_ip.Location = new System.Drawing.Point(98, 194);
             this.txb_ip.Name = "txb_ip";
             this.txb_ip.Size = new System.Drawing.Size(125, 27);
             this.txb_ip.TabIndex = 7;
@@ -182,7 +183,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 150);
+            this.label2.Location = new System.Drawing.Point(15, 147);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 20);
             this.label2.TabIndex = 4;
@@ -229,6 +230,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.ckb_verify_mods);
             this.groupBox2.Controls.Add(this.ckb_premium);
             this.groupBox2.Controls.Add(this.btn_install_forge);
@@ -246,6 +248,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Configurations - Importants";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(239, 83);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(122, 37);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "Install fabric";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // ckb_verify_mods
             // 
@@ -391,5 +403,6 @@
         private Button btn_install_forge;
         private CheckBox ckb_premium;
         private CheckBox ckb_verify_mods;
+        private Button button1;
     }
 }
