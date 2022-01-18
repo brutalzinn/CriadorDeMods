@@ -18,6 +18,7 @@ namespace CriadorDeModpacks.Models
         public string description { get; set; }
         public string game_version { get; set; }
         public string forge_version { get; set; }
+        public string fabric_version { get; set; }
         public string server_ip { get; set; }
         public string server_port { get; set; }
         public string datetime_creat_at { get; set; }

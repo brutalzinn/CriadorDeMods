@@ -140,12 +140,18 @@ namespace CriadorDeModpacks.Dialogos
             string version = "";
             foreach (XmlNode node in nodes)
             {
-                version = node["versioning"].InnerText;
+                version = node["latest"].InnerText;
             }
             form.minecraft_version = this.txb_minecraft_version.Text;
             form.fabric_version = version;
             form.mod_directory = this.txb_diretory.Text;
             form.ShowDialog();
+
+            if (form.DialogResult == DialogResult.OK)
+            {
+                //pegarversão da pasta é mais fácil que ler o json quebrado.
+
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

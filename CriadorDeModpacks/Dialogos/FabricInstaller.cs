@@ -83,7 +83,7 @@ namespace CriadorDeModpacks.Dialogos
         private void clipboard_copy_click(object sender, EventArgs e)
         {
             Clipboard.SetText(modpackDirectory);
-            MessageBox.Show(modpackDirectory + " paste this folder to forge installer client");
+            MessageBox.Show(modpackDirectory + " paste this folder to fabric installer client");
             NextStep(STEP.two);
    
 
@@ -122,18 +122,18 @@ namespace CriadorDeModpacks.Dialogos
                 case STEP.two:
                 btn_clipboard_copy.BackColor = Color.Green;
                 btn_start_forge.Enabled = true;
-                lbl_info.Text = "You clipboard was updated! Paste this to forge installer client";
+                lbl_info.Text = "You clipboard was updated! Paste this to fabric installer client";
 
                 break;
 
                 case STEP.three:
                 btn_start_forge.BackColor = Color.Green;
                 btn_start_forge.Enabled = true;
-                lbl_info.Text = "Forge install is complete. Ready for verification step";
+                lbl_info.Text = "Fabric install is complete. Ready for verification step";
                 break;
 
                 case STEP.four:
-                 lbl_info.Text = "Forge installation complete and modpack created with forge client.";
+                 lbl_info.Text = "Fabric installation complete and modpack created with fabric client.";
                 break;
 
 
@@ -174,7 +174,7 @@ namespace CriadorDeModpacks.Dialogos
           
             modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory ?? "default");
             fabric_name = $"fabric-installer-{fabric_version}.jar";
-            lbl_forge_version.Text = "Installing forge " + fabric_version;
+            lbl_forge_version.Text = "Installing fabric " + fabric_version;
 
         }
 
@@ -182,10 +182,19 @@ namespace CriadorDeModpacks.Dialogos
         {
 
         }
+        private void CloseForm(DialogResult result)
+        {
+            DialogResult = result;
+            Close();
+        }
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            CloseForm(DialogResult.Cancel);
+        }
 
-      
-        
-
-     
+        private void btn_ok_Click(object sender, EventArgs e)
+        {
+            CloseForm(DialogResult.OK);
+        }
     }
 }

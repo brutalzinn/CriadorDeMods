@@ -35,6 +35,8 @@
             this.btn_start_forge = new System.Windows.Forms.Button();
             this.lbl_info = new System.Windows.Forms.Label();
             this.lbl_forge_version = new System.Windows.Forms.Label();
+            this.btn_cancel = new System.Windows.Forms.Button();
+            this.btn_ok = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -94,11 +96,33 @@
             this.lbl_forge_version.TabIndex = 8;
             this.lbl_forge_version.Text = "Forge Version:";
             // 
+            // btn_cancel
+            // 
+            this.btn_cancel.Location = new System.Drawing.Point(358, 411);
+            this.btn_cancel.Name = "btn_cancel";
+            this.btn_cancel.Size = new System.Drawing.Size(101, 61);
+            this.btn_cancel.TabIndex = 12;
+            this.btn_cancel.Text = "CANCEL";
+            this.btn_cancel.UseVisualStyleBackColor = true;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
+            // 
+            // btn_ok
+            // 
+            this.btn_ok.Location = new System.Drawing.Point(465, 411);
+            this.btn_ok.Name = "btn_ok";
+            this.btn_ok.Size = new System.Drawing.Size(108, 61);
+            this.btn_ok.TabIndex = 11;
+            this.btn_ok.Text = "OK";
+            this.btn_ok.UseVisualStyleBackColor = true;
+            this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
+            // 
             // FabricInstaller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 423);
+            this.ClientSize = new System.Drawing.Size(585, 484);
+            this.Controls.Add(this.btn_cancel);
+            this.Controls.Add(this.btn_ok);
             this.Controls.Add(this.lbl_forge_version);
             this.Controls.Add(this.lbl_info);
             this.Controls.Add(this.btn_start_forge);
@@ -122,5 +146,7 @@
         private Button btn_start_forge;
         private Label lbl_info;
         private Label lbl_forge_version;
+        private Button btn_cancel;
+        private Button btn_ok;
     }
 }

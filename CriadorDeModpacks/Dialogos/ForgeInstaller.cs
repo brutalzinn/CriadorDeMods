@@ -179,10 +179,20 @@ namespace CriadorDeModpacks.Dialogos
         {
 
         }
+        private void CloseForm(DialogResult result)
+        {
+            DialogResult = result;
+            Close();
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CloseForm(DialogResult.Cancel);
 
-      
-        
+        }
 
-     
+        private void btn_ok_Click(object sender, EventArgs e)
+        {
+            CloseForm(DialogResult.OK);
+        }
     }
 }
