@@ -161,6 +161,14 @@ namespace CriadorDeModpacks.Dialogos
                 {
                     var dir = new DirectoryInfo(item);
                     var dirName = dir.Name;
+
+                    foreach (FileInfo file in dir.GetFiles("*.jar"))
+                    {
+                        if(File.Exists(file.FullName))
+                        {
+                            File.Delete(file.FullName);
+                        }
+                    }
                     fabric_version = dirName.Replace("fabric-loader-","");
                 }
 
