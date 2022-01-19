@@ -39,6 +39,10 @@ namespace CriadorDeModpacks.Utils
     public static void CreateModPackFiles(string mod_directory)
     {
         var modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory);
+            if (!Directory.Exists(modpackDirectory))
+            {
+                Directory.CreateDirectory(modpackDirectory);
+            }
         File.Copy(@"Arquivos\launcher_profiles.json", Path.Combine(modpackDirectory, "launcher_profiles.json"), true);
         File.Copy(@"Arquivos\.htaccess", Path.Combine(modpackDirectory, ".htaccess"), true);
     }

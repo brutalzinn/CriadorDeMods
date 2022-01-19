@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Linq;
 using CriadorDeModpacks.Dialogos.ModsManagerDialog;
+using CriadorDeModpacks.Utils;
 
 namespace CriadorDeModpacks
 {
@@ -280,9 +281,12 @@ namespace CriadorDeModpacks
                 var modpack_old = Globals.ModPacks.Where(e => e.id == criarModPack.ModPack.id).FirstOrDefault();
                 Globals.ModPacks.Remove(modpack_old);
                 Globals.ModPacks.Add(criarModPack.ModPack);
+                ApiUtils.CreateModPackFiles(criarModPack.ModPack.directory);
+
                 saveAllModpacks();
             }
-
+            
+            
             CarregarModPacksComboBox();
             ListarDataGrid();
         }
