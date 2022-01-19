@@ -100,24 +100,30 @@ namespace CriadorDeModpacks
             ListarDataGrid();
         }
 
-        //botao salvar em json
-        private void button3_Click(object sender, EventArgs e)
+        public void saveAllModpacks()
         {
-
             var modpacks_defauls = Globals.ModPacks.FindAll(e => e.@default == true);
 
-            if(modpacks_defauls.Count > 1) {
+            if (modpacks_defauls.Count > 1)
+            {
                 string modpacks_errados = "Há mais de um modpack padrão criado.Faça a correção" + Environment.NewLine;
-                foreach(var item in modpacks_defauls)
+                foreach (var item in modpacks_defauls)
                 {
                     modpacks_errados += item.id + Environment.NewLine;
                 }
                 MessageBox.Show(modpacks_errados);
                 return;
             }
-            
+
             var json = JsonConvert.SerializeObject(Globals.ModPacks, Formatting.Indented);
             File.WriteAllText(Globals.filename, json);
+        }
+        //botao salvar em json
+        private void button3_Click(object sender, EventArgs e)
+        {
+            saveAllModpacks();
+
+
 
 
 
@@ -274,6 +280,7 @@ namespace CriadorDeModpacks
                 var modpack_old = Globals.ModPacks.Where(e => e.id == criarModPack.ModPack.id).FirstOrDefault();
                 Globals.ModPacks.Remove(modpack_old);
                 Globals.ModPacks.Add(criarModPack.ModPack);
+                saveAllModpacks();
             }
 
             CarregarModPacksComboBox();

@@ -58,6 +58,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txb_diretory = new System.Windows.Forms.TextBox();
             this.lbl_error = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txb_fabric = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -72,13 +74,15 @@
             // 
             // txb_minecraft_version
             // 
-            this.txb_minecraft_version.Location = new System.Drawing.Point(98, 144);
+            this.txb_minecraft_version.Location = new System.Drawing.Point(97, 181);
             this.txb_minecraft_version.Name = "txb_minecraft_version";
             this.txb_minecraft_version.Size = new System.Drawing.Size(125, 27);
             this.txb_minecraft_version.TabIndex = 1;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.txb_fabric);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.txb_id);
             this.groupBox1.Controls.Add(this.label9);
@@ -119,7 +123,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 288);
+            this.label9.Location = new System.Drawing.Point(14, 325);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(77, 20);
             this.label9.TabIndex = 12;
@@ -127,7 +131,7 @@
             // 
             // txb_img
             // 
-            this.txb_img.Location = new System.Drawing.Point(98, 288);
+            this.txb_img.Location = new System.Drawing.Point(97, 325);
             this.txb_img.Name = "txb_img";
             this.txb_img.Size = new System.Drawing.Size(125, 27);
             this.txb_img.TabIndex = 11;
@@ -135,7 +139,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 246);
+            this.label5.Location = new System.Drawing.Point(14, 283);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 20);
             this.label5.TabIndex = 10;
@@ -144,7 +148,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 194);
+            this.label4.Location = new System.Drawing.Point(14, 231);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(25, 20);
             this.label4.TabIndex = 9;
@@ -152,14 +156,14 @@
             // 
             // txb_port
             // 
-            this.txb_port.Location = new System.Drawing.Point(98, 243);
+            this.txb_port.Location = new System.Drawing.Point(97, 280);
             this.txb_port.Name = "txb_port";
             this.txb_port.Size = new System.Drawing.Size(125, 27);
             this.txb_port.TabIndex = 8;
             // 
             // txb_ip
             // 
-            this.txb_ip.Location = new System.Drawing.Point(98, 194);
+            this.txb_ip.Location = new System.Drawing.Point(97, 231);
             this.txb_ip.Name = "txb_ip";
             this.txb_ip.Size = new System.Drawing.Size(125, 27);
             this.txb_ip.TabIndex = 7;
@@ -183,7 +187,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 147);
+            this.label2.Location = new System.Drawing.Point(14, 184);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 20);
             this.label2.TabIndex = 4;
@@ -192,7 +196,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 113);
+            this.label1.Location = new System.Drawing.Point(16, 109);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 20);
             this.label1.TabIndex = 3;
@@ -351,6 +355,22 @@
             this.lbl_error.Text = "Error";
             this.lbl_error.Visible = false;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 144);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(51, 20);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "Fabric:";
+            // 
+            // txb_fabric
+            // 
+            this.txb_fabric.Location = new System.Drawing.Point(97, 141);
+            this.txb_fabric.Name = "txb_fabric";
+            this.txb_fabric.Size = new System.Drawing.Size(126, 27);
+            this.txb_fabric.TabIndex = 15;
+            // 
             // CriarModPack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -404,5 +424,7 @@
         private CheckBox ckb_premium;
         private CheckBox ckb_verify_mods;
         private Button button1;
+        private Label label11;
+        public TextBox txb_fabric;
     }
 }

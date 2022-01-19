@@ -47,6 +47,7 @@ namespace CriadorDeModpacks.Dialogos
                 this.txb_minecraft_version.Text = ModPack.game_version;
                 this.txb_forge_version.Text = ModPack.forge_version;
                 this.txb_ip.Text = ModPack.server_ip;
+                this.txb_fabric.Text = ModPack.fabric_version;
                 this.txb_port.Text = ModPack.server_port;
                 this.txb_img.Text = ModPack.img;
                 this.txb_autor.Text = ModPack.author;
@@ -80,6 +81,7 @@ namespace CriadorDeModpacks.Dialogos
                 @default = this.ckb_default.Checked,
                 author = this.txb_autor.Text,
                 description = this.txb_description.Text,
+                fabric_version = this.txb_fabric.Text
 
             };
             CloseForm(DialogResult.OK);
@@ -149,8 +151,20 @@ namespace CriadorDeModpacks.Dialogos
 
             if (form.DialogResult == DialogResult.OK)
             {
+                var modpackDirectory = Path.Combine(Globals.modpack_root, form.mod_directory);
+                var version_path =  Path.Combine(modpackDirectory, "versions");
+                var fabric_version = "";
                 //pegarversão da pasta é mais fácil que ler o json quebrado.
+                var versions_folder = Directory.GetDirectories(version_path);
+               
+                foreach(string item in versions_folder)
+                {
+                    var dir = new DirectoryInfo(item);
+                    var dirName = dir.Name;
+                    fabric_version = dirName.Replace("fabric-loader-","");
+                }
 
+                this.txb_fabric.Text = fabric_version;
             }
         }
 
