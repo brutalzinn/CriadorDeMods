@@ -31,6 +31,9 @@
             this.txb_forge_version = new System.Windows.Forms.TextBox();
             this.txb_minecraft_version = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbl_error = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txb_fabric_version = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txb_id = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -57,9 +60,6 @@
             this.txb_autor = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txb_diretory = new System.Windows.Forms.TextBox();
-            this.lbl_error = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txb_fabric = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -78,11 +78,13 @@
             this.txb_minecraft_version.Name = "txb_minecraft_version";
             this.txb_minecraft_version.Size = new System.Drawing.Size(125, 27);
             this.txb_minecraft_version.TabIndex = 1;
+            this.txb_minecraft_version.TextChanged += new System.EventHandler(this.txb_minecraft_version_TextChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lbl_error);
             this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.txb_fabric);
+            this.groupBox1.Controls.Add(this.txb_fabric_version);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.txb_id);
             this.groupBox1.Controls.Add(this.label9);
@@ -104,10 +106,36 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configurations - Modpack";
             // 
+            // lbl_error
+            // 
+            this.lbl_error.AutoSize = true;
+            this.lbl_error.ForeColor = System.Drawing.Color.Red;
+            this.lbl_error.Location = new System.Drawing.Point(11, 351);
+            this.lbl_error.Name = "lbl_error";
+            this.lbl_error.Size = new System.Drawing.Size(41, 20);
+            this.lbl_error.TabIndex = 12;
+            this.lbl_error.Text = "Error";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 144);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(51, 20);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "Fabric:";
+            // 
+            // txb_fabric_version
+            // 
+            this.txb_fabric_version.Location = new System.Drawing.Point(97, 141);
+            this.txb_fabric_version.Name = "txb_fabric_version";
+            this.txb_fabric_version.Size = new System.Drawing.Size(126, 27);
+            this.txb_fabric_version.TabIndex = 15;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(14, 30);
+            this.label10.Location = new System.Drawing.Point(16, 34);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(25, 20);
             this.label10.TabIndex = 14;
@@ -123,7 +151,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 325);
+            this.label9.Location = new System.Drawing.Point(16, 288);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(77, 20);
             this.label9.TabIndex = 12;
@@ -131,7 +159,7 @@
             // 
             // txb_img
             // 
-            this.txb_img.Location = new System.Drawing.Point(97, 325);
+            this.txb_img.Location = new System.Drawing.Point(96, 285);
             this.txb_img.Name = "txb_img";
             this.txb_img.Size = new System.Drawing.Size(125, 27);
             this.txb_img.TabIndex = 11;
@@ -139,7 +167,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 283);
+            this.label5.Location = new System.Drawing.Point(16, 252);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 20);
             this.label5.TabIndex = 10;
@@ -148,7 +176,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 231);
+            this.label4.Location = new System.Drawing.Point(16, 217);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(25, 20);
             this.label4.TabIndex = 9;
@@ -156,14 +184,14 @@
             // 
             // txb_port
             // 
-            this.txb_port.Location = new System.Drawing.Point(97, 280);
+            this.txb_port.Location = new System.Drawing.Point(96, 252);
             this.txb_port.Name = "txb_port";
             this.txb_port.Size = new System.Drawing.Size(125, 27);
             this.txb_port.TabIndex = 8;
             // 
             // txb_ip
             // 
-            this.txb_ip.Location = new System.Drawing.Point(97, 231);
+            this.txb_ip.Location = new System.Drawing.Point(96, 217);
             this.txb_ip.Name = "txb_ip";
             this.txb_ip.Size = new System.Drawing.Size(125, 27);
             this.txb_ip.TabIndex = 7;
@@ -204,7 +232,8 @@
             // 
             // btn_salvar
             // 
-            this.btn_salvar.Location = new System.Drawing.Point(563, 363);
+            this.btn_salvar.Enabled = false;
+            this.btn_salvar.Location = new System.Drawing.Point(576, 363);
             this.btn_salvar.Name = "btn_salvar";
             this.btn_salvar.Size = new System.Drawing.Size(101, 34);
             this.btn_salvar.TabIndex = 7;
@@ -214,7 +243,7 @@
             // 
             // btn_cancelar
             // 
-            this.btn_cancelar.Location = new System.Drawing.Point(456, 363);
+            this.btn_cancelar.Location = new System.Drawing.Point(469, 363);
             this.btn_cancelar.Name = "btn_cancelar";
             this.btn_cancelar.Size = new System.Drawing.Size(101, 34);
             this.btn_cancelar.TabIndex = 8;
@@ -339,44 +368,17 @@
             // 
             // txb_diretory
             // 
-            this.txb_diretory.Location = new System.Drawing.Point(95, 67);
+            this.txb_diretory.Location = new System.Drawing.Point(96, 67);
             this.txb_diretory.Name = "txb_diretory";
-            this.txb_diretory.Size = new System.Drawing.Size(125, 27);
+            this.txb_diretory.Size = new System.Drawing.Size(124, 27);
             this.txb_diretory.TabIndex = 10;
-            // 
-            // lbl_error
-            // 
-            this.lbl_error.AutoSize = true;
-            this.lbl_error.ForeColor = System.Drawing.Color.Red;
-            this.lbl_error.Location = new System.Drawing.Point(12, 363);
-            this.lbl_error.Name = "lbl_error";
-            this.lbl_error.Size = new System.Drawing.Size(41, 20);
-            this.lbl_error.TabIndex = 12;
-            this.lbl_error.Text = "Error";
-            this.lbl_error.Visible = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 144);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(51, 20);
-            this.label11.TabIndex = 16;
-            this.label11.Text = "Fabric:";
-            // 
-            // txb_fabric
-            // 
-            this.txb_fabric.Location = new System.Drawing.Point(97, 141);
-            this.txb_fabric.Name = "txb_fabric";
-            this.txb_fabric.Size = new System.Drawing.Size(126, 27);
-            this.txb_fabric.TabIndex = 15;
+            this.txb_diretory.TextChanged += new System.EventHandler(this.txb_diretory_TextChanged);
             // 
             // CriarModPack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 406);
-            this.Controls.Add(this.lbl_error);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btn_cancelar);
             this.Controls.Add(this.groupBox1);
@@ -389,7 +391,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -425,6 +426,6 @@
         private CheckBox ckb_verify_mods;
         private Button button1;
         private Label label11;
-        public TextBox txb_fabric;
+        public TextBox txb_fabric_version;
     }
 }

@@ -47,7 +47,7 @@ namespace CriadorDeModpacks.Dialogos
                 this.txb_minecraft_version.Text = ModPack.game_version;
                 this.txb_forge_version.Text = ModPack.forge_version;
                 this.txb_ip.Text = ModPack.server_ip;
-                this.txb_fabric.Text = ModPack.fabric_version;
+                this.txb_fabric_version.Text = ModPack.fabric_version;
                 this.txb_port.Text = ModPack.server_port;
                 this.txb_img.Text = ModPack.img;
                 this.txb_autor.Text = ModPack.author;
@@ -81,7 +81,7 @@ namespace CriadorDeModpacks.Dialogos
                 @default = this.ckb_default.Checked,
                 author = this.txb_autor.Text,
                 description = this.txb_description.Text,
-                fabric_version = this.txb_fabric.Text
+                fabric_version = this.txb_fabric_version.Text
 
             };
             CloseForm(DialogResult.OK);
@@ -172,13 +172,41 @@ namespace CriadorDeModpacks.Dialogos
                     fabric_version = dirName.Replace("fabric-loader-","");
                 }
 
-                this.txb_fabric.Text = fabric_version;
+                this.txb_fabric_version.Text = fabric_version;
             }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void txb_diretory_TextChanged(object sender, EventArgs e)
+        {
+            if (txb_diretory.Text.Length == 0)
+            {
+                btn_salvar.Enabled = false;
+                lbl_error.Text = "Fill the mod pack directory name.";
+            }
+            else
+            {
+                lbl_error.Text = "";
+                btn_salvar.Enabled = true;
+            }
+        }
+
+        private void txb_minecraft_version_TextChanged(object sender, EventArgs e)
+        {
+            if (txb_minecraft_version.Text.Length == 0)
+            {
+                btn_salvar.Enabled = false;
+                lbl_error.Text = "Fill the minecraft version";
+            }
+            else
+            {
+                lbl_error.Text = "";
+                btn_salvar.Enabled = true;
+            }
         }
     }
 }

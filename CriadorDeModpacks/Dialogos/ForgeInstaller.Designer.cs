@@ -48,7 +48,7 @@
             // 
             // btn_download_forge
             // 
-            this.btn_download_forge.Location = new System.Drawing.Point(200, 80);
+            this.btn_download_forge.Location = new System.Drawing.Point(191, 57);
             this.btn_download_forge.Name = "btn_download_forge";
             this.btn_download_forge.Size = new System.Drawing.Size(185, 60);
             this.btn_download_forge.TabIndex = 2;
@@ -59,7 +59,7 @@
             // btn_clipboard_copy
             // 
             this.btn_clipboard_copy.Enabled = false;
-            this.btn_clipboard_copy.Location = new System.Drawing.Point(200, 162);
+            this.btn_clipboard_copy.Location = new System.Drawing.Point(191, 138);
             this.btn_clipboard_copy.Name = "btn_clipboard_copy";
             this.btn_clipboard_copy.Size = new System.Drawing.Size(185, 60);
             this.btn_clipboard_copy.TabIndex = 5;
@@ -70,7 +70,7 @@
             // btn_start_forge
             // 
             this.btn_start_forge.Enabled = false;
-            this.btn_start_forge.Location = new System.Drawing.Point(147, 246);
+            this.btn_start_forge.Location = new System.Drawing.Point(138, 218);
             this.btn_start_forge.Name = "btn_start_forge";
             this.btn_start_forge.Size = new System.Drawing.Size(286, 60);
             this.btn_start_forge.TabIndex = 6;
@@ -130,7 +130,7 @@
             this.Controls.Add(this.btn_download_forge);
             this.Controls.Add(this.progressBar1);
             this.Name = "ForgeInstaller";
-            this.Text = "ForgeInstaller";
+            this.Text = "Forge Installer";
             this.Load += new System.EventHandler(this.ForgeInstaller_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
