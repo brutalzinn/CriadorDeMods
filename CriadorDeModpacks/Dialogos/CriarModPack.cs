@@ -106,9 +106,12 @@ namespace CriadorDeModpacks.Dialogos
         {
             var form = new ForgeInstaller();
             form.minecraft_version = this.txb_minecraft_version.Text;
-            form.forge_version = this.txb_forge_version.Text;
             form.mod_directory = this.txb_diretory.Text;
             form.ShowDialog();
+            if(form.DialogResult == DialogResult.OK)
+            {
+                this.txb_forge_version.Text = form.forge_version;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -120,14 +123,14 @@ namespace CriadorDeModpacks.Dialogos
 
         private void txb_forge_version_TextChanged(object sender, EventArgs e)
         {
-            if(txb_forge_version.Text.Length == 0)
-            {
-                btn_install_forge.Enabled = false;
-            }
-            else
-            {
-                btn_install_forge.Enabled = true;
-            }
+            //if(txb_forge_version.Text.Length == 0)
+            //{
+            //    btn_install_forge.Enabled = false;
+            //}
+            //else
+            //{
+            //    btn_install_forge.Enabled = true;
+            //}
         }
 
         private void button1_Click_1(object sender, EventArgs e)

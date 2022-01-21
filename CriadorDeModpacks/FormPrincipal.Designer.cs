@@ -53,6 +53,7 @@
             this.btn_sync_modpack = new System.Windows.Forms.Button();
             this.btn_configuracoes = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -288,11 +289,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(744, 85);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(129, 26);
+            this.button2.TabIndex = 23;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 600);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_configuracoes);
             this.Controls.Add(this.btn_sync_modpack);
@@ -346,5 +358,6 @@
         private Button btn_sync_modpack;
         private Button btn_configuracoes;
         private Button button1;
+        private Button button2;
     }
 }

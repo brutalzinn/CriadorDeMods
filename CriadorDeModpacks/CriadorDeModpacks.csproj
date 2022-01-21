@@ -19,13 +19,12 @@
 
   <ItemGroup>
     <PackageReference Include="fNbt" Version="0.6.4" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1072.54" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Dialogos\FabricInstaller.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Dialogos\FabricInstaller.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

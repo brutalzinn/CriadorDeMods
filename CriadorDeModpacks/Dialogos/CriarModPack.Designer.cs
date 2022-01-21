@@ -284,7 +284,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(239, 83);
+            this.button1.Location = new System.Drawing.Point(239, 82);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(122, 37);
             this.button1.TabIndex = 19;
@@ -314,7 +314,6 @@
             // 
             // btn_install_forge
             // 
-            this.btn_install_forge.Enabled = false;
             this.btn_install_forge.Location = new System.Drawing.Point(239, 126);
             this.btn_install_forge.Name = "btn_install_forge";
             this.btn_install_forge.Size = new System.Drawing.Size(122, 37);

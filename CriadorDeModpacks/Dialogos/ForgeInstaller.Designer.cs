@@ -37,18 +37,19 @@
             this.lbl_forge_version = new System.Windows.Forms.Label();
             this.btn_ok = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 357);
+            this.progressBar1.Location = new System.Drawing.Point(12, 404);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(561, 33);
             this.progressBar1.TabIndex = 0;
             // 
             // btn_download_forge
             // 
-            this.btn_download_forge.Location = new System.Drawing.Point(191, 57);
+            this.btn_download_forge.Location = new System.Drawing.Point(259, 84);
             this.btn_download_forge.Name = "btn_download_forge";
             this.btn_download_forge.Size = new System.Drawing.Size(185, 60);
             this.btn_download_forge.TabIndex = 2;
@@ -59,7 +60,7 @@
             // btn_clipboard_copy
             // 
             this.btn_clipboard_copy.Enabled = false;
-            this.btn_clipboard_copy.Location = new System.Drawing.Point(191, 138);
+            this.btn_clipboard_copy.Location = new System.Drawing.Point(259, 183);
             this.btn_clipboard_copy.Name = "btn_clipboard_copy";
             this.btn_clipboard_copy.Size = new System.Drawing.Size(185, 60);
             this.btn_clipboard_copy.TabIndex = 5;
@@ -70,7 +71,7 @@
             // btn_start_forge
             // 
             this.btn_start_forge.Enabled = false;
-            this.btn_start_forge.Location = new System.Drawing.Point(138, 218);
+            this.btn_start_forge.Location = new System.Drawing.Point(206, 263);
             this.btn_start_forge.Name = "btn_start_forge";
             this.btn_start_forge.Size = new System.Drawing.Size(286, 60);
             this.btn_start_forge.TabIndex = 6;
@@ -81,7 +82,7 @@
             // lbl_info
             // 
             this.lbl_info.AutoSize = true;
-            this.lbl_info.Location = new System.Drawing.Point(22, 323);
+            this.lbl_info.Location = new System.Drawing.Point(12, 363);
             this.lbl_info.Name = "lbl_info";
             this.lbl_info.Size = new System.Drawing.Size(498, 20);
             this.lbl_info.TabIndex = 7;
@@ -90,7 +91,7 @@
             // lbl_forge_version
             // 
             this.lbl_forge_version.AutoSize = true;
-            this.lbl_forge_version.Location = new System.Drawing.Point(234, 24);
+            this.lbl_forge_version.Location = new System.Drawing.Point(590, 283);
             this.lbl_forge_version.Name = "lbl_forge_version";
             this.lbl_forge_version.Size = new System.Drawing.Size(102, 20);
             this.lbl_forge_version.TabIndex = 8;
@@ -98,7 +99,7 @@
             // 
             // btn_ok
             // 
-            this.btn_ok.Location = new System.Drawing.Point(465, 399);
+            this.btn_ok.Location = new System.Drawing.Point(622, 443);
             this.btn_ok.Name = "btn_ok";
             this.btn_ok.Size = new System.Drawing.Size(108, 61);
             this.btn_ok.TabIndex = 9;
@@ -108,7 +109,7 @@
             // 
             // btn_cancel
             // 
-            this.btn_cancel.Location = new System.Drawing.Point(358, 399);
+            this.btn_cancel.Location = new System.Drawing.Point(515, 443);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(101, 61);
             this.btn_cancel.TabIndex = 10;
@@ -120,7 +121,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 472);
+            this.ClientSize = new System.Drawing.Size(742, 516);
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.btn_ok);
             this.Controls.Add(this.lbl_forge_version);
@@ -148,5 +149,6 @@
         private Label lbl_forge_version;
         private Button btn_ok;
         private Button btn_cancel;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

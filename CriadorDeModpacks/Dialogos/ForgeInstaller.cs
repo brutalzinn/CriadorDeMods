@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,18 +33,14 @@ namespace CriadorDeModpacks.Dialogos
         }
 
         //this is wrong way to do this
-        string GetUrl()
-        {
-            return $"https://maven.minecraftforge.net/net/minecraftforge/forge/{minecraft_version}-{forge_version}/forge-{minecraft_version}-{forge_version}-installer.jar";
-
-        }
-        private void startDownload()
+     
+        private void startDownload(string forge_url)
         {
             Thread thread = new Thread(() => {
                 WebClient client = new WebClient();
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(GetUrl()), Path.Combine(Application.StartupPath,"web","files","files", mod_directory, forge_name));
+                client.DownloadFileAsync(new Uri(forge_url), Path.Combine(Application.StartupPath,"web","files","files", mod_directory, forge_name));
             });
             thread.Start();
         }
@@ -74,8 +71,23 @@ namespace CriadorDeModpacks.Dialogos
             }
             File.Copy(@"Arquivos\launcher_profiles.json", Path.Combine(modpackDirectory, "launcher_profiles.json"), true);
             File.Copy(@"Arquivos\.htaccess", Path.Combine(modpackDirectory, ".htaccess"), true);
-            
-            startDownload();
+
+            var launcherUpdateForm = new WebViewForgeInstaller(minecraft_version, modpackDirectory);
+            launcherUpdateForm.ShowDialog();
+            if(launcherUpdateForm.DialogResult == DialogResult.OK)
+            {
+                var name = launcherUpdateForm.forge_url.Split('/');
+                var index = name.Length - 1;
+                forge_name = name[index];
+                var match = Regex.Match(forge_name, @"forge-(.*)-installer");
+                if (match.Success)
+                {
+                    forge_version = match.Groups[1].Value;
+                }
+           
+                startDownload(launcherUpdateForm.forge_url);
+            }
+            //
         }
 
         private void clipboard_copy_click(object sender, EventArgs e)
@@ -170,7 +182,6 @@ namespace CriadorDeModpacks.Dialogos
         private void ForgeInstaller_Load(object sender, EventArgs e)
         {
             modpackDirectory = Path.Combine(Globals.modpack_root, mod_directory ?? "default");
-            forge_name = $"forge-{minecraft_version}-{forge_version}-installer.jar";
             lbl_forge_version.Text = "Installing forge " + forge_version;
 
         }

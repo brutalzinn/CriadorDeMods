@@ -81,6 +81,10 @@ namespace CriadorDeModpacks
         }
         private void CarregarConfiguracoes()
         {
+            if (!File.Exists(Globals.filename_config))
+            {
+                return;
+            }
             var config_json = File.ReadAllText(Globals.filename_config);
             Globals.Configuracao = JsonConvert.DeserializeObject<ConfiguracaoModel>(config_json);
         }
@@ -115,7 +119,10 @@ namespace CriadorDeModpacks
                 MessageBox.Show(modpacks_errados);
                 return;
             }
-
+            if (!File.Exists(Globals.filename))
+            {
+                File.Create(Globals.filename);
+            }
             var json = JsonConvert.SerializeObject(Globals.ModPacks, Formatting.Indented);
             File.WriteAllText(Globals.filename, json);
         }
@@ -415,6 +422,12 @@ namespace CriadorDeModpacks
             CarregarConfiguracoes();
             launcherUpdateForm.ShowDialog();
         
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            var launcherUpdateForm = new WebViewForgeInstaller("1.12.2");
+            launcherUpdateForm.ShowDialog();
         }
     }
 }
