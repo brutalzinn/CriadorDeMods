@@ -83,7 +83,9 @@ namespace CriadorDeModpacks
         {
             if (!File.Exists(Globals.filename_config))
             {
-                return;
+                var config = new ConfiguracaoModel();
+                var json = JsonConvert.SerializeObject(config, Formatting.Indented);
+                File.WriteAllText(Globals.filename_config, json);
             }
             var config_json = File.ReadAllText(Globals.filename_config);
             Globals.Configuracao = JsonConvert.DeserializeObject<ConfiguracaoModel>(config_json);

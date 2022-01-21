@@ -40,14 +40,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Arquivos\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Arquivos\.htaccess">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Arquivos\launcher_profiles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mouse.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
