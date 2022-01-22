@@ -83,12 +83,23 @@ namespace CriadorDeModpacks
         {
             if (!File.Exists(Globals.filename_config))
             {
-                var config = new ConfiguracaoModel();
+                var config = new GenericConfigModel();
+                config.Enviroment = EnvironmentModel.ENV.DEV;
+                var model = new ConfigModel()
+                {
+                    Dev_mode = EnvironmentModel.ENV.DEV,
+                    Api_Header = "api-key",
+                    Api_Key = "teste",
+                    Url_Api = "http://127.0.0.1",
+                    Url = "http://127.0.0.1"
+                };
+                config.Configs = new List<ConfigModel>();
+                config.Configs.Add(model);
                 var json = JsonConvert.SerializeObject(config, Formatting.Indented);
                 File.WriteAllText(Globals.filename_config, json);
             }
             var config_json = File.ReadAllText(Globals.filename_config);
-            Globals.Configuracao = JsonConvert.DeserializeObject<ConfiguracaoModel>(config_json);
+            Globals.Configuracao = JsonConvert.DeserializeObject<GenericConfigModel>(config_json);
         }
         private void CarregarModPacks()
         {
@@ -268,9 +279,11 @@ namespace CriadorDeModpacks
             ListarDataGrid();
         }
 
-        private void SalvarConfiguracoes(ConfiguracaoModel config)
-        {      
-            var json = JsonConvert.SerializeObject(config, Formatting.Indented);
+        private void SalvarConfiguracoes(ConfigModel model)
+        {
+            EnvironmentModel.addConfigEnv(model, Globals.Configuracao.Enviroment);
+            Globals.Configuracao.Enviroment = model.Dev_mode;
+            var json = JsonConvert.SerializeObject(Globals.Configuracao, Formatting.Indented);
             File.WriteAllText(Application.StartupPath + @"\config.json", json);
         }
 
@@ -306,7 +319,7 @@ namespace CriadorDeModpacks
             switch (cbx_search.SelectedItem)
             {
                 case Search.TIPOS.id:
-                    ModPacks_Filters = Globals.ModPacks.FindAll(e => e.id.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.id.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.nome:
                 ModPacks_Filters = Globals.ModPacks.FindAll(e => e.name.Contains(textBox1.Text)).ToList();
@@ -394,15 +407,22 @@ namespace CriadorDeModpacks
         {
             var configuracoesForm = new Configuracoes();
             CarregarConfiguracoes();
-            configuracoesForm.txb_web_url.Text = Globals.Configuracao.Url;
-            configuracoesForm.txb_api_url.Text = Globals.Configuracao.Url_Api;
-            configuracoesForm.txb_api_key.Text = Globals.Configuracao.Api_Key;
-            configuracoesForm.txb_api_header.Text = Globals.Configuracao.Api_Header;
+            configuracoesForm.txb_web_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url;
+            configuracoesForm.txb_api_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api;
+            configuracoesForm.txb_api_key.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key;
+            configuracoesForm.txb_api_header.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header;
+
+
             configuracoesForm.ShowDialog();
             if (configuracoesForm.DialogResult == DialogResult.OK)
             {
-                var config = new ConfiguracaoModel();
+                var config = new ConfigModel();
 
+                var ConfigModel = configuracoesForm.cbx_dev_mode.SelectedItem;
+                if (ConfigModel != null)
+                {
+                    config.Dev_mode = (EnvironmentModel.ENV)ConfigModel;
+                }
                 config.Url = configuracoesForm.txb_web_url.Text;
                 config.Url_Api = configuracoesForm.txb_api_url.Text;
                 config.Api_Key = configuracoesForm.txb_api_key.Text;
@@ -430,6 +450,11 @@ namespace CriadorDeModpacks
         {
             var launcherUpdateForm = new WebViewForgeInstaller("1.12.2");
             launcherUpdateForm.ShowDialog();
+        }
+
+        private void textBox1_Validated(object sender, EventArgs e)
+        {
+
         }
     }
 }

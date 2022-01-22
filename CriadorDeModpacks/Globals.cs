@@ -14,6 +14,8 @@ namespace CriadorDeModpacks
         public static string filename_config = Application.StartupPath + @"\config.json";
         public static List<ModPack> ModPacks { get; set; } = new List<ModPack>();
         public static string api_key { get; set; } = "teste";
-        public static ConfiguracaoModel Configuracao { get; set; }
+        public static GenericConfigModel Configuracao { get; set; }
+       
+
     }
 }

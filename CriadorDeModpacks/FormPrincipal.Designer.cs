@@ -226,6 +226,7 @@
             this.textBox1.Size = new System.Drawing.Size(270, 27);
             this.textBox1.TabIndex = 16;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.Validated += new System.EventHandler(this.textBox1_Validated);
             // 
             // cbx_search
             // 
