@@ -273,9 +273,9 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.txb_diretory);
             this.groupBox2.Controls.Add(this.ckb_default);
-            this.groupBox2.Location = new System.Drawing.Point(303, 22);
+            this.groupBox2.Location = new System.Drawing.Point(303, 26);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(374, 335);
+            this.groupBox2.Size = new System.Drawing.Size(374, 331);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Configurations - Importants";
@@ -384,7 +384,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_salvar);
             this.Name = "CriarModPack";
-            this.Text = "CriarModPack";
+            this.Text = "ModPack creator";
             this.Load += new System.EventHandler(this.CriarModPack_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
