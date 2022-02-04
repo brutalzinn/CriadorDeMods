@@ -61,9 +61,32 @@ namespace CriadorDeModpacks.Dialogos
             Close();
         }
    
+        private bool CheckRequiredFields()
+        {
+            List<Control> list = new List<Control>();
+            list.Add(txb_diretory);
+            list.Add(txb_minecraft_version);
+            bool valid = true;
+            foreach(Control item in list)
+            {
+                if(item.Text.Length == 0)
+                {
+                    valid = false;
+                }
+            }
 
+            return valid;
+        }
         private void btn_salvar_Click(object sender, EventArgs e)
         {
+
+            if (!CheckRequiredFields())
+            {
+                lbl_error.Text = "Required field is invalid";
+                return;
+            }
+
+
             ModPack = new ModPack()
             {
                 id = this.txb_id.Text ?? Guid.NewGuid().ToString(),
@@ -186,30 +209,12 @@ namespace CriadorDeModpacks.Dialogos
 
         private void txb_diretory_TextChanged(object sender, EventArgs e)
         {
-            if (txb_diretory.Text.Length == 0)
-            {
-                btn_salvar.Enabled = false;
-                lbl_error.Text = "Fill the mod pack directory name.";
-            }
-            else
-            {
-                lbl_error.Text = "";
-                btn_salvar.Enabled = true;
-            }
+         
         }
 
         private void txb_minecraft_version_TextChanged(object sender, EventArgs e)
         {
-            if (txb_minecraft_version.Text.Length == 0)
-            {
-                btn_salvar.Enabled = false;
-                lbl_error.Text = "Fill the minecraft version";
-            }
-            else
-            {
-                lbl_error.Text = "";
-                btn_salvar.Enabled = true;
-            }
+       
         }
     }
 }

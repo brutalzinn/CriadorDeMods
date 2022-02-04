@@ -74,6 +74,7 @@ namespace CriadorDeModpacks
         public void CarregarModPacksComboBox()
         {
             comboBox1.Items.Clear();
+            comboBox1.SelectedText = String.Empty;
             foreach (var item in Globals.ModPacks)
             {
                 comboBox1.Items.Add(item);
@@ -265,6 +266,7 @@ namespace CriadorDeModpacks
                 Globals.ModPacks.Add(criarModPack.ModPack);
 
                 CarregarModPacksComboBox();
+                saveAllModpacks();
             }
             ListarDataGrid();
         }
@@ -277,6 +279,7 @@ namespace CriadorDeModpacks
 
             CarregarModPacksComboBox();
             ListarDataGrid();
+            saveAllModpacks();
         }
 
         private void SalvarConfiguracoes(ConfigModel model)
