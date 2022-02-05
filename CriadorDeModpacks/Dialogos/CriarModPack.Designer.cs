@@ -50,7 +50,7 @@
             this.btn_cancelar = new System.Windows.Forms.Button();
             this.ckb_default = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_install_fabric = new System.Windows.Forms.Button();
             this.ckb_verify_mods = new System.Windows.Forms.CheckBox();
             this.ckb_premium = new System.Windows.Forms.CheckBox();
             this.btn_install_forge = new System.Windows.Forms.Button();
@@ -262,7 +262,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.btn_install_fabric);
             this.groupBox2.Controls.Add(this.ckb_verify_mods);
             this.groupBox2.Controls.Add(this.ckb_premium);
             this.groupBox2.Controls.Add(this.btn_install_forge);
@@ -281,16 +281,16 @@
             this.groupBox2.Text = "Configurations - Importants";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // button1
+            // btn_install_fabric
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(239, 82);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 37);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "Install fabric";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.btn_install_fabric.Enabled = false;
+            this.btn_install_fabric.Location = new System.Drawing.Point(239, 82);
+            this.btn_install_fabric.Name = "btn_install_fabric";
+            this.btn_install_fabric.Size = new System.Drawing.Size(122, 37);
+            this.btn_install_fabric.TabIndex = 19;
+            this.btn_install_fabric.Text = "Install fabric";
+            this.btn_install_fabric.UseVisualStyleBackColor = true;
+            this.btn_install_fabric.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // ckb_verify_mods
             // 
@@ -424,7 +424,7 @@
         private Button btn_install_forge;
         private CheckBox ckb_premium;
         private CheckBox ckb_verify_mods;
-        private Button button1;
+        private Button btn_install_fabric;
         private Label label11;
         public TextBox txb_fabric_version;
     }

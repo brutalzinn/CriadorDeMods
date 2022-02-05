@@ -214,7 +214,17 @@ namespace CriadorDeModpacks.Dialogos
 
         private void txb_minecraft_version_TextChanged(object sender, EventArgs e)
         {
-       
+            if (txb_minecraft_version.Text.Length == 0)
+            {
+                btn_install_forge.Enabled = false;
+                btn_install_fabric.Enabled = false;
+            }
+            else
+            {
+                btn_install_forge.Enabled = true;
+                btn_install_fabric.Enabled = true;
+
+            }
         }
     }
 }

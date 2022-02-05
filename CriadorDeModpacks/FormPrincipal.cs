@@ -86,7 +86,7 @@ namespace CriadorDeModpacks
             {
                 var config = new GenericConfigModel();
                 config.Enviroment = EnvironmentModel.ENV.DEV;
-                var model = new ConfigModel()
+                var devModel = new ConfigModel()
                 {
                     Dev_mode = EnvironmentModel.ENV.DEV,
                     Api_Header = "api-key",
@@ -94,8 +94,17 @@ namespace CriadorDeModpacks
                     Url_Api = "http://127.0.0.1",
                     Url = "http://127.0.0.1"
                 };
+                var prodModel = new ConfigModel()
+                {
+                    Dev_mode = EnvironmentModel.ENV.PROD,
+                    Api_Header = "api-key",
+                    Api_Key = "teste",
+                    Url_Api = "http://127.0.0.1",
+                    Url = "http://127.0.0.1"
+                };
                 config.Configs = new List<ConfigModel>();
-                config.Configs.Add(model);
+                config.Configs.Add(devModel);
+                config.Configs.Add(prodModel);
                 var json = JsonConvert.SerializeObject(config, Formatting.Indented);
                 File.WriteAllText(Globals.filename_config, json);
             }
@@ -284,7 +293,7 @@ namespace CriadorDeModpacks
 
         private void SalvarConfiguracoes(ConfigModel model)
         {
-            EnvironmentModel.addConfigEnv(model, Globals.Configuracao.Enviroment);
+            EnvironmentModel.saveConfig(model);
             Globals.Configuracao.Enviroment = model.Dev_mode;
             var json = JsonConvert.SerializeObject(Globals.Configuracao, Formatting.Indented);
             File.WriteAllText(Application.StartupPath + @"\config.json", json);
@@ -425,12 +434,13 @@ namespace CriadorDeModpacks
                 if (ConfigModel != null)
                 {
                     config.Dev_mode = (EnvironmentModel.ENV)ConfigModel;
+                    config.Url = configuracoesForm.txb_web_url.Text;
+                    config.Url_Api = configuracoesForm.txb_api_url.Text;
+                    config.Api_Key = configuracoesForm.txb_api_key.Text;
+                    config.Api_Header = configuracoesForm.txb_api_header.Text;
+                    SalvarConfiguracoes(config);
                 }
-                config.Url = configuracoesForm.txb_web_url.Text;
-                config.Url_Api = configuracoesForm.txb_api_url.Text;
-                config.Api_Key = configuracoesForm.txb_api_key.Text;
-                config.Api_Header = configuracoesForm.txb_api_header.Text;
-                SalvarConfiguracoes(config);
+            
             }
         }
 

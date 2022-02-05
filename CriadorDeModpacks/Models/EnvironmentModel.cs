@@ -34,12 +34,12 @@ namespace CriadorDeModpacks.Models
             }
         }
 
-        public static void addConfigEnv(ConfigModel model, ENV environment)
+        public static void saveConfig(ConfigModel model)
         {
-            var count = Globals.Configuracao.Configs.FindAll((e) => e.Dev_mode == environment).ToList().Count();
-            if(count == 0)
+            var configs = Globals.Configuracao.Configs.FindIndex((e) => e.Dev_mode == model.Dev_mode);
+            if(configs != -1)
             {
-              Globals.Configuracao.Configs.Add(model);
+                Globals.Configuracao.Configs[configs] = model;
             }
         }
 
