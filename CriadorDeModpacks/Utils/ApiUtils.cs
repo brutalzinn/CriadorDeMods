@@ -146,7 +146,7 @@ namespace CriadorDeModpacks.Utils
 
             Uri uri = new Uri($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/launcher/version/upload");
             List<Teste> files = new List<Teste>();
-            foreach(var item in launcher.files)
+            foreach(var item in launcher.data.files)
             {
                 FileStream file = File.OpenRead(item);
                 files.Add(new Teste(file,item));
@@ -277,11 +277,11 @@ namespace CriadorDeModpacks.Utils
                 {
                     packages = new Messages.Launcher.Packages()
                     {
-                        win64 = launcherUpdateModel.packages.win64 != null ? new Messages.Launcher.Win64(launcherUpdateModel.packages.win64.url) : null,
-                        mac64 = launcherUpdateModel.packages.mac64 != null ? new Messages.Launcher.Mac64(launcherUpdateModel.packages.mac64.url) : null,
-                        linux64 = launcherUpdateModel.packages.linux64 != null ? new Messages.Launcher.Linux64(launcherUpdateModel.packages.linux64.url) : null
+                        win64 = launcherUpdateModel.data.packages.win64 != null ? new Messages.Launcher.Win64(launcherUpdateModel.data.packages.win64.url) : null,
+                        mac64 = launcherUpdateModel.data.packages.mac64 != null ? new Messages.Launcher.Mac64(launcherUpdateModel.data.packages.mac64.url) : null,
+                        linux64 = launcherUpdateModel.data.packages.linux64 != null ? new Messages.Launcher.Linux64(launcherUpdateModel.data.packages.linux64.url) : null
                     },
-                    version = launcherUpdateModel.version
+                    version = launcherUpdateModel.data.version
                 };
                 var json = JsonConvert.SerializeObject(update, Formatting.Indented);
                 
@@ -297,9 +297,7 @@ namespace CriadorDeModpacks.Utils
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/launcher/version");
             httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
-            httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "GET";
-            httpWebRequest.Accept = "application/json; charset=utf-8";
 
 
             string json = null;
@@ -310,18 +308,18 @@ namespace CriadorDeModpacks.Utils
                 json = sr.ReadToEnd();
             }
             LauncherUpdateModel resultado = JsonConvert.DeserializeObject<LauncherUpdateModel>(json);
-            if(resultado.packages == null || resultado.version == null){
+            if(resultado.data.packages == null || resultado.data.version == null){
                 return null;
             }
             return new LauncherUpdateMessage()
             {
                 packages = new Messages.Launcher.Packages()
                 {
-                    win64 = resultado.packages.win64 != null ? new Messages.Launcher.Win64(resultado.packages.win64.url) : new Messages.Launcher.Win64(),
-                    mac64 = resultado.packages.mac64 != null ? new Messages.Launcher.Mac64(resultado.packages.mac64.url) : new Messages.Launcher.Mac64(),
-                    linux64 = resultado.packages.linux64 != null ? new Messages.Launcher.Linux64(resultado.packages.linux64.url) : new Messages.Launcher.Linux64()
+                    win64 = resultado.data.packages.win64 != null ? new Messages.Launcher.Win64(resultado.data.packages.win64.url) : new Messages.Launcher.Win64(),
+                    mac64 = resultado.data.packages.mac64 != null ? new Messages.Launcher.Mac64(resultado.data.packages.mac64.url) : new Messages.Launcher.Mac64(),
+                    linux64 = resultado.data.packages.linux64 != null ? new Messages.Launcher.Linux64(resultado.data.packages.linux64.url) : new Messages.Launcher.Linux64()
                 },
-                version = resultado.version
+                version = resultado.data.version
             };
           
 

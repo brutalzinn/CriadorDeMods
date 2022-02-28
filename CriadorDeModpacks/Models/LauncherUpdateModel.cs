@@ -70,7 +70,7 @@ namespace CriadorDeModpacks.Models
         }
     }
 
-        public class LauncherUpdateModel
+        public class Data
         {
             public string version { get; set; }
             public Packages packages { get; set; }
@@ -78,7 +78,13 @@ namespace CriadorDeModpacks.Models
 
         }
 
-  
+        public class LauncherUpdateModel
+        {
+            public bool status { get; set; }
+            public Data data { get; set; }
+        }
 
-    
+
+
+
 }

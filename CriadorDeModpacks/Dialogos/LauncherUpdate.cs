@@ -48,17 +48,19 @@ namespace CriadorDeModpacks.Dialogos
             {
                 launcherUpdate = new LauncherUpdateModel()
                 {
-                    packages = new Packages()
+                    data = new Data()
                     {
-                        win64 = server.packages.win64 != null ? new Win64(server.packages.win64.url) : new Win64(),
-                        mac64 = server.packages.mac64 != null ? new Mac64(server.packages.mac64.url) : new Mac64(),
-                        linux64 = server.packages.linux64 != null ? new Linux64(server.packages.linux64.url) : new Linux64()
-                    },
-                    version = server.version,
-                    files = new List<string>()
-  
+                        packages = new Packages()
+                        {
+                            win64 = server.packages.win64 != null ? new Win64(server.packages.win64.url) : new Win64(),
+                            mac64 = server.packages.mac64 != null ? new Mac64(server.packages.mac64.url) : new Mac64(),
+                            linux64 = server.packages.linux64 != null ? new Linux64(server.packages.linux64.url) : new Linux64()
+                        },
+                        version = server.version,
+                        files = new List<string>()
+                    }
                 };
-                txb_launcher_version.Text = launcherUpdate.version;
+                txb_launcher_version.Text = launcherUpdate.data.version;
             }
             else
             {
@@ -84,8 +86,8 @@ namespace CriadorDeModpacks.Dialogos
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            launcherUpdate.version = txb_launcher_version.Text;
-            launcherUpdate.packages = new Packages();
+            launcherUpdate.data.version = txb_launcher_version.Text;
+            launcherUpdate.data.packages = new Packages();
            
             string url = $"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url}/cliente/launcher/update-launcher";
 
@@ -100,13 +102,13 @@ namespace CriadorDeModpacks.Dialogos
                 switch (item.system)
                 {
                     case SYSTEM.linux:
-                        launcherUpdate.packages.linux64 = new Linux64($"{url}/{Path.GetFileName(item.file)}");
+                        launcherUpdate.data.packages.linux64 = new Linux64($"{url}/{Path.GetFileName(item.file)}");
                     break;
                     case SYSTEM.mac:
-                        launcherUpdate.packages.mac64 = new Mac64($"{url}/{Path.GetFileName(item.file)}");
+                        launcherUpdate.data.packages.mac64 = new Mac64($"{url}/{Path.GetFileName(item.file)}");
                     break;
                     case SYSTEM.win:
-                        launcherUpdate.packages.win64 = new Win64($"{url}/{Path.GetFileName(item.file)}");
+                        launcherUpdate.data.packages.win64 = new Win64($"{url}/{Path.GetFileName(item.file)}");
                     break;
                 }
             }
@@ -164,7 +166,7 @@ namespace CriadorDeModpacks.Dialogos
             listBox1.Items.Clear();
             if (files.Count > 0)
             {
-                launcherUpdate.files = files.Select(v => v.file).ToList();
+                launcherUpdate.data.files = files.Select(v => v.file).ToList();
             }
         }
         private void btn_remove_windows_Click(object sender, EventArgs e)
