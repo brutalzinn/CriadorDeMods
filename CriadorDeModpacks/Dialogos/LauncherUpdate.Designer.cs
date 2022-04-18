@@ -124,17 +124,17 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(405, 303);
+            this.button1.Location = new System.Drawing.Point(512, 303);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(121, 51);
             this.button1.TabIndex = 8;
-            this.button1.Text = "OK";
+            this.button1.Text = "Upload";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(318, 303);
+            this.button2.Location = new System.Drawing.Point(412, 303);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(76, 51);
             this.button2.TabIndex = 9;

@@ -31,8 +31,12 @@ namespace CriadorDeModpacks.Dialogos
                 this.system = system;
             }
 
-        
-          
+            public override string ToString()
+            {
+                return Path.GetFileName(file);
+            }
+
+
         }
 
         public List<LauncherUrl> files = new List<LauncherUrl>();
@@ -77,13 +81,21 @@ namespace CriadorDeModpacks.Dialogos
         {
             Utils.ApiUtils.progress_bar = progressBar1;
             Utils.ApiUtils.progress_txt = lbl_status;
+
             if (await Utils.ApiUtils.LauncherUpdateVersion(launcherUpdate))
             {
                 await Utils.ApiUtils.UploadLauncherUpdate(launcherUpdate);
             }
 
 
+
         }
+
+        private void ApiUtils_FinishedUpload(object? sender, EventArgs e)
+        {
+            lbl_status.Invoke(() => lbl_status.Text = "Upload finished.");
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             launcherUpdate.data.version = txb_launcher_version.Text;
@@ -114,6 +126,8 @@ namespace CriadorDeModpacks.Dialogos
             }
             Thread t = new Thread(StartBackground);          // Kick off a new thread
             t.Start();
+
+            Utils.ApiUtils.FinishedUpload += ApiUtils_FinishedUpload;
 
 
 

@@ -18,6 +18,8 @@ namespace CriadorDeModpacks.Utils
     {
         public static ProgressBar progress_bar { get; set; }
 
+        public static event EventHandler FinishedUpload = delegate { };
+
         public static Label progress_txt { get; set; }
 
         public static void CreateServerFile(ModPack  modpack)
@@ -115,6 +117,7 @@ namespace CriadorDeModpacks.Utils
             FileStream file = File.OpenRead(path);
             Uri uri = new Uri($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/launcher/modpacks/upload");
             HttpClient httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(120);
             httpClient.DefaultRequestHeaders.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
             MultipartFormDataContent form = new MultipartFormDataContent();
             form.Add(new StringContent(directory), "directory");
@@ -126,8 +129,10 @@ namespace CriadorDeModpacks.Utils
             httpClient.Dispose();
             file.Close();
 
-           // result.Content.ReadAsStringAsync().Result;
-           return  result.StatusCode == HttpStatusCode.OK;
+            // result.Content.ReadAsStringAsync().Result;
+            FinishedUpload(null, EventArgs.Empty);
+
+            return result.StatusCode == HttpStatusCode.OK;
         }
         public class Teste
         {
@@ -153,6 +158,7 @@ namespace CriadorDeModpacks.Utils
             }
 
             HttpClient httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(120);
             httpClient.DefaultRequestHeaders.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
             MultipartFormDataContent form = new MultipartFormDataContent();
             bool keepTracking = true;
@@ -169,6 +175,8 @@ namespace CriadorDeModpacks.Utils
             {
                 file.file.Close();
             }
+            FinishedUpload(null, EventArgs.Empty);
+
             return result.StatusCode == HttpStatusCode.OK;
 
 
@@ -193,7 +201,7 @@ namespace CriadorDeModpacks.Utils
                 }
                 prevPos = pos;
 
-                Thread.Sleep(100); //update every 100ms
+                Thread.Sleep(50); //update every 50ms
             }
         }
  

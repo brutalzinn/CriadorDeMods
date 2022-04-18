@@ -74,7 +74,7 @@
             this.btn_generate_modpack.Name = "btn_generate_modpack";
             this.btn_generate_modpack.Size = new System.Drawing.Size(148, 42);
             this.btn_generate_modpack.TabIndex = 2;
-            this.btn_generate_modpack.Text = "Generate";
+            this.btn_generate_modpack.Text = "Upload";
             this.btn_generate_modpack.UseVisualStyleBackColor = true;
             this.btn_generate_modpack.Click += new System.EventHandler(this.btn_generate_modpack_Click);
             // 
