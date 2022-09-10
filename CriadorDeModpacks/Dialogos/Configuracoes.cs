@@ -19,10 +19,10 @@ namespace CriadorDeModpacks.Dialogos
             InitializeComponent();
             EnvironmentModel.FillConfigComboBox(cbx_dev_mode);
 
-            txb_api_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api;
+            txb_api_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi;
             txb_web_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url;
-            txb_api_key.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key;
-            txb_api_header.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header;
+            txb_api_key.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey;
+            txb_api_header.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader;
             cbx_dev_mode.SelectedItem = Globals.Configuracao.Enviroment;
         }
         private void CloseForm(DialogResult result)
@@ -47,12 +47,12 @@ namespace CriadorDeModpacks.Dialogos
 
         private void cbx_dev_mode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var Enviroment = (EnvironmentModel.ENV)cbx_dev_mode.SelectedItem;
+            var Enviroment = (EnvironmentModel.EnvironmentMode)cbx_dev_mode.SelectedItem;
       
             txb_web_url.Text = EnvironmentModel.GetConfigEnv(Enviroment).Url;
-            txb_api_url.Text = EnvironmentModel.GetConfigEnv(Enviroment).Url_Api;
-            txb_api_key.Text = EnvironmentModel.GetConfigEnv(Enviroment).Api_Key;
-            txb_api_header.Text = EnvironmentModel.GetConfigEnv(Enviroment).Api_Header;
+            txb_api_url.Text = EnvironmentModel.GetConfigEnv(Enviroment).UrlApi;
+            txb_api_key.Text = EnvironmentModel.GetConfigEnv(Enviroment).ApiKey;
+            txb_api_header.Text = EnvironmentModel.GetConfigEnv(Enviroment).ApiHeader;
 
         }
     }

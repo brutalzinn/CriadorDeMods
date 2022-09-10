@@ -36,21 +36,21 @@ namespace CriadorDeModpacks.Dialogos
             if (ModPack != null)
             {
                 this.ModPack = ModPack;
-                this.txb_id.Text = ModPack.id ?? Guid.NewGuid().ToString();
-                this.txb_nome.Text = ModPack.name;
-                this.creat_at = ModPack.datetime_creat_at;
-                this.txb_diretory.Text = ModPack.directory;
-                this.ckb_default.Checked = ModPack.@default;
-                this.ckb_premium.Checked = ModPack.premium;
-                this.ckb_verify_mods.Checked = ModPack.verify_mods;
-                this.txb_description.Text = ModPack.description;
-                this.txb_minecraft_version.Text = ModPack.game_version;
-                this.txb_forge_version.Text = ModPack.forge_version;
-                this.txb_ip.Text = ModPack.server_ip;
-                this.txb_fabric_version.Text = ModPack.fabric_version;
-                this.txb_port.Text = ModPack.server_port;
-                this.txb_img.Text = ModPack.img;
-                this.txb_autor.Text = ModPack.author;
+                this.txb_id.Text = ModPack.Id ?? Guid.NewGuid().ToString();
+                this.txb_nome.Text = ModPack.Name;
+               // this.creat_at = ModPack.datetime_creat_at;
+                this.txb_diretory.Text = ModPack.Directory;
+                this.ckb_default.Checked = ModPack.IsDefault;
+                this.ckb_premium.Checked = ModPack.IsPremium;
+                this.ckb_verify_mods.Checked = ModPack.IsVerifyMods;
+                this.txb_description.Text = ModPack.Description;
+                this.txb_minecraft_version.Text = ModPack.GameVersion;
+                this.txb_forge_version.Text = ModPack.ForgeVersion;
+                this.txb_ip.Text = ModPack.ServerIp;
+                this.txb_fabric_version.Text = ModPack.FabricVersion;
+                this.txb_port.Text = ModPack.ServerPort;
+                this.txb_img.Text = ModPack.Img;
+                this.txb_autor.Text = ModPack.Author;
             }
 
         }
@@ -89,22 +89,22 @@ namespace CriadorDeModpacks.Dialogos
 
             ModPack = new ModPack()
             {
-                id = this.txb_id.Text ?? Guid.NewGuid().ToString(),
-                name = this.txb_nome.Text,
-                datetime_creat_at = creat_at,
-                datetime_updat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
-                forge_version = this.txb_forge_version.Text,
-                game_version = this.txb_minecraft_version.Text,
-                verify_mods = this.ckb_verify_mods.Checked,
-                directory = this.txb_diretory.Text,
-                server_ip = this.txb_ip.Text,
-                server_port = this.txb_port.Text,
-                img = this.txb_img.Text,
-                premium = this.ckb_premium.Checked,
-                @default = this.ckb_default.Checked,
-                author = this.txb_autor.Text,
-                description = this.txb_description.Text,
-                fabric_version = this.txb_fabric_version.Text
+                Id = this.txb_id.Text ?? Guid.NewGuid().ToString(),
+                Name = this.txb_nome.Text,
+             //  datetime_creat_at = creat_at,
+             //   datetime_updat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                ForgeVersion = this.txb_forge_version.Text,
+                GameVersion = this.txb_minecraft_version.Text,
+                IsVerifyMods = this.ckb_verify_mods.Checked,
+                Directory = this.txb_diretory.Text,
+                ServerIp = this.txb_ip.Text,
+                ServerPort = this.txb_port.Text,
+                Img = this.txb_img.Text,
+                IsPremium = this.ckb_premium.Checked,
+                IsDefault = this.ckb_default.Checked,
+                Author = this.txb_autor.Text,
+                Description = this.txb_description.Text,
+                FabricVersion = this.txb_fabric_version.Text
 
             };
             CloseForm(DialogResult.OK);

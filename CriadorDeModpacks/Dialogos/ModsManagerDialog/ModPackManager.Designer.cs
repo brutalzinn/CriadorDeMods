@@ -38,6 +38,7 @@
             this.progress_bar_complete = new System.Windows.Forms.ProgressBar();
             this.lbl_progress_complete = new System.Windows.Forms.Label();
             this.lbl_progress_bar_modpack = new System.Windows.Forms.Label();
+            this.lbl_enviroment = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_modpack)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,7 +98,7 @@
             // lbl_count
             // 
             this.lbl_count.AutoSize = true;
-            this.lbl_count.Location = new System.Drawing.Point(203, 20);
+            this.lbl_count.Location = new System.Drawing.Point(817, 12);
             this.lbl_count.Name = "lbl_count";
             this.lbl_count.Size = new System.Drawing.Size(50, 20);
             this.lbl_count.TabIndex = 5;
@@ -106,7 +107,7 @@
             // lbl_status
             // 
             this.lbl_status.AutoSize = true;
-            this.lbl_status.Location = new System.Drawing.Point(349, 15);
+            this.lbl_status.Location = new System.Drawing.Point(996, 15);
             this.lbl_status.Name = "lbl_status";
             this.lbl_status.Size = new System.Drawing.Size(70, 20);
             this.lbl_status.TabIndex = 6;
@@ -137,11 +138,21 @@
             this.lbl_progress_bar_modpack.TabIndex = 9;
             this.lbl_progress_bar_modpack.Text = "0";
             // 
+            // lbl_enviroment
+            // 
+            this.lbl_enviroment.AutoSize = true;
+            this.lbl_enviroment.Location = new System.Drawing.Point(207, 15);
+            this.lbl_enviroment.Name = "lbl_enviroment";
+            this.lbl_enviroment.Size = new System.Drawing.Size(50, 20);
+            this.lbl_enviroment.TabIndex = 10;
+            this.lbl_enviroment.Text = "label1";
+            // 
             // ModPackManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 352);
+            this.Controls.Add(this.lbl_enviroment);
             this.Controls.Add(this.lbl_progress_bar_modpack);
             this.Controls.Add(this.lbl_progress_complete);
             this.Controls.Add(this.progress_bar_complete);
@@ -173,5 +184,6 @@
         private ProgressBar progress_bar_complete;
         private Label lbl_progress_complete;
         private Label lbl_progress_bar_modpack;
+        private Label lbl_enviroment;
     }
 }

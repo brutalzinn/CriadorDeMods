@@ -8,7 +8,7 @@ namespace CriadorDeModpacks.Models
 {
     public class GenericConfigModel
     {
-        public EnvironmentModel.ENV Enviroment { get; set; }
+        public EnvironmentModel.EnvironmentMode Enviroment { get; set; }
 
         public List<ConfigModel> Configs { get; set; }
     }

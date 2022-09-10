@@ -8,14 +8,14 @@ namespace CriadorDeModpacks.Models
 {
     public class ConfigModel
     {
-        public EnvironmentModel.ENV Dev_mode { get; set; }
+        public EnvironmentModel.EnvironmentMode DevMode { get; set; }
 
-        public string Url_Api { get; set; } = "http://boberto.net";
+        public string UrlApi { get; set; } = "http://boberto.net";
 
         public string Url { get; set; } = "http://boberto.net";
         
-        public string Api_Key { get; set; } = "teste";
+        public string ApiKey { get; set; } = "teste";
 
-        public string Api_Header { get; set; } = "api-key";
+        public string ApiHeader { get; set; } = "api-key";
     }
 }

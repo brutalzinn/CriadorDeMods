@@ -24,19 +24,19 @@ namespace CriadorDeModpacks.Utils
 
         public static void CreateServerFile(ModPack  modpack)
      {
-            if(string.IsNullOrEmpty(modpack.server_ip) && string.IsNullOrEmpty(modpack.server_port))
+            if(string.IsNullOrEmpty(modpack.ServerIp) && string.IsNullOrEmpty(modpack.ServerPort))
             {
                 return;
             }
             var serverInfo = new NbtCompound("");
             var list = new NbtList("servers");
             var server = new NbtCompound();
-            server.Add(new NbtString("ip", modpack.server_ip + ":" + modpack.server_port));
-            server.Add(new NbtString("name", modpack.name));
+            server.Add(new NbtString("ip", modpack.ServerIp + ":" + modpack.ServerPort));
+            server.Add(new NbtString("name", modpack.Name));
             list.Add(server);
             serverInfo.Add(list);            
             var serverFile = new NbtFile(serverInfo);
-            serverFile.SaveToFile(Path.Combine(Globals.modpack_root, modpack.directory, "servers.dat"), NbtCompression.None);
+            serverFile.SaveToFile(Path.Combine(Globals.modpack_root, modpack.Directory, "servers.dat"), NbtCompression.None);
       }
     public static void CreateModPackFiles(string mod_directory)
     {
@@ -102,25 +102,25 @@ namespace CriadorDeModpacks.Utils
 
         public static  void GenerateModPackZip(ModPack modpack)
         {
-            string caminho = Path.Combine(Globals.modpack_root, $"{modpack.directory.ToLower()}.zip");
+            string caminho = Path.Combine(Globals.modpack_root, $"{modpack.Directory.ToLower()}.zip");
             bool zipExists = File.Exists(caminho);
             if (zipExists) File.Delete(caminho);
 
             //await Archive.CreateFromFolderAsync(Path.Combine(Globals.modpack_root, modpack.directory), caminho,(V)=>Debug.WriteLine(V));
-            CompressFolder(Path.Combine(Globals.modpack_root, modpack.directory), Path.Combine(Globals.modpack_root, Path.GetFileName(caminho)));
+            CompressFolder(Path.Combine(Globals.modpack_root, modpack.Directory), Path.Combine(Globals.modpack_root, Path.GetFileName(caminho)));
             //  ZipFile.CreateFromDirectory(Path.Combine(Globals.modpack_root, modpack.directory), caminho);
 
         }
-        async public static Task<bool> UploadModPack(string path, string directory)
+        async public static Task<bool> UploadModPack(string path, ModPack modpack)
         {
         
             FileStream file = File.OpenRead(path);
-            Uri uri = new Uri($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/launcher/modpacks/upload");
+            Uri uri = new Uri($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/modpack/upload/{modpack.Id}");
             HttpClient httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(120);
-            httpClient.DefaultRequestHeaders.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            httpClient.DefaultRequestHeaders.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             MultipartFormDataContent form = new MultipartFormDataContent();
-            form.Add(new StringContent(directory), "directory");
+            form.Add(new StringContent(modpack.Directory), "directory");
             form.Add(new StreamContent(file), "file", Path.GetFileName(path));
             bool keepTracking = true; //to start and stop the tracking thread
             new Task(new Action(() => { progressTracker(file, ref keepTracking); })).Start();
@@ -149,7 +149,7 @@ namespace CriadorDeModpacks.Utils
         async public static Task<bool> UploadLauncherUpdate(LauncherUpdateModel launcher)
         {
 
-            Uri uri = new Uri($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/launcher/version/upload");
+            Uri uri = new Uri($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/launcher");
             List<Teste> files = new List<Teste>();
             foreach(var item in launcher.data.files)
             {
@@ -159,7 +159,7 @@ namespace CriadorDeModpacks.Utils
 
             HttpClient httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(120);
-            httpClient.DefaultRequestHeaders.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            httpClient.DefaultRequestHeaders.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             MultipartFormDataContent form = new MultipartFormDataContent();
             bool keepTracking = true;
             foreach (Teste file in files)
@@ -207,8 +207,8 @@ namespace CriadorDeModpacks.Utils
  
        public static bool SyncModPacks(List<ModPack> modpacks)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/modpackcreator/modpacks/sync");
-            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/modpackcreator/modpacks/sync");
+            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
@@ -224,8 +224,8 @@ namespace CriadorDeModpacks.Utils
         }
         public static bool RedisClearAll()
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/redis/clear");
-            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/redis/clear");
+            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
@@ -234,14 +234,14 @@ namespace CriadorDeModpacks.Utils
         }
         public static bool RedisClearModPack(ModPack modpack)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/redis/del");
-            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/redis/del");
+            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
             var resultado = new RedisClearModPackMessage()
             {
-                id = modpack.id
+                id = modpack.Id
             };
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
@@ -254,16 +254,16 @@ namespace CriadorDeModpacks.Utils
             return httpResponse.StatusCode == HttpStatusCode.OK;
         }
 
-        public static bool AppendModPack(ModPack modpacks)
+        async public static Task<bool> AppendModPack(ModPack modpack)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/modpackcreator/modpacks/append");
-            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/modpack/add");
+            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                var json = JsonConvert.SerializeObject(modpacks, Formatting.Indented);
+                var json = JsonConvert.SerializeObject(modpack, Formatting.Indented);
                 streamWriter.Write(json);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -274,8 +274,8 @@ namespace CriadorDeModpacks.Utils
 
         async public static Task<bool> LauncherUpdateVersion(LauncherUpdateModel launcherUpdateModel)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/launcher/version");
-            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/launcher/version");
+            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
@@ -303,8 +303,8 @@ namespace CriadorDeModpacks.Utils
 
          public static LauncherUpdateMessage LauncherGetVersion()
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api}/launcher/version");
-            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/launcher");
+            httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.Method = "GET";
 
 

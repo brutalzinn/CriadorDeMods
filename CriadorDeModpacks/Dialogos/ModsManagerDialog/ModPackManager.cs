@@ -1,5 +1,6 @@
 ﻿using CriadorDeModpacks.Models;
 using CriadorDeModpacks.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,27 +51,24 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
             dgv_modpack.Columns.Add(modpack_dir);
             dgv_modpack.Columns.Add(buttonmodpack);
 
-            HostUtils.FillHostModPack(comboBox1);
+            EnvironmentModel.FillConfigComboBox(comboBox1);
+            GenerateLocalModPacks();
 
         }
+
+
         private void GenerateLocalModPacks()
         {
             dgv_modpack.Rows.Clear();
             foreach (var modpack in Globals.ModPacks)
             {
-                string path_name = Path.Combine(Globals.modpack_root, modpack.directory);
-                dgv_modpack.Rows.Add(false, modpack.id, modpack.name, path_name, "Ações");
+                string path_name = Path.Combine(Globals.modpack_root, modpack.Directory);
+                dgv_modpack.Rows.Add(false, modpack.Id, modpack.Name, path_name, "Ações");
             }
         }
-        private void GenerateRemoteModPacks()
-        {
-
-        }
-
+   
         private void ModPackManager_Load(object sender, EventArgs e)
         {
-
-
         }
 
         private void dgv_modpack_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -90,15 +88,11 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var tipo = comboBox1.SelectedItem;
-
-            switch (tipo)
-            {
-                case HostUtils.TIPOS.local:
-                    GenerateLocalModPacks();
-                    break;
-            }
+           var comboBox = (ComboBox)sender;
+           var configModel = EnvironmentModel.GetConfigComboBox(comboBox);
+           lbl_enviroment.Text = EnvironmentModel.GetConfigDescription(configModel);
         }
+
         async void StartBackground()
 
         {
@@ -110,22 +104,21 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
             progress_bar_modpack.Invoke(() => progress_bar_modpack.Value = 0);
             foreach (ModPack modpack in ModPacksChecked)
             {
-                string path = Path.Combine(Globals.modpack_root, $"{modpack.directory.Replace(" ", "_").ToLower()}.zip");
-                lbl_status.Invoke(() => lbl_status.Text = $"Preparing to zip modpack.. {modpack.name} 1/2");
+                string path = Path.Combine(Globals.modpack_root, $"{modpack.Directory.Replace(" ", "_").ToLower()}.zip");
+                lbl_status.Invoke(() => lbl_status.Text = $"Preparing to zip modpack.. {modpack.Name} 1/2");
                 Utils.ApiUtils.GenerateModPackZip(modpack);
-                lbl_status.Invoke(() => lbl_status.Text = $"Zip Ready. Sending modpack to server.. {modpack.name} 2/2");
-                if(!await Utils.ApiUtils.UploadModPack(path, modpack.directory))
+                lbl_status.Invoke(() => lbl_status.Text = $"Zip Ready. Sending modpack to server.. {modpack.Name} 2/2");
+                await Utils.ApiUtils.AppendModPack(modpack);
+            
+                if (!await Utils.ApiUtils.UploadModPack(path, modpack))
                 {
-                    lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.name} with error.");
+                    lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.Name} with error.");
                 }
 
-                lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.name} with success.");
+                lbl_status.Invoke(() => lbl_status.Text = $"Modpack uploaded {modpack.Name} with success.");
                 progress_bar_complete.Invoke(() => progress_bar_complete.Value += 1);
                 lbl_progress_complete.Invoke(() => lbl_progress_complete.Text = $"{progress_bar_complete.Value}/{ModPacksChecked.Count}");
-                if (Utils.ApiUtils.AppendModPack(modpack))
-                {
-                    lbl_status.Invoke(() => lbl_status.Text = $"{modpack.name} uploaded.");
-                }
+             
                 //try
                 //{
                 //    Utils.ApiUtils.RedisClearModPack(modpack);
@@ -172,8 +165,8 @@ namespace CriadorDeModpacks.Dialogos.ModsManagerDialog
                     break;
             }
     
-            var modpack_finder = Globals.ModPacks.Where(v => v.id.Equals(modpack_id.Value.ToString())).FirstOrDefault();
-            var checkModpackChecked = ModPacksChecked.Where(v => v.id.Equals(modpack_id.Value.ToString())).FirstOrDefault();
+            var modpack_finder = Globals.ModPacks.Where(v => v.Id.Equals(modpack_id.Value.ToString())).FirstOrDefault();
+            var checkModpackChecked = ModPacksChecked.Where(v => v.Id.Equals(modpack_id.Value.ToString())).FirstOrDefault();
             if (modpack_cheked)
             {
                 if (modpack_finder != null && checkModpackChecked == null)

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Linq;
 using CriadorDeModpacks.Dialogos.ModsManagerDialog;
 using CriadorDeModpacks.Utils;
+using MongoDB.Bson;
 
 namespace CriadorDeModpacks
 {
@@ -85,21 +86,21 @@ namespace CriadorDeModpacks
             if (!File.Exists(Globals.filename_config))
             {
                 var config = new GenericConfigModel();
-                config.Enviroment = EnvironmentModel.ENV.DEV;
+                config.Enviroment = EnvironmentModel.EnvironmentMode.DEV;
                 var devModel = new ConfigModel()
                 {
-                    Dev_mode = EnvironmentModel.ENV.DEV,
-                    Api_Header = "api-key",
-                    Api_Key = "teste",
-                    Url_Api = "http://127.0.0.1",
+                    DevMode = EnvironmentModel.EnvironmentMode.DEV,
+                    ApiHeader = "api-key",
+                    ApiKey = "teste",
+                    UrlApi = "http://127.0.0.1",
                     Url = "http://127.0.0.1"
                 };
                 var prodModel = new ConfigModel()
                 {
-                    Dev_mode = EnvironmentModel.ENV.PROD,
-                    Api_Header = "api-key",
-                    Api_Key = "teste",
-                    Url_Api = "http://127.0.0.1",
+                    DevMode = EnvironmentModel.EnvironmentMode.PROD,
+                    ApiHeader = "api-key",
+                    ApiKey = "teste",
+                    UrlApi = "http://127.0.0.1",
                     Url = "http://127.0.0.1"
                 };
                 config.Configs = new List<ConfigModel>();
@@ -130,14 +131,14 @@ namespace CriadorDeModpacks
 
         public void saveAllModpacks()
         {
-            var modpacks_defauls = Globals.ModPacks.FindAll(e => e.@default == true);
+            var modpacks_defauls = Globals.ModPacks.FindAll(e => e.IsDefault == true);
 
             if (modpacks_defauls.Count > 1)
             {
-                string modpacks_errados = "Há mais de um modpack padrão criado.Faça a correção" + Environment.NewLine;
+                string modpacks_errados = "More than one default modpack." + Environment.NewLine;
                 foreach (var item in modpacks_defauls)
                 {
-                    modpacks_errados += item.id + Environment.NewLine;
+                    modpacks_errados += item.Id + Environment.NewLine;
                 }
                 MessageBox.Show(modpacks_errados);
                 return;
@@ -168,7 +169,7 @@ namespace CriadorDeModpacks
             }
             foreach (var mod in Globals.ModPacks)
             {
-                dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default, mod.premium, "Open modpack folder");
+                dataGridView1.Rows.Add(mod.Id, mod.Name, mod.GameVersion, mod.ForgeVersion, mod.IsDefault, mod.IsPremium, "Open modpack folder");
             }
         }
         private void button6_Click(object sender, EventArgs e)
@@ -258,7 +259,7 @@ namespace CriadorDeModpacks
         private void addmodpack_click(object sender, EventArgs e)
         {
             var criarModPack = new CriarModPack();
-            criarModPack.txb_id.Text  = Guid.NewGuid().ToString();
+            criarModPack.txb_id.Text  = ObjectId.GenerateNewId().ToString();
             criarModPack.creat_at = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
 
             criarModPack.ShowDialog();
@@ -270,7 +271,7 @@ namespace CriadorDeModpacks
                     Directory.CreateDirectory(modpack_directory);
                 }
                 Utils.ApiUtils.CreateServerFile(criarModPack.ModPack);
-                Utils.ApiUtils.CreateModPackFiles(criarModPack.ModPack.directory);
+                Utils.ApiUtils.CreateModPackFiles(criarModPack.ModPack.Directory);
                 //  criarModPack.ModPack.datetime_creat_at = d
                 Globals.ModPacks.Add(criarModPack.ModPack);
 
@@ -291,14 +292,6 @@ namespace CriadorDeModpacks
             saveAllModpacks();
         }
 
-        private void SalvarConfiguracoes(ConfigModel model)
-        {
-            EnvironmentModel.saveConfig(model);
-            Globals.Configuracao.Enviroment = model.Dev_mode;
-            var json = JsonConvert.SerializeObject(Globals.Configuracao, Formatting.Indented);
-            File.WriteAllText(Application.StartupPath + @"\config.json", json);
-        }
-
         private void button10_Click(object sender, EventArgs e)
         {
             ModPack = (ModPack)comboBox1.SelectedItem;
@@ -312,10 +305,10 @@ namespace CriadorDeModpacks
             if (criarModPack.DialogResult == DialogResult.OK)
             {
        
-                var modpack_old = Globals.ModPacks.Where(e => e.id == criarModPack.ModPack.id).FirstOrDefault();
+                var modpack_old = Globals.ModPacks.Where(e => e.Id == criarModPack.ModPack.Id).FirstOrDefault();
                 Globals.ModPacks.Remove(modpack_old);
                 Globals.ModPacks.Add(criarModPack.ModPack);
-                ApiUtils.CreateModPackFiles(criarModPack.ModPack.directory);
+                ApiUtils.CreateModPackFiles(criarModPack.ModPack.Directory);
 
                 saveAllModpacks();
             }
@@ -331,25 +324,25 @@ namespace CriadorDeModpacks
             switch (cbx_search.SelectedItem)
             {
                 case Search.TIPOS.id:
-                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.id.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.Id.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.nome:
-                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.name.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.Name.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.game_version:
-                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.game_version.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.GameVersion.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.forge_version:
-                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.forge_version.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.ForgeVersion.Contains(textBox1.Text)).ToList();
                 break;
                 case Search.TIPOS.author:
-                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.author.Contains(textBox1.Text)).ToList();
+                ModPacks_Filters = Globals.ModPacks.FindAll(e => e.Author.Contains(textBox1.Text)).ToList();
                 break;
             }
             dataGridView1.Rows.Clear();
             foreach (var mod in ModPacks_Filters)
             {
-                dataGridView1.Rows.Add(mod.id, mod.name, mod.game_version, mod.forge_version, mod.@default, mod.premium, "Open modpack");
+                dataGridView1.Rows.Add(mod.Id, mod.Name, mod.GameVersion, mod.ForgeVersion, mod.IsDefault, mod.IsPremium, "Open modpack");
             }
         }
 
@@ -370,11 +363,11 @@ namespace CriadorDeModpacks
             string forge_version = row.Cells[3].Value.ToString();
             bool  @default = (bool)row.Cells[4].Value;
 
-            var modpack_old = Globals.ModPacks.Where(e => e.id == id).FirstOrDefault();
-            modpack_old.name = name;
-            modpack_old.game_version = game_version;
-            modpack_old.forge_version = forge_version;
-            modpack_old.@default = @default;
+            var modpack_old = Globals.ModPacks.Where(e => e.Id == id).FirstOrDefault();
+            modpack_old.Name = name;
+            modpack_old.GameVersion = game_version;
+            modpack_old.ForgeVersion = forge_version;
+            modpack_old.IsDefault = @default;
             Globals.ModPacks.Remove(modpack_old);
             Globals.ModPacks.Add(modpack_old);
             CarregarModPacksComboBox();
@@ -390,8 +383,8 @@ namespace CriadorDeModpacks
             if (e.ColumnIndex == dataGridView1.Columns["openmodpack_column"].Index) {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 string id = row.Cells[0].Value.ToString();
-                var modpack = Globals.ModPacks.Where(e => e.id == id).FirstOrDefault();
-                string modpack_dir = Path.Combine(Globals.modpack_root, modpack.directory);
+                var modpack = Globals.ModPacks.Where(e => e.Id == id).FirstOrDefault();
+                string modpack_dir = Path.Combine(Globals.modpack_root, modpack.Directory);
                 if (Directory.Exists(modpack_dir))
                 {
                     Process.Start("explorer.exe", modpack_dir);
@@ -420,9 +413,9 @@ namespace CriadorDeModpacks
             var configuracoesForm = new Configuracoes();
             CarregarConfiguracoes();
             configuracoesForm.txb_web_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url;
-            configuracoesForm.txb_api_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url_Api;
-            configuracoesForm.txb_api_key.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Key;
-            configuracoesForm.txb_api_header.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Api_Header;
+            configuracoesForm.txb_api_url.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi;
+            configuracoesForm.txb_api_key.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey;
+            configuracoesForm.txb_api_header.Text = EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader;
 
 
             configuracoesForm.ShowDialog();
@@ -433,12 +426,13 @@ namespace CriadorDeModpacks
                 var ConfigModel = configuracoesForm.cbx_dev_mode.SelectedItem;
                 if (ConfigModel != null)
                 {
-                    config.Dev_mode = (EnvironmentModel.ENV)ConfigModel;
+                    config.DevMode = (EnvironmentModel.EnvironmentMode)ConfigModel;
                     config.Url = configuracoesForm.txb_web_url.Text;
-                    config.Url_Api = configuracoesForm.txb_api_url.Text;
-                    config.Api_Key = configuracoesForm.txb_api_key.Text;
-                    config.Api_Header = configuracoesForm.txb_api_header.Text;
-                    SalvarConfiguracoes(config);
+                    config.UrlApi = configuracoesForm.txb_api_url.Text;
+                    config.ApiKey = configuracoesForm.txb_api_key.Text;
+                    config.ApiHeader = configuracoesForm.txb_api_header.Text;
+                    
+                    EnvironmentModel.SaveConfig(config);
                 }
             
             }

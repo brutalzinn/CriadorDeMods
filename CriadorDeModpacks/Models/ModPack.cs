@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,26 +10,20 @@ namespace CriadorDeModpacks.Models
     public class ModPack
     {
 
-        public string id { get; set; } = Guid.NewGuid().ToString();
-        public string name { get; set; }
-        public string directory { get; set; }
-        public bool @default { get; set; }
-        public bool premium { get; set; }
-        public bool verify_mods { get; set; }
-        public string description { get; set; }
-        public string game_version { get; set; }
-        public string forge_version { get; set; }
-        public string fabric_version { get; set; }
-        public string server_ip { get; set; }
-        public string server_port { get; set; }
-        public string datetime_creat_at { get; set; }
-        public string datetime_updat_at { get; set; }
-        public string img { get; set; }
-        public string author { get; set; }
-
-     
-        
-       
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+        public string Name { get; set; }
+        public string Directory { get; set; }
+        public bool IsDefault { get; set; }
+        public bool IsPremium { get; set; }
+        public bool IsVerifyMods { get; set; }
+        public string Description { get; set; }
+        public string GameVersion { get; set; }
+        public string ForgeVersion { get; set; }
+        public string FabricVersion { get; set; }
+        public string ServerIp { get; set; }
+        public string ServerPort { get; set; }
+        public string Img { get; set; }
+        public string Author { get; set; }
 
         public ModPack()
         {
@@ -38,33 +33,35 @@ namespace CriadorDeModpacks.Models
         public ModPack(string id,
             string name,
             string directory, 
-            bool @default, 
-            bool premium,
+            bool isDefault, 
+            bool isPremium,
             string description, 
             string game_version, 
             string forge_version, 
+            string fabric_version,
             string server_ip, 
             string server_port, 
             string img, 
             string author)
         {
-            this.id = id;
-            this.name = name;
-            this.directory = directory;
-            this.@default = @default;
-            this.premium = premium;
-            this.description = description;
-            this.game_version = game_version;
-            this.forge_version = forge_version;
-            this.server_ip = server_ip;
-            this.server_port = server_port;
-            this.img = img;
-            this.author = author;
+            this.Id = id;
+            this.Name = name;
+            this.Directory = directory;
+            this.IsDefault = isDefault;
+            this.IsPremium = isPremium;
+            this.Description = description;
+            this.GameVersion = game_version;
+            this.ForgeVersion = forge_version;
+            this.FabricVersion = fabric_version;
+            this.ServerIp = server_ip;
+            this.ServerPort = server_port;
+            this.Img = img;
+            this.Author = author;
         }
 
         public override string ToString()
         {
-            return this.name;
+            return this.Name;
         }
 
 
