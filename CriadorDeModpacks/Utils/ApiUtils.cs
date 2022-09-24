@@ -2,15 +2,10 @@
 using CriadorDeModpacks.Models;
 using fNbt;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CriadorDeModpacks.Utils
 {
@@ -134,35 +129,23 @@ namespace CriadorDeModpacks.Utils
 
             return result.StatusCode == HttpStatusCode.OK;
         }
-        public class Teste
+        async public static Task<bool> UploadLauncherUpdate(LauncherVersionModel launcher)
         {
-            public FileStream file { get; set; }
-            public string path { get; set; }
-            public Teste(FileStream file, string path)
-            {
-                this.file = file;
-                this.path = path;
-            }
-
-  
-        }
-        async public static Task<bool> UploadLauncherUpdate(LauncherUpdateModel launcher)
-        {
-
             Uri uri = new Uri($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/launcher");
-            List<Teste> files = new List<Teste>();
-            foreach(var item in launcher.data.files)
-            {
-                FileStream file = File.OpenRead(item);
-                files.Add(new Teste(file,item));
-            }
+            List<FileUploadModel> files = new List<FileUploadModel>();
+           
+            //foreach(FileUploadModel item in launcher.Files)
+            //{
+            //    FileStream file = File.OpenRead(item.path);
+            //    files.Add(new FileUploadModel(file, item.path));
+            //}
 
             HttpClient httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(120);
             httpClient.DefaultRequestHeaders.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             MultipartFormDataContent form = new MultipartFormDataContent();
             bool keepTracking = true;
-            foreach (Teste file in files)
+            foreach (FileUploadModel file in files)
             {
                form.Add(new StreamContent(file.file), "file[]", Path.GetFileName(file.path));
                new Task(new Action(() => { progressTracker(file.file, ref keepTracking); })).Start();
@@ -171,36 +154,30 @@ namespace CriadorDeModpacks.Utils
             var result = await httpClient.PostAsync(uri, form);
             keepTracking = false;
             httpClient.Dispose();
-            foreach (Teste file in files)
+            foreach (FileUploadModel file in files)
             {
                 file.file.Close();
             }
             FinishedUpload(null, EventArgs.Empty);
 
             return result.StatusCode == HttpStatusCode.OK;
-
-
         }
+
         static void progressTracker(FileStream streamToTrack, ref bool keepTracking)
         {
             int prevPos = -1;
             progress_bar.Invoke(() => progress_bar.Maximum = 100);
-            progress_bar.Invoke(() => progress_bar.Value = 0);
-                
+            progress_bar.Invoke(() => progress_bar.Value = 0);         
              while (keepTracking)
             {
                 int pos = (int)Math.Round(100 * (streamToTrack.Position / (double)streamToTrack.Length));
                 if (pos != prevPos)
-                {
-                  
+                {               
                     progress_bar.Invoke(() => progress_bar.Value = pos);
                     progress_txt.Invoke(() => progress_txt.Text = $"Uploading.. {pos}/100");
-
                     Debug.WriteLine(pos + "%");
-
                 }
                 prevPos = pos;
-
                 Thread.Sleep(50); //update every 50ms
             }
         }
@@ -272,26 +249,16 @@ namespace CriadorDeModpacks.Utils
             return httpResponse.StatusCode == HttpStatusCode.OK;
         }
 
-        async public static Task<bool> LauncherUpdateVersion(LauncherUpdateModel launcherUpdateModel)
+        async public static Task<bool> LauncherUpdateVersion(LauncherVersionModel launcherVersionModel)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/launcher/version");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/launcher");
             httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
             httpWebRequest.Accept = "application/json; charset=utf-8";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                var update = new LauncherUpdateMessage()
-                {
-                    packages = new Messages.Launcher.Packages()
-                    {
-                        win64 = launcherUpdateModel.data.packages.win64 != null ? new Messages.Launcher.Win64(launcherUpdateModel.data.packages.win64.url) : null,
-                        mac64 = launcherUpdateModel.data.packages.mac64 != null ? new Messages.Launcher.Mac64(launcherUpdateModel.data.packages.mac64.url) : null,
-                        linux64 = launcherUpdateModel.data.packages.linux64 != null ? new Messages.Launcher.Linux64(launcherUpdateModel.data.packages.linux64.url) : null
-                    },
-                    version = launcherUpdateModel.data.version
-                };
-                var json = JsonConvert.SerializeObject(update, Formatting.Indented);
+                var json = JsonConvert.SerializeObject(launcherVersionModel, Formatting.Indented);
                 
                 streamWriter.Write(json);
                 streamWriter.Flush();
@@ -301,13 +268,11 @@ namespace CriadorDeModpacks.Utils
             return httpResponse.StatusCode == HttpStatusCode.OK;
         }
 
-         public static LauncherUpdateMessage LauncherGetVersion()
+         public static LauncherVersionModel LauncherGetVersion()
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create($"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).UrlApi}/launcher");
             httpWebRequest.Headers.Add(EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiHeader, EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).ApiKey);
             httpWebRequest.Method = "GET";
-
-
             string json = null;
             var response = (HttpWebResponse)httpWebRequest.GetResponse();
 
@@ -315,23 +280,20 @@ namespace CriadorDeModpacks.Utils
             {
                 json = sr.ReadToEnd();
             }
-            LauncherUpdateModel resultado = JsonConvert.DeserializeObject<LauncherUpdateModel>(json);
-            if(resultado.data.packages == null || resultado.data.version == null){
+            LauncherVersionModel resultado = JsonConvert.DeserializeObject<LauncherVersionModel>(json);
+            if(resultado == null || resultado.Packages == null || resultado.Version == null){
                 return null;
             }
-            return new LauncherUpdateMessage()
+            return new LauncherVersionModel()
             {
-                packages = new Messages.Launcher.Packages()
+                Packages = new LauncherVersionModel.PackagesModel
                 {
-                    win64 = resultado.data.packages.win64 != null ? new Messages.Launcher.Win64(resultado.data.packages.win64.url) : new Messages.Launcher.Win64(),
-                    mac64 = resultado.data.packages.mac64 != null ? new Messages.Launcher.Mac64(resultado.data.packages.mac64.url) : new Messages.Launcher.Mac64(),
-                    linux64 = resultado.data.packages.linux64 != null ? new Messages.Launcher.Linux64(resultado.data.packages.linux64.url) : new Messages.Launcher.Linux64()
+                    Win64 = resultado.Packages.Win64 != null ? new LauncherVersionModel.Win64Model(resultado.Packages.Win64.Url) : new LauncherVersionModel.Win64Model(),
+                    Mac64 = resultado.Packages.Mac64 != null ? new LauncherVersionModel.Mac64Model(resultado.Packages.Mac64.Url) : new LauncherVersionModel.Mac64Model(),
+                    Linux64 = resultado.Packages.Linux64 != null ? new LauncherVersionModel.Linux64Model(resultado.Packages.Linux64.Url) : new LauncherVersionModel.Linux64Model()
                 },
-                version = resultado.data.version
-            };
-          
-
+                Version = resultado.Version
+            };       
         }
-
     }
 }

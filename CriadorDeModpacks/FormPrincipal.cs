@@ -67,7 +67,6 @@ namespace CriadorDeModpacks
             CarregarModPacks();
             CarregarModPacksComboBox();
             CarregarConfiguracoes();
-           // SalvarConfiguracoes("http://boberto.net");
             Search.FillSearchComboBox(cbx_search);
 
         }

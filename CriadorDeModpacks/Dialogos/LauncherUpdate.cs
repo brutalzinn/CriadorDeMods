@@ -1,19 +1,13 @@
 ﻿using CriadorDeModpacks.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace CriadorDeModpacks.Dialogos
 {
     public partial class LauncherUpdate : Form
     {
-        public LauncherUpdateModel launcherUpdate { get; set; }
+        public LauncherVersionModel launcherVersionModel { get; set; }
+        public List<LauncherUrl> files = new List<LauncherUrl>();
         public enum SYSTEM
         {
             win = 0,
@@ -35,11 +29,8 @@ namespace CriadorDeModpacks.Dialogos
             {
                 return Path.GetFileName(file);
             }
-
-
         }
 
-        public List<LauncherUrl> files = new List<LauncherUrl>();
         public LauncherUpdate()
         {
             InitializeComponent();
@@ -50,26 +41,28 @@ namespace CriadorDeModpacks.Dialogos
             var server = Utils.ApiUtils.LauncherGetVersion();
             if(server != null)
             {
-                launcherUpdate = new LauncherUpdateModel()
+                launcherVersionModel = new LauncherVersionModel()
                 {
-                    data = new Data()
+                    Packages = new LauncherVersionModel.PackagesModel
                     {
-                        packages = new Packages()
-                        {
-                            win64 = server.packages.win64 != null ? new Win64(server.packages.win64.url) : new Win64(),
-                            mac64 = server.packages.mac64 != null ? new Mac64(server.packages.mac64.url) : new Mac64(),
-                            linux64 = server.packages.linux64 != null ? new Linux64(server.packages.linux64.url) : new Linux64()
-                        },
-                        version = server.version,
-                        files = new List<string>()
-                    }
+                       Win64 = new LauncherVersionModel.Win64Model()
+                       {
+                           Url = server.Packages.Win64.Url
+                       },
+                       Linux64 = new LauncherVersionModel.Linux64Model()
+                       {
+                           Url = server.Packages.Linux64.Url
+                       },
+                       Mac64 = new LauncherVersionModel.Mac64Model()
+                       {
+                           Url = server.Packages.Mac64.Url
+                       }
+                    },
+                    Version = server.Version
                 };
-                txb_launcher_version.Text = launcherUpdate.data.version;
-            }
-            else
-            {
-                launcherUpdate = new LauncherUpdateModel();
-            }
+
+                txb_launcher_version.Text = launcherVersionModel.Version;
+            } 
 
         }
         private void CloseForm(DialogResult result)
@@ -82,9 +75,9 @@ namespace CriadorDeModpacks.Dialogos
             Utils.ApiUtils.progress_bar = progressBar1;
             Utils.ApiUtils.progress_txt = lbl_status;
 
-            if (await Utils.ApiUtils.LauncherUpdateVersion(launcherUpdate))
+            if (await Utils.ApiUtils.LauncherUpdateVersion(launcherVersionModel))
             {
-                await Utils.ApiUtils.UploadLauncherUpdate(launcherUpdate);
+                await Utils.ApiUtils.UploadLauncherUpdate(launcherVersionModel);
             }
 
 
@@ -98,15 +91,16 @@ namespace CriadorDeModpacks.Dialogos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            launcherUpdate.data.version = txb_launcher_version.Text;
-            launcherUpdate.data.packages = new Packages();
+            launcherVersionModel.Version = txb_launcher_version.Text;
+            launcherVersionModel.Packages = new LauncherVersionModel.PackagesModel();
            
-            string url = $"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url}/cliente/launcher/update-launcher";
+            string url = $"{EnvironmentModel.GetConfigEnv(Globals.Configuracao.Enviroment).Url}/launcher/upload/";
 
-            UpdateList();
+         //   UpdateList();
 
             foreach (var item in files)
             {
+       
                 if (!listBox1.Items.Contains(item))
                 {
                     listBox1.Items.Add(item);
@@ -114,13 +108,13 @@ namespace CriadorDeModpacks.Dialogos
                 switch (item.system)
                 {
                     case SYSTEM.linux:
-                        launcherUpdate.data.packages.linux64 = new Linux64($"{url}/{Path.GetFileName(item.file)}");
+                        launcherVersionModel.Packages.Linux64 = new LauncherVersionModel.Linux64Model($"{url}/linux");
                     break;
                     case SYSTEM.mac:
-                        launcherUpdate.data.packages.mac64 = new Mac64($"{url}/{Path.GetFileName(item.file)}");
+                        launcherVersionModel.Packages.Mac64 = new LauncherVersionModel.Mac64Model($"{url}/mac");
                     break;
                     case SYSTEM.win:
-                        launcherUpdate.data.packages.win64 = new Win64($"{url}/{Path.GetFileName(item.file)}");
+                        launcherVersionModel.Packages.Win64 = new LauncherVersionModel.Win64Model($"{url}/windows");
                     break;
                 }
             }
@@ -155,7 +149,7 @@ namespace CriadorDeModpacks.Dialogos
         {
             string path = GetFilePath();
             txb_launcher_windows.Text = path;
-            files.Add(new LauncherUrl(path,SYSTEM.win));
+            files.Add(new LauncherUrl(path, SYSTEM.win));
         }
 
         private void btn_open_linux_Click(object sender, EventArgs e)
@@ -163,8 +157,6 @@ namespace CriadorDeModpacks.Dialogos
             string path = GetFilePath();
             txb_launcher_linux.Text = path;
             files.Add(new LauncherUrl(path, SYSTEM.linux));
-
-
         }
 
         private void btn_open_mac_Click(object sender, EventArgs e)
@@ -180,7 +172,7 @@ namespace CriadorDeModpacks.Dialogos
             listBox1.Items.Clear();
             if (files.Count > 0)
             {
-                launcherUpdate.data.files = files.Select(v => v.file).ToList();
+              files.Select(v => listBox1.Items.Add(v.file)).ToList();
             }
         }
         private void btn_remove_windows_Click(object sender, EventArgs e)
